@@ -76,6 +76,9 @@ for rental_id in range(1, 2501):  # Generate information for 2500 rentals
             payment += int(compensation[int(car_ID[rental_id-1])-1])
         else:
             status = 'Done'
+    elif car_end_date[int(car_ID[rental_id - 1])-1][j[int(car_ID[rental_id-1])-1]] == begin_date[rental_id-1]:
+        status = 'Cancelled'
+        payment = 0
     else:
         payment = int(DailyRentalFee[int(car_ID[rental_id-1])-1]) * ((temp2 - begin_date[rental_id-1]).days +
                                                                      3 * (car_end_date[int(car_ID[rental_id-1])-1][j[int(car_ID[rental_id-1])-1]] - temp2).days)

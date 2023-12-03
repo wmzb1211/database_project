@@ -13,6 +13,9 @@ import java.util.List;
 
 
 public class CarDAO {
+
+
+
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;

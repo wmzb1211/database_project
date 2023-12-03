@@ -32,7 +32,7 @@ public class User {
     }
 
     public User(String username, String passwordHash, String email) {
-        this.id = -1;
+        //this.id = -1;
         this.username = username;
         this.passwordHash = passwordHash;
         this.email = email;

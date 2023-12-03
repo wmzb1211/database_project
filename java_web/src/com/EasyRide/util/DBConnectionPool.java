@@ -18,11 +18,12 @@ public class DBConnectionPool {
 
     static {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             for (int i = 0; i < initialPoolSize; i++) {
                 Connection connection = DriverManager.getConnection(url, username, password);
                 connectionPool.add(connection);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

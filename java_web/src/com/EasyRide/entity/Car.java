@@ -1,4 +1,7 @@
 package com.EasyRide.entity;
+import com.EasyRide.dao.CarDAO;
+import javax.xml.crypto.Data;
+import java.util.List;
 
 
 //CREATE TABLE Car (
@@ -22,6 +25,7 @@ public class Car {
     private double dailyRentalFee;
 
     // Getters and setters
+
     public Car(int carId, int modelId, String plateNumber, String color, int year, String status, double dailyRentalFee) {
         this.carId = carId;
         this.modelId = modelId;
@@ -31,4 +35,45 @@ public class Car {
         this.status = status;
         this.dailyRentalFee = dailyRentalFee;
     }
-}
+
+    public int getCarId() {
+        return carId;
+    }
+
+
+    public int getModelId() {
+        return modelId;
+    }
+
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }

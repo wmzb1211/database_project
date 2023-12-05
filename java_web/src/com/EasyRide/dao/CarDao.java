@@ -302,13 +302,14 @@ public class CarDao {
             preparedStatement.setString(5, status);
             preparedStatement.setDouble(6, dailyRentalFee);
             int affectedRows = preparedStatement.executeUpdate();
-
-            if (affectedRows > 0){
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()){
-                    int id = generatedKeys.getInt(1);
-                    car = new Car(id, modelId, plateNumber, color, year, status, dailyRentalFee);
-                }
+            if (affectedRows == 0){
+                throw new SQLException("Creating car failed, no rows affected.");
+            }
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()){
+                car = new Car(resultSet.getInt(1), modelId, plateNumber, color, year, status, dailyRentalFee);
+            } else {
+                throw new SQLException("Creating car failed, no ID obtained.");
             }
 
         } catch (SQLException e){
@@ -349,9 +350,10 @@ public class CarDao {
             preparedStatement.setInt(7, car.getCarId());
             int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows > 0){
-                updatedCar = car;
+            if(affectedRows == 0){
+                throw new SQLException("Updating car failed, no rows affected.");
             }
+            updatedCar = car;
         } catch (SQLException e){
             e.printStackTrace();
         } finally {

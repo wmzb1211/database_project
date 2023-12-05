@@ -15,6 +15,10 @@ public class CarModel {
         this.description = description;
     }
 
+    public CarModel() {
+
+    }
+
     public int getModelId() {
         return modelId;
     }

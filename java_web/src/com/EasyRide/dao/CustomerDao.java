@@ -10,7 +10,10 @@ import java.util.List;
 
 public class CustomerDao {
 
-    
+    /**
+     * 获取所有用户
+     * @return 用户列表
+     */
     public List<Customer> getAllCustomers() {
         List<Customer> customers = new ArrayList<>();
         Connection connection = null;
@@ -84,7 +87,6 @@ public class CustomerDao {
     /**
      * 通过账号获取用户，检查用户是否存在，如果存在则返回用户对象，否则返回null
      */
-    
     public Customer getCustomerByAccount(String account){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -119,7 +121,9 @@ public class CustomerDao {
         return customer;
     }
 
-    
+    /**
+     * 通过账号和密码获取用户，如果用户存在且密码正确则返回用户对象，否则返回null
+     */
     public Customer getCustomer(String account, String password) {
         Customer customer = this.getCustomerByAccount(account);
         if (customer != null && customer.getPassword().equals(password)) {
@@ -130,29 +134,31 @@ public class CustomerDao {
 
     /**
      * 添加用户，如果用户已存在则返回null，否则返回用户对象
+     * @param customer 用户对象, 注意customerId不需要设置或者设置为0
+     * @return 添加成功返回Customer对象，其中包含数据库自动生成的customerId，添加失败返回null
      */
-    
-    public Customer addCustomer(String name, String account, String password, String contactInfo, String licenseNumber, String address){
+    public Customer addCustomer(Customer customer) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Customer customer = null;
+        Customer newCustomer = null;
         try {
             connection = DBConnectionPool.getConnection();
             String sql = "INSERT INTO customer (name, account, password, contact_info, license_number, address) VALUES (?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, account);
-            preparedStatement.setString(3, password);
-            preparedStatement.setString(4, contactInfo);
-            preparedStatement.setString(5, licenseNumber);
-            preparedStatement.setString(6, address);
+            preparedStatement.setString(1, customer.getName());
+            preparedStatement.setString(2, customer.getAccount());
+            preparedStatement.setString(3, customer.getPassword());
+            preparedStatement.setString(4, customer.getContactInfo());
+            preparedStatement.setString(5, customer.getLicenseNumber());
+            preparedStatement.setString(6, customer.getAddress());
 
             preparedStatement.executeUpdate();
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 int customerId = resultSet.getInt(1);
-                customer = new Customer(customerId, name, account, password, contactInfo, licenseNumber, address);
+                newCustomer = new Customer(customerId, customer.getName(), customer.getAccount(), customer.getPassword(),
+                        customer.getContactInfo(), customer.getLicenseNumber(), customer.getAddress());
             }
         } catch (Exception e) {
             // SQLIntegrityConstraintViolationException is thrown when the account already exists
@@ -170,13 +176,13 @@ public class CustomerDao {
                 e.printStackTrace();
             }
         }
-        return customer;
+        return newCustomer;
     }
 
     /**
-     * 更新用户信息，如果用户不存在或者更改后的账号已存在则返回null，否则返回用户对象
+     * 更新用户信息，如果用户不存在, 或者更改后的账号(account)已存在则返回null，否则返回用户对象
+     * 注意：如果用户不存在，或者更改后的账号(account)已存在，则不会更新数据库
      */
-    
     public Customer updateCustomer(Customer customer) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -218,7 +224,10 @@ public class CustomerDao {
 
     }
 
-    
+
+    /**
+     * 删除用户，如果用户不存在则返回false，否则返回true
+     */
     public boolean deleteCustomer(int customerId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -266,7 +275,7 @@ public class CustomerDao {
         System.out.println(customer1);
 
         System.out.println("=== Test addCustomer() ===");
-        Customer customer2 = customerDao.addCustomer("test", "test", "test", "test", "test", "test");
+        Customer customer2 = customerDao.addCustomer(new Customer(0, "test", "test", "test", "test", "test", "test"));
         System.out.println(customer2);
 
         System.out.println("=== Test updateCustomer() ===");

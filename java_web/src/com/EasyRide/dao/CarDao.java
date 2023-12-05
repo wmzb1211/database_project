@@ -18,7 +18,6 @@ public class CarDao {
     /**
      * 返回所有车辆，包括已出租和未出租的
      */
-
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -307,7 +306,8 @@ public class CarDao {
             }
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()){
-                car = new Car(resultSet.getInt(1), modelId, plateNumber, color, year, status, dailyRentalFee);
+                newCar = new Car(resultSet.getInt(1), car.getModelId(), car.getPlateNumber(), car.getColor(),
+                        car.getYear(), car.getStatus(), car.getDailyRentalFee());
             } else {
                 throw new SQLException("Creating car failed, no ID obtained.");
             }
@@ -330,7 +330,6 @@ public class CarDao {
      * 更新车辆信息
      * 注意：car的id必须存在，不允许更新id，可以更新其他信息
      */
-
     public Car updateCar(Car car) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

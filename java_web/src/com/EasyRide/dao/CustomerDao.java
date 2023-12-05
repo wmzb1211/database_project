@@ -5,8 +5,13 @@ import com.EasyRide.entity.Customer;
 import java.util.List;
 
 public interface CustomerDao {
-    Customer getCustomerById(int customerId);
-    Customer addCustomer(Customer customer);
+    List<Customer> getAllCustomers();
+    Customer getCustomerByLicenseNumber(String licenseNumber);
+    Customer getCustomerByAccount(String account);
+    Customer getCustomer(String account, String password);
+    Customer addCustomer(String name, String account, String password, String contactInfo, String licenseNumber, String address);
     Customer updateCustomer(Customer customer);
     boolean deleteCustomer(int customerId);
+
+
 }

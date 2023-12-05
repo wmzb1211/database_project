@@ -1,19 +1,8 @@
 package com.EasyRide.entity;
-import com.EasyRide.dao.CarDAO;
-import javax.xml.crypto.Data;
+
+import com.EasyRide.daoimpl.*;
+import com.EasyRide.entity.RentalRecord;
 import java.util.List;
-
-
-//CREATE TABLE Car (
-//    car_id INT PRIMARY KEY,
-//    model_id INT,
-//    plate_number VARCHAR(20),
-//color VARCHAR(50),
-//year INT,
-//status VARCHAR(50),
-//daily_rental_fee DECIMAL(10, 2),
-//FOREIGN KEY (model_id) REFERENCES CarModel(model_id)
-//    );
 
 public class Car {
     private int carId;
@@ -70,6 +59,18 @@ public class Car {
         this.year = year;
     }
 
+    public void setModelId(int modelId) {
+        this.modelId = modelId;
+    }
+
+    public double getDailyRentalFee() {
+        return dailyRentalFee;
+    }
+
+    public void setDailyRentalFee(double dailyRentalFee) {
+        this.dailyRentalFee = dailyRentalFee;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -77,3 +78,22 @@ public class Car {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString(){
+        // 以JSON格式返回
+        return "{\"carId\":" + carId +
+                ",\"modelId\":" + modelId +
+                ",\"plateNumber\":\"" + plateNumber +
+                "\",\"color\":\"" + color +
+                "\",\"year\":" + year +
+                ",\"status\":\"" + status +
+                "\",\"dailyRentalFee\":" + dailyRentalFee + "}";
+    }
+
+    public RentalRecord rent(int customerId, int duration) {
+        RentalRecordDaoImpl rentalRecordDaoImpl = new RentalRecordDaoImpl();
+        return rentalRecordDaoImpl.addRentalRecord(carId, customerId, duration);
+    }
+
+}

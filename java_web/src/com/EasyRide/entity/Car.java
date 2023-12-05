@@ -1,7 +1,5 @@
 package com.EasyRide.entity;
 
-import com.EasyRide.daoimpl.*;
-import com.EasyRide.entity.RentalRecord;
 import java.util.List;
 
 public class Car {
@@ -91,9 +89,5 @@ public class Car {
                 "\",\"dailyRentalFee\":" + dailyRentalFee + "}";
     }
 
-    public RentalRecord rent(int customerId, int duration) {
-        RentalRecordDaoImpl rentalRecordDaoImpl = new RentalRecordDaoImpl();
-        return rentalRecordDaoImpl.addRentalRecord(carId, customerId, duration);
-    }
 
 }

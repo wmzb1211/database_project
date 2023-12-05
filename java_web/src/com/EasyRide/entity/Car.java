@@ -1,5 +1,4 @@
 package com.EasyRide.entity;
-import com.EasyRide.dao.CarDAO;
 import javax.xml.crypto.Data;
 import java.util.List;
 
@@ -77,3 +76,5 @@ public class Car {
     public void setStatus(String status) {
         this.status = status;
     }
+}
+

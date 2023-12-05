@@ -21,6 +21,10 @@ public class Payment {
         this.paymentMethod = paymentMethod;
     }
 
+    public Payment() {
+
+    }
+
     public int getPaymentId() {
         return paymentId;
     }

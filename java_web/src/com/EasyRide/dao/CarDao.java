@@ -20,6 +20,7 @@ public class CarDao {
      * 注意：如果数据库中没有车辆，返回空的List<Car>
      * @return List<Car>
      */
+    
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -312,14 +313,15 @@ public class CarDao {
             preparedStatement.setString(5, car.getStatus());
             preparedStatement.setDouble(6, car.getDailyRentalFee());
             int affectedRows = preparedStatement.executeUpdate();
-
-            if (affectedRows > 0){
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()){
-                    int id = generatedKeys.getInt(1);
-                    newCar = new Car(id, car.getModelId(), car.getPlateNumber(), car.getColor(),
-                            car.getYear(), car.getStatus(), car.getDailyRentalFee());
-                }
+            if (affectedRows == 0){
+                throw new SQLException("Creating car failed, no rows affected.");
+            }
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()){
+                newCar = new Car(resultSet.getInt(1), car.getModelId(), car.getPlateNumber(), car.getColor(),
+                        car.getYear(), car.getStatus(), car.getDailyRentalFee());
+            } else {
+                throw new SQLException("Creating car failed, no ID obtained.");
             }
 
         } catch (SQLException e){
@@ -343,6 +345,7 @@ public class CarDao {
      *            可以更新modelId, plateNumber, color, year, status, dailyRentalFee
      * @return 更新成功返回Car对象，否则返回null
      */
+    
     public Car updateCar(Car car) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -362,9 +365,10 @@ public class CarDao {
             preparedStatement.setInt(7, car.getCarId());
             int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows > 0){
-                updatedCar = car;
+            if(affectedRows == 0){
+                throw new SQLException("Updating car failed, no rows affected.");
             }
+            updatedCar = car;
         } catch (SQLException e){
             e.printStackTrace();
         } finally {

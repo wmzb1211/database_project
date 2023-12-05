@@ -7,7 +7,13 @@ import java.sql.*;
 
 public class AdministratorDao {
 
-
+    /**
+     * Get administrator by username and password
+     * 如果用户名和密码匹配，返回Administrator对象，否则返回null
+     * @param username 用户名
+     * @param password 密码
+     * @return Administrator对象
+     */
     public Administrator getAdministrator(String username, String password) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -45,30 +51,35 @@ public class AdministratorDao {
         return administrator;
     }
 
-
-    public Administrator addAdministrator(String name, String account, String password, String contactInfo, String role) {
+    /**
+     * 添加管理员
+     * @param administrator Administrator对象，注意adminId不需要设置或者设置为0
+     * @return 添加成功返回Administrator对象，其中包含数据库自动生成的adminId，添加失败返回null
+     */
+    public Administrator addAdministrator(Administrator administrator) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Administrator administrator = null;
+        Administrator addAdministrator = null;
 
         try{
             connection = DBConnectionPool.getConnection();
             Date creationDate = new Date(System.currentTimeMillis());
             String sql = "INSERT INTO administrator(name, account, password, contact_info, role, creation_date) VALUES(?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, account);
-            preparedStatement.setString(3, password);
-            preparedStatement.setString(4, contactInfo);
-            preparedStatement.setString(5, role);
+            preparedStatement.setString(1, administrator.getName());
+            preparedStatement.setString(2, administrator.getAccount());
+            preparedStatement.setString(3, administrator.getPassword());
+            preparedStatement.setString(4, administrator.getContactInfo());
+            preparedStatement.setString(5, administrator.getRole());
             preparedStatement.setDate(6, creationDate);
             preparedStatement.executeUpdate();
 
             resultSet = preparedStatement.getGeneratedKeys();
             if(resultSet.next()){
                 int adminId = resultSet.getInt(1);
-                administrator = new Administrator(adminId, name, account, password, contactInfo, role, creationDate);
+                addAdministrator = new Administrator(adminId, administrator.getName(), administrator.getAccount(),
+                        administrator.getPassword(), administrator.getContactInfo(), administrator.getRole(), creationDate);
             }
 
         }catch (SQLException e){
@@ -86,10 +97,15 @@ public class AdministratorDao {
                 e.printStackTrace();
             }
         }
-        return administrator;
+        return addAdministrator;
     }
 
 
+    /**
+     * 更新管理员信息
+     * @param administrator Administrator对象，其中adminId必须正确，不能修改
+     * @return 更新成功返回Administrator对象，否则返回null
+     */
     public Administrator updateAdministrator(Administrator administrator) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -130,6 +146,11 @@ public class AdministratorDao {
     }
 
 
+    /**
+     * 删除管理员
+     * @param adminId 管理员ID
+     * @return 删除成功返回true，否则返回false
+     */
     public boolean deleteAdministrator(int adminId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -166,7 +187,8 @@ public class AdministratorDao {
         System.out.println(administrator);
 
         System.out.println("=== Test addAdministrator() ===");
-        administrator = administratorDao.addAdministrator("admin2", "admin2", "admin2passwd", "admin", "admin");
+        administrator = new Administrator(0, "test", "test", "test", "test", "test", null);
+        administrator = administratorDao.addAdministrator(administrator);
         System.out.println(administrator);
 
         System.out.println("=== Test updateAdministrator() ===");

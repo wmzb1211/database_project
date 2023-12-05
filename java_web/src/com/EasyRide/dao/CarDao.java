@@ -18,7 +18,7 @@ public class CarDao {
     /**
      * 返回所有车辆，包括已出租和未出租的
      */
-    
+
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -57,7 +57,7 @@ public class CarDao {
         return cars;
     }
 
-    
+
     public Car getCarById(int id) {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -99,7 +99,7 @@ public class CarDao {
     /**
      * 返回某状态的所有车辆
      */
-    
+
     public List<Car> getCarsByStatus(String status){
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -142,7 +142,7 @@ public class CarDao {
     /**
      * 返回某车型的所有车辆
      */
-    
+
     public List<Car> getCarsByModelId(int modelId) {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -189,7 +189,7 @@ public class CarDao {
      * 注意：如果filterParams为null，返回所有车辆
      * 注意：参数参数为Map<String, String>，其中key为上述参数，value为参数值，value类型为String
      */
-    
+
     public List<Car> getCarsByFilter(Map<String, String> filterParams) {
         if (filterParams == null || filterParams.isEmpty()){
             return getAllCars();
@@ -285,7 +285,7 @@ public class CarDao {
     /**
      * 添加车辆
      */
-    
+
     public Car addCar(int modelId, String plateNumber, String color, int year, String status, double dailyRentalFee) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -330,7 +330,7 @@ public class CarDao {
      * 更新车辆信息
      * 注意：car的id必须存在，不允许更新id，可以更新其他信息
      */
-    
+
     public Car updateCar(Car car) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -368,7 +368,7 @@ public class CarDao {
         return updatedCar;
     }
 
-    
+
     public boolean deleteCar(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -405,7 +405,7 @@ public class CarDao {
         for (Car car : cars){
             System.out.println(car);
         }
-        
+
         // 测试getCarsByStatus()
         System.out.println("=== Test getCarsByStatus() ===");
         cars = carDao.getCarsByStatus("Rented");

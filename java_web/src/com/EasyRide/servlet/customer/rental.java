@@ -34,6 +34,17 @@ public class rental extends HttpServlet {
         int rentalDuration = Integer.parseInt(request.getParameter("rentalDuration"));
         double totalRentalFee = Double.parseDouble(request.getParameter("totalRentalFee"));
 
+        // 检查汽车是否已经被租赁
+        CarDao carDao = new CarDao();
+        Car carCheck = carDao.getCarById(carId);
+        if (carCheck.getStatus().equals("Rented")){
+            // 弹窗提示汽车已经被租赁
+            PrintWriter out = response.getWriter();
+            out.print("<script>alert('Car has been rented!');window.location.href='rentalCar.jsp';</script>");
+            out.flush();
+            return;
+        }
+
         // 创建租赁记录
         RentalRecordDao rentalRecordDao = new RentalRecordDao();
         RentalRecord rentalRecord = rentalRecordDao.addRentalRecord(carId, customerId, rentalDuration);
@@ -43,7 +54,7 @@ public class rental extends HttpServlet {
         Payment payment = paymentDao.addPayment(rentalRecord.getRentalId(), customerId, totalRentalFee, "Credit Card", "Rental Fee");
 
         // 更新车辆状态
-        CarDao carDao = new CarDao();
+
         Car car = carDao.getCarById(carId);
         car.setStatus("Rented");
         carDao.updateCar(car);

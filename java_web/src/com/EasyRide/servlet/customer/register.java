@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/register")
+@WebServlet("/customer/register")
 public class register extends HttpServlet {
 
     @Override

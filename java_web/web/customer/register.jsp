@@ -24,7 +24,7 @@
 </head>
 
 <body>
-<form name="registrationForm" action="register" method="post" onsubmit="return validateForm()">
+<form name="registrationForm" action="/customer/register" method="post" onsubmit="return validateForm()">
     <!--    (String name, String account, String password, String contactInfo, String licenseNumber, String address) -->
     <table>
         <tr>

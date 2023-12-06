@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/login")
+@WebServlet("/customer/login")
 public class login extends HttpServlet {
 
     @Override
@@ -54,7 +54,7 @@ public class login extends HttpServlet {
 
             request.getSession().setAttribute("rentalRecordList", rentalRecordList);
 
-            request.getRequestDispatcher("user.jsp").forward(request, response);
+            request.getRequestDispatcher("customer/user.jsp").forward(request, response);
 
         }
     }

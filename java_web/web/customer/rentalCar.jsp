@@ -48,14 +48,14 @@
         <!-- 一个输入框，输入租车天数 -->
         <td>
             <form action="payment.jsp" method="post">
-                <input type="hidden" name="function" value="rental">
+                <input type="hidden" name="function" value="/customer/rental">
                 <input type="hidden" name="carId" value="<%= car.getCarId() %>">
                 <input type="hidden" name="customerId" value="<%= customerId %>">
                 <input type="hidden" name="paymentDetails"
                        value="<%= "RENTAL: " + car.getCarId() + ' ' + car.getPlateNumber() + ' ' + car.getColor() +'\n' +
                        carModel.getBrand() + ' ' + carModel.getModelName() + '\n' +
                        car.getYear() + ' ' + car.getDailyRentalFee()%>">
-                <input type="hidden", name="dailyRentalFee", value="<%= car.getDailyRentalFee() %>">
+                <input type="hidden" name="dailyRentalFee", value="<%= car.getDailyRentalFee() %>">
                 <input type="text" name="rentalDuration" value="1">
                 <input type="submit" value="Rent">
             </form>

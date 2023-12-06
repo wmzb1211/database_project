@@ -16,10 +16,10 @@
 <h1>Welcome to My Web App</h1>
 
 <%--两个按钮：登录和注册，跳转到login.jsp和register.jsp--%>
-<form action="login.jsp">
+<form action="customer/login.jsp">
   <input type="submit" value="登录">
 </form>
-<form action="register.jsp">
+<form action="customer/register.jsp">
   <input type="submit" value="注册">
 </form>
 

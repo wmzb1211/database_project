@@ -1,7 +1,9 @@
 package com.EasyRide.servlet.customer;
 
 import com.EasyRide.dao.CustomerDao;
+import com.EasyRide.dao.RentalRecordDao;
 import com.EasyRide.entity.Customer;
+import com.EasyRide.entity.RentalRecord;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-@WebServlet("/login")
+@WebServlet("/customer/login")
 public class login extends HttpServlet {
 
     @Override
@@ -45,8 +48,14 @@ public class login extends HttpServlet {
             // 重定向到user.jsp
             request.getSession().setAttribute("customerObject", c);
 
-            request.getRequestDispatcher("user.jsp").forward(request, response);
-        }
+            //public List<RentalRecord> getRentalRecordsByCustomerID(int customerId, String status)
+            // 查询该用户的所有未完成订单
+            List<RentalRecord> rentalRecordList = new RentalRecordDao().getRentalRecordsByCustomerID(c.getCustomerId(), "Ongoing");
 
+            request.getSession().setAttribute("rentalRecordList", rentalRecordList);
+
+            request.getRequestDispatcher("customer/user.jsp").forward(request, response);
+
+        }
     }
 }

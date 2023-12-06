@@ -1,5 +1,6 @@
 package com.EasyRide.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class ReturnRecord {
@@ -11,7 +12,7 @@ public class ReturnRecord {
     private String fuelCondition;
     private String handlingPersonnel;
 
-    public ReturnRecord(int returnId, int rentalId, int violationId, Timestamp returnDateTime, String vehicleConditionDescription, String fuelCondition, String handlingPersonnel) {
+    public ReturnRecord(int returnId, int rentalId, int violationId, Date returnDateTime, String vehicleConditionDescription, String fuelCondition, String handlingPersonnel) {
         this.returnId = returnId;
         this.rentalId = rentalId;
         this.violationId = violationId;

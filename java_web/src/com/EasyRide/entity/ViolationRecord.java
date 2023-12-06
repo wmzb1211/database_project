@@ -6,11 +6,13 @@ public class ViolationRecord {
     private String violationType;
     private double fineAmount;
 
-    public ViolationRecord(int violationId, int rentalId, String violationType, String violationDescription, double fineAmount, String handlingPersonnel) {
+    private String description;
+    public ViolationRecord(int violationId, int rentalId, String violationType, String violationDescription, double fineAmount) {
         this.violationId = violationId;
         this.rentalId = rentalId;
         this.violationType = violationType;
         this.fineAmount = fineAmount;
+        this.description=violationDescription;
     }
     // Getters and setters
 

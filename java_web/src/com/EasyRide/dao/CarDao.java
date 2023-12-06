@@ -325,6 +325,7 @@ public class CarDao {
 
     /**
      * 更新车辆信息
+     * 注意：Status只能为Available、Rented、Maintenance、Unusable四种之一
      * 注意：car的id必须存在，不允许更新id，可以更新其他信息
      */
     public Car updateCar(Car car) {

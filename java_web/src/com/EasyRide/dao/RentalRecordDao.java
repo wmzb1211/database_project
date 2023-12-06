@@ -73,6 +73,10 @@ public class RentalRecordDao {
         return null;
     }
 
+    /**
+     * 添加租赁记录
+     * 注意：添加租赁记录时，status默认是Ongoing
+     */
     public RentalRecord addRentalRecord(int carId, int customerId, int duration){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -125,6 +129,11 @@ public class RentalRecordDao {
         }
         return rentalRecord;
     }
+
+    /**
+     * 更新租赁记录
+     * 注意：Status只能是Ongoing, Completed, Cancelled
+     */
     public RentalRecord updateRentalRecord(RentalRecord rentalRecord){
         return null;
     }

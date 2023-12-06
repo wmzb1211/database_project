@@ -72,4 +72,17 @@ public class Payment {
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
+
+    @Override
+    public String toString() {
+        // Json format
+        return "{" +
+                "\"paymentId\":" + paymentId +
+                ", \"rentalId\":" + rentalId +
+                ", \"paymentType\":\"" + paymentType + "\"" +
+                ", \"paymentDate\":\"" + paymentDate + "\"" +
+                ", \"amount\":" + amount +
+                ", \"paymentMethod\":\"" + paymentMethod + "\"" +
+                "}";
+    }
 }

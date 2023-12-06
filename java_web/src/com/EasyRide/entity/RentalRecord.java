@@ -23,7 +23,10 @@ public class RentalRecord {
         this.status = status;
     }
 
-// Getters and setters
+    public RentalRecord() {
+    }
+
+    // Getters and setters
 
     public int getRentalId() {
         return rentalId;
@@ -87,5 +90,20 @@ public class RentalRecord {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        // Json format
+        return "{" +
+                "\"rentalId\":" + rentalId +
+                ", \"customerId\":" + customerId +
+                ", \"carId\":" + carId +
+                ", \"startDate\":\"" + startDate + "\"" +
+                ", \"expectedReturnDate\":\"" + expectedReturnDate + "\"" +
+                ", \"actualReturnDate\":\"" + actualReturnDate + "\"" +
+                ", \"rentalFee\":" + rentalFee +
+                ", \"status\":\"" + status + "\"" +
+                "}";
     }
 }

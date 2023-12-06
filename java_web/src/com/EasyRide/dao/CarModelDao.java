@@ -12,6 +12,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 public class CarModelDao {
+
+    public CarModel getCarModelById(int id){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        CarModel carModel = null;
+
+        try{
+            connection = DBConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM carmodel WHERE model_id = ?");
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                carModel = new CarModel();
+                carModel.setModelId(resultSet.getInt("model_id"));
+                carModel.setBrand(resultSet.getString("brand"));
+                carModel.setModelName(resultSet.getString("model_name"));
+                carModel.setDescription(resultSet.getString("description"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return carModel;
+    }
+
     public List<CarModel> getAllCarModels(){
         List<CarModel> carModels = new ArrayList<>();
         Connection connection = null;
@@ -32,6 +65,14 @@ public class CarModelDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return carModels;
     }
@@ -98,5 +139,13 @@ public class CarModelDao {
         } catch (SQLException e) {
         }
         return brands;
+    }
+
+    // 测试代码
+    public static void main(String[] args) {
+        CarModelDao carModelDao = new CarModelDao();
+        CarModel carModel = carModelDao.getCarModelById(80);
+        System.out.printf("model_id: %d, brand: %s, model_name: %s, description: %s\n",
+                carModel.getModelId(), carModel.getBrand(), carModel.getModelName(), carModel.getDescription());
     }
 }

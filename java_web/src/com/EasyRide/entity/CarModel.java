@@ -51,5 +51,10 @@ public class CarModel {
         this.description = description;
     }
 
+    @Override
+    public String toString(){
+    	// 以JSON格式输出
+        return "{\"modelId\":" + modelId + ",\"brand\":\"" + brand + "\",\"modelName\":\"" + modelName + "\",\"description\":\"" + description + "\"}";
+    }
 
 }

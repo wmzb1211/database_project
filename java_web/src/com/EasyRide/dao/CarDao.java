@@ -303,7 +303,7 @@ public class CarDao {
             }
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()){
-                Car newCar = new Car(resultSet.getInt(1), car.getModelId(), car.getPlateNumber(), car.getColor(),
+                newCar = new Car(resultSet.getInt(1), car.getModelId(), car.getPlateNumber(), car.getColor(),
                         car.getYear(), car.getStatus(), car.getDailyRentalFee());
             } else {
                 throw new SQLException("Creating car failed, no ID obtained.");

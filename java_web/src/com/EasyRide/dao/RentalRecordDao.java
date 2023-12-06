@@ -253,11 +253,45 @@ public class RentalRecordDao {
      * 注意：Status只能是Ongoing, Completed, Cancelled
      */
     public RentalRecord updateRentalRecord(RentalRecord rentalRecord) {
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        RentalRecord updatedRentalRecord = null;
+        try {
+            connection = DBConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement("UPDATE rentalrecord SET customer_id = ?, car_id = ?, start_date = ?, expected_return_date = ?, actual_return_date = ?, rental_fee = ?, status = ? WHERE rental_id = ?");
+            preparedStatement.setInt(1, rentalRecord.getCustomerId());
+            preparedStatement.setInt(2, rentalRecord.getCarId());
+            preparedStatement.setDate(3, rentalRecord.getStartDate());
+            preparedStatement.setDate(4, rentalRecord.getExpectedReturnDate());
+            preparedStatement.setDate(5, rentalRecord.getActualReturnDate());
+            preparedStatement.setDouble(6, rentalRecord.getRentalFee());
+            preparedStatement.setString(7, rentalRecord.getStatus());
+            preparedStatement.setInt(8, rentalRecord.getRentalId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Updating rental record failed, no rows affected.");
+            }
+            updatedRentalRecord = rentalRecord;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null){
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return updatedRentalRecord;
     }
 
     public boolean processViolationAndPayment(int rentalRecordId, String violationType, String violationDescription, double fineAmount, String paymentMethod) {
-        return false;
+
     }
 
     private static StringBuilder getStringBuilder(Map<String, String> filterParams) {

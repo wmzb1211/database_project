@@ -36,10 +36,11 @@ public class returnCar extends HttpServlet {
             response.sendRedirect("/customer/login");
             return;
         }
+
         int carId = Integer.parseInt(request.getParameter("carId"));
         int rentalRecordId = Integer.parseInt(request.getParameter("rentalRecordId"));
-        int extraDuration = Integer.parseInt(request.getParameter("rentalDuration"));
-        double extraFee = Double.parseDouble(request.getParameter("totalRentalFee"));
+        int extraDuration = Integer.parseInt(request.getParameter("duration"));
+        double extraFee = Double.parseDouble(request.getParameter("totalFee"));
 
         // 创建还车记录
 

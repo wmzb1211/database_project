@@ -4,6 +4,7 @@ import com.EasyRide.dao.CarDao;
 import com.EasyRide.dao.RentalRecordDao;
 import com.EasyRide.dao.PaymentDao;
 import com.EasyRide.entity.Car;
+import com.EasyRide.entity.Customer;
 import com.EasyRide.entity.RentalRecord;
 import com.EasyRide.entity.Payment;
 
@@ -28,10 +29,12 @@ public class rentalCar extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
 
-        int customerId = Integer.parseInt(request.getParameter("customerId"));
+        Customer customer = (Customer) request.getSession().getAttribute("customer");
+        int customerId = customer.getCustomerId();
+
         int carId = Integer.parseInt(request.getParameter("carId"));
-        int rentalDuration = Integer.parseInt(request.getParameter("rentalDuration"));
-        double totalRentalFee = Double.parseDouble(request.getParameter("totalRentalFee"));
+        int rentalDuration = Integer.parseInt(request.getParameter("duration"));
+        double totalRentalFee = Double.parseDouble(request.getParameter("totalFee"));
 
         // 检查汽车是否已经被租赁
         CarDao carDao = new CarDao();
@@ -58,12 +61,9 @@ public class rentalCar extends HttpServlet {
         car.setStatus("Rented");
         carDao.updateCar(car);
 
-        // 跳转到成功页面，设置参数，表示租赁成功
-        request.setAttribute("rentalRecord", rentalRecord);
-        request.setAttribute("payment", payment);
-        request.setAttribute("paymentStatus", "Success");
-
-        request.getRequestDispatcher("successRental.jsp").forward(request, response);
+        // 弹窗提示，租赁成功，返回到user界面
+        PrintWriter out = response.getWriter();
+        out.print("<script>alert('借车成功!');window.location.href='user.jsp';</script>");
 
     }
 }

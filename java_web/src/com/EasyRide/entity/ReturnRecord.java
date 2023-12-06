@@ -7,7 +7,7 @@ public class ReturnRecord {
     private int returnId;
     private int rentalId;
     private int violationId;
-    private Timestamp returnDateTime;
+    private Date returnDateTime;
     private String vehicleConditionDescription;
     private String fuelCondition;
     private String handlingPersonnel;
@@ -47,11 +47,11 @@ public class ReturnRecord {
         this.violationId = violationId;
     }
 
-    public Timestamp getReturnDateTime() {
+    public Date getReturnDateTime() {
         return returnDateTime;
     }
 
-    public void setReturnDateTime(Timestamp returnDateTime) {
+    public void setReturnDateTime(Date returnDateTime) {
         this.returnDateTime = returnDateTime;
     }
 

@@ -64,12 +64,12 @@ public class checkReturnTime extends HttpServlet {
             String script = "if (confirm('还车已经超时，您需要支付的额外费用为：" + extraFee + "元，是否继续还车？')) {";
             script += "  window.location.href ='payment.jsp?" +
                     "function=" + "/customer/returnCar" +
-                    "&rentalRecordId=" + rentalId +
                     "&carId=" + car.getCarId() +
-                    "&customerId=" + rentalRecord.getCustomerId() +
-                    "&paymentDetails=" + "Fine Fee: " + dayDifference + " days " + car.getDailyRentalFee() + " 3 times" +
-                    "&rentalDuration=" + dayDifference +
+                    "&rentalRecordId=" + rentalId +
+                    "&paymentType=Overdue Penalty Fee" +
+                    "&paymentDetails=" + "You are " + dayDifference + " day(s) late to return the car." +
                     "&dailyRentalFee=" +  extraFee +
+                    "&duration=" + dayDifference +
                     "';";
             script += "} else {";
             script += "  history.back();"; // 如果用户点击否，显示提示消息
@@ -84,10 +84,8 @@ public class checkReturnTime extends HttpServlet {
             script += "  window.location.href = 'returnCar?" +
                     "rentalRecordId=" + rentalId +
                     "&carId=" + rentalRecord.getCarId() +
-                    "&customerId=" + rentalRecord.getCustomerId() +
-                    "&paymentDetails=0" +
-                    "&rentalDuration=0" +
-                    "&totalRentalFee=0" +
+                    "&duration=0" +
+                    "&totalFee=0" +
                     "';";
             script += "} else {";
             script += "  history.back();"; // 如果用户点击否，显示提示消息

@@ -18,8 +18,6 @@
     <input type="password" name="password" placeholder="密码" required>
     <input type="submit" value="登录">
 </form>
-<!-- 显示登录错误信息 -->
-<p>${error}</p>
 </body>
 </html>
 

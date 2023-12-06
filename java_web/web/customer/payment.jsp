@@ -10,6 +10,7 @@
     String function = request.getParameter("function");
     int carId = Integer.parseInt(request.getParameter("carId"));
     int customerId = Integer.parseInt(request.getParameter("customerId"));
+    int rentalRecordId = Integer.parseInt(request.getParameter("rentalRecordId"));
     String paymentDetails = request.getParameter("paymentDetails");
     Double dailyRentalFee = Double.parseDouble(request.getParameter("dailyRentalFee"));
     int rentalDuration = Integer.parseInt(request.getParameter("rentalDuration"));
@@ -27,6 +28,7 @@
 <form action="<%= function %>" method="post">
     <input type="hidden" name="carId" value="<%= carId %>">
     <input type="hidden" name="customerId" value="<%= customerId %>">
+    <input type="hidden" name="rentalRecordId" value="<%= rentalRecordId %>">
     <input type="hidden" name="rentalDuration" value="<%= rentalDuration %>">
     <input type="hidden" name="totalRentalFee" value="<%= totalRentalFee %>">
     <input type="submit" value="Confirm Payment">

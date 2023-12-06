@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/customer/login")
-public class login extends HttpServlet {
+@WebServlet("/customer/rentalDetail")
+public class rentalDetail extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,29 +29,20 @@ public class login extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
 
-        String name = request.getParameter("account");
-        String password = request.getParameter("password");
-
-        CustomerDao ud = new CustomerDao();
-        //调用添加接口
-        Customer c = ud.getCustomer(name, password);
-
-        if (c == null) {
-            String str = "用户名或密码错误";
-            PrintWriter out = response.getWriter();
-            out.print("<script>");
-            out.print("alert('" + str + "');");
-            out.print("location.href='login.jsp'");
-            out.print("</script>");
-            out.close();
-        } else {
-            // 登录成功
-            // 重定向到user.jsp
-            // 将用户信息存储到Session
-            HttpSession session = request.getSession();
-            session.setAttribute("customer", c);
-
-            response.sendRedirect("user.jsp");
+        HttpSession session = request.getSession();
+        if (session.getAttribute("customerId") == null) {
+            response.sendRedirect("/customer/login.jsp");
+            return;
         }
+
+        Customer customer = (Customer) session.getAttribute("customer");
+
+        int rentalRecordId = Integer.parseInt(request.getParameter("rentalRecordId"));
+        int customerId = customer.getCustomerId();
+
+
+
+
+
     }
 }

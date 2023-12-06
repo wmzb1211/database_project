@@ -5,17 +5,45 @@ import com.EasyRide.entity.Customer;
 import com.EasyRide.entity.RentalRecord;
 import com.EasyRide.util.DBConnectionPool;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class RentalRecordDao {
-    public List<RentalRecord> getRentalRecordsByID(int id){
-        return null;
+    public RentalRecord getRentalRecordsByID(int id){
+        RentalRecord rentalRecord = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT * FROM rentalrecord WHERE rental_id =?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                rentalRecord = new RentalRecord(
+                        resultSet.getInt("rental_id"), resultSet.getInt("customer_id"),
+                        resultSet.getInt("car_id"), resultSet.getDate("start_date"),
+                        resultSet.getDate("expected_return_date"), resultSet.getDate("actual_return_date"),
+                        resultSet.getDouble("rental_fee"), resultSet.getString("status"));
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return rentalRecord;
     }
 
     // status为null时，返回所有状态的rental record
@@ -63,6 +91,7 @@ public class RentalRecordDao {
         }
         return rentalRecordList;
     }
+
     public List<RentalRecord> getRentalRecordsByCarID(int carId){
         return null;
     }
@@ -130,13 +159,67 @@ public class RentalRecordDao {
         return rentalRecord;
     }
 
+    public RentalRecord endRentalRecord(int id, double extraFee) {
+        RentalRecord rentalRecord = this.getRentalRecordsByID(id);
+        Date returnDate = new Date(System.currentTimeMillis());
+        rentalRecord.setActualReturnDate(returnDate);
+        rentalRecord.setRentalFee(rentalRecord.getRentalFee() + extraFee);
+        rentalRecord.setStatus("Completed");
+        return this.updateRentalRecord(rentalRecord);
+    }
+
     /**
      * 更新租赁记录
      * 注意：Status只能是Ongoing, Completed, Cancelled
      */
     public RentalRecord updateRentalRecord(RentalRecord rentalRecord){
-        return null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        RentalRecord newRentalRecord = null;
+
+        try {
+            connection = DBConnectionPool.getConnection();
+            String sql = "UPDATE rentalrecord SET " +
+                    "customer_id =?, car_id =?, start_date =?, expected_return_date =?, " +
+                    "actual_return_date =?, rental_fee =?, status =? WHERE rental_id =?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, rentalRecord.getCustomerId());
+            preparedStatement.setInt(2, rentalRecord.getCarId());
+            preparedStatement.setDate(3, rentalRecord.getStartDate());
+            preparedStatement.setDate(4, rentalRecord.getExpectedReturnDate());
+            if (rentalRecord.getActualReturnDate() != null) {
+                preparedStatement.setDate(5, rentalRecord.getActualReturnDate());
+            } else {
+                preparedStatement.setDate(5, null);
+            }
+            preparedStatement.setDouble(6, rentalRecord.getRentalFee());
+            preparedStatement.setString(7, rentalRecord.getStatus());
+            preparedStatement.setInt(8, rentalRecord.getRentalId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Updating rental record failed, no rows affected.");
+            }
+            newRentalRecord = this.getRentalRecordsByID(rentalRecord.getRentalId());
+            if (newRentalRecord == null) {
+                throw new SQLException("Updating rental record failed, no ID obtained.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+        return newRentalRecord;
+
     }
+
     public boolean processViolationAndPayment(int rentalRecordId, String violationType, String violationDescription, double fineAmount, String paymentMethod){
         return false;
     }

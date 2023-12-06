@@ -32,6 +32,10 @@
 
 <p><%= payment.getPaymentId() %></p>
 
+<!-- 添加确定按钮，返回user界面 -->
+<form action="/customer/user.jsp">
+    <input type="submit" value="确定">
+</form>
 
 </body>
 </html>

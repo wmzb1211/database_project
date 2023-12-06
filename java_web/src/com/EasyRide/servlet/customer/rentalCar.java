@@ -12,12 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/customer/rental")
-public class rental extends HttpServlet {
+@WebServlet("/customer/rentalCar")
+public class rentalCar extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
@@ -64,7 +63,7 @@ public class rental extends HttpServlet {
         request.setAttribute("payment", payment);
         request.setAttribute("paymentStatus", "Success");
 
-        request.getRequestDispatcher("success.jsp").forward(request, response);
+        request.getRequestDispatcher("successRental.jsp").forward(request, response);
 
     }
 }

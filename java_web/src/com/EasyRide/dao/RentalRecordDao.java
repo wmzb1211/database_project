@@ -291,7 +291,7 @@ public class RentalRecordDao {
     }
 
     public boolean processViolationAndPayment(int rentalRecordId, String violationType, String violationDescription, double fineAmount, String paymentMethod) {
-
+        return true;
     }
 
     private static StringBuilder getStringBuilder(Map<String, String> filterParams) {
@@ -307,7 +307,7 @@ public class RentalRecordDao {
             return sb;
         }
         // 测试代码
-        public static void main (String[]args){
+        public static void main(RentalRecord[] args){
             List<RentalRecord> rentalRecordList = new RentalRecordDao().getRentalRecordsByCustomerID(18, null);
             for (RentalRecord rentalRecord : rentalRecordList) {
                 System.out.println(rentalRecord.getRentalId());

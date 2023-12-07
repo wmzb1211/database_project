@@ -11,6 +11,8 @@
     int customerId = customer.getCustomerId();
 
     String function = request.getParameter("function");
+    System.out.println(request.getParameter("function"));
+    System.out.println(request.getParameter("carId"));
     int carId = Integer.parseInt(request.getParameter("carId"));
 
     int rentalRecordId = Integer.parseInt(request.getParameter("rentalRecordId"));

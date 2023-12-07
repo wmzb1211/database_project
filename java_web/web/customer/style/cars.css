@@ -37,6 +37,7 @@ select, input[type="text"] {
 input[type="submit"] {
     padding: 5px 15px;
     background-color: #007bff;
+    transition: background-color 0.3s;
     color: white;
     border: none;
     border-radius: 5px;
@@ -64,11 +65,38 @@ th {
 }
 /* 长下拉列表 */
 .select-long {
-    width: 120px; /* 或其他合适的长度 */
+    width: 150px; /* 或其他合适的长度 */
     padding: 5px 10px;
     margin-right: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between; /* 确保左右两部分分开 */
+}
+
+.filter-selected {
+    flex: 1;
+}
+
+.filter-button {
+    text-align: right;
+}
+
+.input-long {
+    width: 150px; /* 或其他合适的长度 */
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.filter-button {
+    /* 左对齐 */
+    text-align: left;
 }
 
 /* 短输入框 */

@@ -14,6 +14,7 @@
 </head>
 <body>
 
+<div class="login-container">
 <h2>注册新账户</h2>
 <form name="registrationForm" action="/customer/register" method="post" onsubmit="return validateForm()">
     <!--    (String name, String account, String password, String contactInfo, String licenseNumber, String address) -->
@@ -51,5 +52,6 @@
 
 </form>
 <button type="button" onclick="window.location.href='login.jsp';" class="secondary-button">已有账户？登录</button>
+</div>
 </body>
 </html>

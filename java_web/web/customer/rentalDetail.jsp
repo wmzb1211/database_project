@@ -78,17 +78,34 @@
     </table>
 
     <% if (rentalRecord.getStatus().equals("Ongoing")) { %>
-    <form action="/customer/checkReturnTime" method="post">
-        <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">
-        <input type="submit" value="Return Car">
+
+    <form action="/customer/checkTimeoutRental" method="get" class="continue-submit">
+        <input type="hidden" name="function"        value="/customer/renewCar">
+        <input type="hidden" name="carId"           value="<%= car.getCarId() %>">
+        <input type="hidden" name="rentalRecordId"  value="<%= rentalRecord.getRentalId() %>">
+        <input type="text"   name="duration"        value="1">
+        <input type="submit"                        value="Continue to Rental Car">
     </form>
+
+    <form action="/customer/checkReturnTime" method="post">
+        <input type="hidden" name="rentalRecordId"  value="<%= rentalRecord.getRentalId() %>">
+        <input type="submit"                        value="Return Car">
+    </form>
+    <% } %>
+
+    <button id="cancel-btn" onclick="history.back()" class="back-button">Back</button>
+
+
+
+
+
 </div>
 <%--<form action="/customer/renewCar" method="post">--%>
 <%--    <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">--%>
 <%--    <input type="text" name="renewDuration" value="1">--%>
 <%--    <input type="submit" value="Renew">--%>
 <%--</form>--%>
-<% } %>
+
 
 
 

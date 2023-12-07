@@ -16,10 +16,9 @@ import java.util.Map;
 public class CarDao {
 
     /**
-     * 返回所有车辆
-     * 注意：如果数据库中没有车辆，返回空的List<Car>
-     * @return List<Car>
+     * 返回所有车辆，包括已出租和未出租的
      */
+    
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -58,11 +57,7 @@ public class CarDao {
         return cars;
     }
 
-    /**
-     * 返回某id的车辆，用于查看某车辆的详情信息
-     * @param id 车辆id
-     * @return Car对象，如果id不存在，返回null
-     */
+    
     public Car getCarById(int id) {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -103,9 +98,8 @@ public class CarDao {
 
     /**
      * 返回某状态的所有车辆
-     * @param status 车辆状态，取值为"Available", "Rented", "Under Repair", "Discarded" 等等
-     * @return List<Car>
      */
+    
     public List<Car> getCarsByStatus(String status){
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -147,9 +141,8 @@ public class CarDao {
 
     /**
      * 返回某车型的所有车辆
-     * @param modelId 车型id
-     * @return List<Car>
      */
+    
     public List<Car> getCarsByModelId(int modelId) {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -195,10 +188,8 @@ public class CarDao {
      * 同时可以根据日租金范围(minDailyRentalFee, maxDailyRentalFee)筛选
      * 注意：如果filterParams为null，返回所有车辆
      * 注意：参数参数为Map<String, String>，其中key为上述参数，value为参数值，value类型为String
-     * @param filterParams 筛选条件
-     *                     key为上述参数，value为参数值，value类型为String
-     * @return List<Car>
      */
+    
     public List<Car> getCarsByFilter(Map<String, String> filterParams) {
         if (filterParams == null || filterParams.isEmpty()){
             return getAllCars();
@@ -293,33 +284,32 @@ public class CarDao {
 
     /**
      * 添加车辆
-     * @param car Car对象，注意carId不需要设置或者设置为0
-     * @return 添加成功返回Car对象，其中包含数据库自动生成的carId，添加失败返回null
      */
-    public Car addCar(Car car) {
+    
+    public Car addCar(int modelId, String plateNumber, String color, int year, String status, double dailyRentalFee) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Car newCar = null;
+        Car car = null;
         try{
             connection = DBConnectionPool.getConnection();
             String sql = "INSERT INTO car(model_id, plate_number, color, year, status, daily_rental_fee) VALUES (?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, car.getModelId());
-            preparedStatement.setString(2, car.getPlateNumber());
-            preparedStatement.setString(3, car.getColor());
-            preparedStatement.setInt(4, car.getYear());
-            preparedStatement.setString(5, car.getStatus());
-            preparedStatement.setDouble(6, car.getDailyRentalFee());
+            preparedStatement.setInt(1, modelId);
+            preparedStatement.setString(2, plateNumber);
+            preparedStatement.setString(3, color);
+            preparedStatement.setInt(4, year);
+            preparedStatement.setString(5, status);
+            preparedStatement.setDouble(6, dailyRentalFee);
             int affectedRows = preparedStatement.executeUpdate();
-
-            if (affectedRows > 0){
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()){
-                    int id = generatedKeys.getInt(1);
-                    newCar = new Car(id, car.getModelId(), car.getPlateNumber(), car.getColor(),
-                            car.getYear(), car.getStatus(), car.getDailyRentalFee());
-                }
+            if (affectedRows == 0){
+                throw new SQLException("Creating car failed, no rows affected.");
+            }
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()){
+                car = new Car(resultSet.getInt(1), modelId, plateNumber, color, year, status, dailyRentalFee);
+            } else {
+                throw new SQLException("Creating car failed, no ID obtained.");
             }
 
         } catch (SQLException e){
@@ -333,16 +323,14 @@ public class CarDao {
                 e.printStackTrace();
             }
         }
-        return newCar;
+        return car;
     }
 
     /**
      * 更新车辆信息
      * 注意：car的id必须存在，不允许更新id，可以更新其他信息
-     * @param car Car对象，其中carId必须存在，不能修改
-     *            可以更新modelId, plateNumber, color, year, status, dailyRentalFee
-     * @return 更新成功返回Car对象，否则返回null
      */
+    
     public Car updateCar(Car car) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -362,9 +350,10 @@ public class CarDao {
             preparedStatement.setInt(7, car.getCarId());
             int affectedRows = preparedStatement.executeUpdate();
 
-            if (affectedRows > 0){
-                updatedCar = car;
+            if(affectedRows == 0){
+                throw new SQLException("Updating car failed, no rows affected.");
             }
+            updatedCar = car;
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
@@ -379,11 +368,7 @@ public class CarDao {
         return updatedCar;
     }
 
-    /**
-     * 删除车辆
-     * @param id 车辆id
-     * @return 删除成功返回true，否则返回false
-     */
+    
     public boolean deleteCar(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -451,8 +436,7 @@ public class CarDao {
 
         // 测试addCar()
         System.out.println("=== Test addCar() ===");
-        Car car = new Car(0, 1, "test", "test", 2000, "Available", 100);
-        car = carDao.addCar(car);
+        Car car = carDao.addCar(1, "粤A12345", "red", 2018, "available", 100);
         System.out.println(car);
 
         car.setColor("blue");

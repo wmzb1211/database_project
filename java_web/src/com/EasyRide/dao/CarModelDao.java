@@ -45,6 +45,39 @@ public class CarModelDao {
         return carModel;
     }
 
+    public CarModel getCarModelByBrandAndModelName(String brand, String modelName){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        CarModel carModel = null;
+
+        try{
+            connection = DBConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM carmodel WHERE brand =? AND model_name =?");
+            preparedStatement.setString(1, brand);
+            preparedStatement.setString(2, modelName);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                carModel = new CarModel();
+                carModel.setModelId(resultSet.getInt("model_id"));
+                carModel.setBrand(resultSet.getString("brand"));
+                carModel.setModelName(resultSet.getString("model_name"));
+                carModel.setDescription(resultSet.getString("description"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return carModel;
+    }
+
     public List<CarModel> getAllCarModels(){
         List<CarModel> carModels = new ArrayList<>();
         Connection connection = null;

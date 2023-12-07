@@ -9,15 +9,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- 页面样式和脚本 -->
+    <title>登录 - 汽车租赁系统</title>
+    <link rel="stylesheet" type="text/css" href="style/login.css" />
 </head>
 <body>
+
+<h2>登录到您的账户</h2>
 <form action="/customer/login" method="post">
     <input type="hidden" name="action" value="login">
     <input type="text" name="account" placeholder="用户名" required>
     <input type="password" name="password" placeholder="密码" required>
-    <input type="submit" value="登录">
+    <div class="centered-container"> <input type="submit" value="登录"> </div>
 </form>
+<button onclick="window.location.href='register.jsp';">注册新账户</button>
 </body>
 </html>
 

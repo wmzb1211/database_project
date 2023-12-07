@@ -18,76 +18,136 @@
 <html>
 <head>
     <title>User Page</title>
+    <link rel="stylesheet" type="text/css" href="style/user.css">
+    <script src="js/user.js"></script>
 </head>
 <body>
-<h1>Welcome, User!</h1>
+
 <% Customer customer = (Customer) session.getAttribute("customer"); %>
-<p>Name: <%= customer.getName() %></p>
-<p>Account: <%= customer.getAccount()%></p>
-<p>Contact Info: <%= customer.getContactInfo()%></p>
-<p>License Number: <%= customer.getLicenseNumber()%></p>
-<p>Address: <%= customer.getAddress()%></p>
+
+<div class="header">
+    <h1>Welcome, <%= customer.getName() %>!</h1>
+</div>
+
+<div class="content">
+<%-- 用户信息 --%>
+    <div class="user-info">
+        <h2>User Information</h2>
+        <p>Account: <%= customer.getAccount()%></p>
+        <p>Contact Info: <%= customer.getContactInfo()%></p>
+        <p>License Number: <%= customer.getLicenseNumber()%></p>
+        <p>Address: <%= customer.getAddress()%></p>
+
+        <form action="/customer/updateProfile.jsp" method="post" class="form-button">
+            <input type="hidden" name="customerId" value="<%= customer.getCustomerId() %>">
+            <input type="submit" value="Update Profile">
+        </form>
+    </div>
 
 <%
     int id = customer.getCustomerId();
-    List<RentalRecord> rentalRecordList = new RentalRecordDao().getRentalRecordsByCustomerID(id, "Ongoing");
+    List<RentalRecord> rentalRecordListOngoing = new RentalRecordDao().getRentalRecordsByCustomerID(id, "Ongoing");
+    List<RentalRecord> rentalRecordListDone = new RentalRecordDao().getRentalRecordsByCustomerID(id, "Done");
 %>
-<!--  显示一个按钮，跳转到个人资料编辑页面  -->
-<form action="/customer/updateProfile.jsp" method="post">
-    <input type="hidden" name="customerId" value="<%= customer.getCustomerId() %>">
-    <input type="submit" value="Update Profile">
-</form>
+
+<%-- 租车记录 --%>
+<div class="rental-records">
+    <h2 id="toggle-ongoing">Ongoing Rentals</h2>
+    <!-- 详情表格 -->
+    <table id="ongoing-rentals" class="rental-table">
+        <tr>
+            <th>RentalRecord ID</th>
+            <th>Car ID</th>
+            <th>Car Model</th>
+            <th>Color</th>
+            <th>Rent Date</th>
+            <th>Expected/Actual Return Date</th>
+            <th>Total Fee</th>
+            <th>Status</th>
+            <th>Operation</th>
+        </tr>
+        <%
+            for (RentalRecord record : rentalRecordListOngoing) {
+                Car car = new Car();
+                if (record.getCarId()!= 0) {
+                    car = new CarDao().getCarById(record.getCarId());
+                }
+        %>
+        <tr>
+            <td><%= record.getRentalId() %></td>
+            <td><%= record.getCarId() %></td>
+            <td><%= car.getBrand() + " " + car.getModelName() %></td>
+            <td><%= car.getColor() %></td>
+            <td><%= record.getStartDate() %></td>
+            <td><%= record.getExpectedReturnDate() %></td>
+            <td><%= record.getRentalFee() %></td>
+            <td><%= record.getStatus() %></td></td>
+            <!--  显示一个按钮，跳转到详情页面  -->
+            <td>
+                <form action="/customer/rentalDetail.jsp" method="post">
+                    <input type="hidden" name="rentalRecordID" value="<%= record.getRentalId() %>">
+                    <input type="submit" value="Detail">
+                </form>
+            </td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
 
 
-<!--  显示rentalRecordList  -->
-<table border="1">
-    <tr>
-        <th>RentalRecord ID</th>
-        <th>Car ID</th>
-        <th>Car Model</th>
-        <th>Color
-        <th>Rent Date</th>
-        <th>Expected/Actual Return Date</th>
-        <th>Total Fee</th>
-        <th>Status</th>
-        <th>Operation</th>
-    </tr>
-    <%
-    for (RentalRecord record : rentalRecordList) {
-        Car car = new Car();
-        CarModel carModel = new CarModel();
-        if (record.getCarId()!= 0) {
-            car = new CarDao().getCarById(record.getCarId());
-            carModel = new CarModelDao().getCarModelById(car.getModelId());
-        }
-    %>
-    <tr>
-        <td><%= record.getRentalId() %></td>
-        <td><%= record.getCarId() %></td>
-        <td><%= carModel.getBrand() + " " + carModel.getModelName() %></td>
-        <td><%= car.getColor() %></td>
-        <td><%= record.getStartDate() %></td>
-        <td><%= record.getExpectedReturnDate() %></td>
-        <td><%= record.getRentalFee() %></td>
-        <td><%= record.getStatus() %></td></td>
-        <!--  显示一个按钮，跳转到详情页面  -->
-        <td>
-        <form action="/customer/rentalDetail.jsp" method="post">
-            <input type="hidden" name="rentalRecordID" value="<%= record.getRentalId() %>">
-            <input type="submit" value="Detail">
-        </form>
-        </td>
-    </tr>
-    <%
-    }
-    %>
-</table>
+    <h2 id="toggle-completed">Completed Rentals</h2>
+    <!-- 详情表格 -->
+    <table id="completed-rentals" class="rental-table">
+        <tr>
+            <th>RentalRecord ID</th>
+            <th>Car ID</th>
+            <th>Car Model</th>
+            <th>Color</th>
+            <th>Rent Date</th>
+            <th>Expected/Actual Return Date</th>
+            <th>Total Fee</th>
+            <th>Status</th>
+            <th>Operation</th>
+        </tr>
+        <%
+            for (RentalRecord record : rentalRecordListDone) {
+                Car car = new Car();
+                if (record.getCarId()!= 0) {
+                    car = new CarDao().getCarById(record.getCarId());
+                }
+        %>
+        <tr>
+            <td><%= record.getRentalId() %></td>
+            <td><%= record.getCarId() %></td>
+            <td><%= car.getBrand() + " " + car.getModelName() %></td>
+            <td><%= car.getColor() %></td>
+            <td><%= record.getStartDate() %></td>
+            <td><%= record.getExpectedReturnDate() %></td>
+            <td><%= record.getRentalFee() %></td>
+            <td><%= record.getStatus() %></td></td>
+            <!--  显示一个按钮，跳转到详情页面  -->
+            <td>
+                <form action="/customer/rentalDetail.jsp" method="post">
+                    <input type="hidden" name="rentalRecordID" value="<%= record.getRentalId() %>">
+                    <input type="submit" value="Detail">
+                </form>
+            </td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
+</div>
 
-<!-- 生成一个按钮，跳转到可以租车的页面，传递参数customerId  -->
-<form action="/customer/filterCars" method="get">
+
+<%-- 租车按钮 --%>
+<form action="/customer/filterCars" method="get" class="form-button">
     <input type="hidden" name="status" value="Available">
     <input type="submit" value="Rent a Car">
 </form>
+
+</div>
 </body>
 </html>
 

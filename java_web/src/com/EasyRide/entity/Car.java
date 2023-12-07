@@ -5,13 +5,27 @@ import java.util.List;
 public class Car {
     private int carId;
     private int modelId;
+    private String brand;
+    private String modelName;
+    private String description;
     private String plateNumber;
     private String color;
     private int year;
     private String status;
     private double dailyRentalFee;
-
     // Getters and setters
+    public Car(int carId, int modelId, String brand, String modelName, String description, String plateNumber, String color, int year, String status, double dailyRentalFee) {
+        this.carId = carId;
+        this.modelId = modelId;
+        this.brand = brand;
+        this.modelName = modelName;
+        this.description = description;
+        this.plateNumber = plateNumber;
+        this.color = color;
+        this.year = year;
+        this.status = status;
+        this.dailyRentalFee = dailyRentalFee;
+    }
 
     public Car(int carId, int modelId, String plateNumber, String color, int year, String status, double dailyRentalFee) {
         this.carId = carId;
@@ -80,11 +94,38 @@ public class Car {
         this.status = status;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModelName() {
+        return modelName;
+    }
+
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString(){
         // 以JSON格式返回
         return "{\"carId\":" + carId +
                 ",\"modelId\":" + modelId +
+                ",\"brand\":\"" + brand +
+                "\",\"modelName\":\"" + modelName +
+                "\",\"description\":\"" + description +
                 ",\"plateNumber\":\"" + plateNumber +
                 "\",\"color\":\"" + color +
                 "\",\"year\":" + year +

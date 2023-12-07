@@ -8,22 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
-    <script>
-        function validateForm() {
-            var password1 = document.forms["registrationForm"]["password"].value;
-            var password2 = document.forms["registrationForm"]["password2"].value;
-
-            if (password1 !== password2) {
-                alert("密码不匹配，请重新输入。");
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <title>注册 - 汽车租赁系统</title>
+    <link rel="stylesheet" type="text/css" href="style/login.css">
+    <script src="js/checkInput.js"></script>
 </head>
-
 <body>
+
+<h2>注册新账户</h2>
 <form name="registrationForm" action="/customer/register" method="post" onsubmit="return validateForm()">
     <!--    (String name, String account, String password, String contactInfo, String licenseNumber, String address) -->
     <table>
@@ -55,10 +46,10 @@
             <td>地址</td>
             <td><input type="text" name="address"></td>
         </tr>
-        <tr>
-            <td><input type="submit" value="注册"></td>
-        </tr>
     </table>
+    <div class="centered-container"> <input type="submit" value="注册"> </div>
+
 </form>
+<button type="button" onclick="window.location.href='login.jsp';" class="secondary-button">已有账户？登录</button>
 </body>
 </html>

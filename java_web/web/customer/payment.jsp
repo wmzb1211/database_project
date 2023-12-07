@@ -27,27 +27,34 @@
     }
 
 %>
+
 <html>
+<head>
+    <title>Payment Confirmation</title>
+    <link rel="stylesheet" type="text/css" href="style/payment.css"> <!-- 确保路径正确 -->
+</head>
 <body>
-<h2>Payment Confirmation</h2>
-<p>Car ID: <%= carId %></p>
-<p>Payment Type: <%= paymentType %></p>
-<p>paymentDetails: <%= paymentDetails %></p>
-<p>Item Price: <%= dailyRentalFee %> per day, for <%= duration %> day(s)</p>
+<div class="payment-container">
+    <h2>Payment Confirmation</h2>
+    <p>Car ID: <%= carId %></p>
+    <p>Payment Type: <%= paymentType %></p>
+    <p class="payment-details">Payment Details: <%= paymentDetails %></p>
+    <p>Item Price: <%= dailyRentalFee %> per day, for <%= duration %> day(s)</p>
 
-<% if (paymentType.equals("Overdue Penalty Fee")) { %>
-<p>Total Price(3 times than normal price): <%= totalFee %></p>
-<% } else { %>
-<p>Total Price: <%= totalFee %></p>
-<% } %>
+    <% if (paymentType.equals("Overdue Penalty Fee")) { %>
+    <p class="total-fee">Total Price (3 times than normal price): <%= totalFee %></p>
+    <% } else { %>
+    <p class="total-fee">Total Price: <%= totalFee %></p>
+    <% } %>
 
-
-<form action="<%= function %>" method="post">
-    <input type="hidden" name="carId" value="<%= carId %>">
-    <input type="hidden" name="rentalRecordId" value="<%= rentalRecordId %>">
-    <input type="hidden" name="duration" value="<%= duration %>">
-    <input type="hidden" name="totalFee" value="<%= totalFee %>">
-    <input type="submit" value="Confirm Payment">
-</form>
+    <form action="<%= function %>" method="post" class="payment-form">
+        <input type="hidden" name="carId" value="<%= carId %>">
+        <input type="hidden" name="rentalRecordId" value="<%= rentalRecordId %>">
+        <input type="hidden" name="duration" value="<%= duration %>">
+        <input type="hidden" name="totalFee" value="<%= totalFee %>">
+        <input type="submit" value="Confirm Payment">
+    </form>
+</div>
 </body>
 </html>
+

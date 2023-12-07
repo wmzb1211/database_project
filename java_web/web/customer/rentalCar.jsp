@@ -15,7 +15,16 @@
 <%@ page import="com.EasyRide.entity.Customer" %>
 <%@ page import="java.util.*" %>
 <%
-    int customerId = ((Customer) session.getAttribute("customer")).getCustomerId();
+    String role = "";
+    // 检查session中存有customer对象还是admin对象
+    if (session.getAttribute("customer") != null) {
+        role = "customer";
+    } else if (session.getAttribute("admin") == null) {
+        role = "admin";
+    } else {
+        // 重定向到index.jsp页面
+        response.sendRedirect("/index.jsp");
+    }
 
     List<Car> cars = (List<Car>) request.getAttribute("cars");
     List<String> brands = (List<String>) request.getAttribute("brands");
@@ -65,7 +74,13 @@
 
     <label for="statusSelect">状态:</label>
     <select name="status", id="statusSelect" class="select-long">
-        <option value="Available">Available</option>
+        <% if (role.equals("customer")) { %>
+            <option value="Available">Available</option>
+        <% } else { %>
+            <option value="Available">Available</option>
+            <option value="Unavailable">Unavailable</option>
+            <option value="Rented">Rented</option>
+        <% } %>
     </select>
 
     <input type="submit" value="筛选">
@@ -80,7 +95,13 @@
         <th>Description</th>
         <th>Year</th>
         <th>Daily Rental Fee</th>
-        <th class="rental-column">Rental Duration</th>
+        <th class="rental-column">
+            <% if (role.equals("customer")) { %>
+            Rental Duration
+            <% } else { %>
+            Details
+            <% } %>
+        </th>
     </tr>
     <% for(Car car : cars) {
 
@@ -95,16 +116,24 @@
         <td><%= car.getDailyRentalFee() %></td>
         <!-- 一个输入框，输入租车天数 -->
         <td class="rental-column">
-            <form id="rentalForm" action="payment.jsp" method="post" onsubmit="return checkDuration()">
-                <input type="hidden" name="function"        value="/customer/rentalCar">
-                <input type="hidden" name="carId"           value="<%= car.getCarId() %>">
-                <input type="hidden" name="rentalRecordId"  value="0">
-                <input type="hidden" name="paymentType"     value="Rental Fee">
-                <input type="hidden" name="paymentDetails"  value="<%= HTMLUtils.escapeHtml(car.toString()) %>">
-                <input type="hidden" name="dailyRentalFee"  value="<%= car.getDailyRentalFee() %>">
-                <input type="text"   name="duration"        value="1"       class="input-short">
-                <input type="submit"                        value="Rent"    class="submit-rent">
-            </form>
+            <% if (role.equals("customer")) { %>
+                <form id="rentalForm" action="payment.jsp" method="post" onsubmit="return checkDuration()">
+                    <input type="hidden" name="function"        value="/customer/rentalCar">
+                    <input type="hidden" name="carId"           value="<%= car.getCarId() %>">
+                    <input type="hidden" name="rentalRecordId"  value="0">
+                    <input type="hidden" name="paymentType"     value="Rental Fee">
+                    <input type="hidden" name="paymentDetails"  value="<%= HTMLUtils.escapeHtml(car.toString()) %>">
+                    <input type="hidden" name="dailyRentalFee"  value="<%= car.getDailyRentalFee() %>">
+                    <input type="text"   name="duration"        value="1"       class="input-short">
+                    <input type="submit"                        value="Rent"    class="submit-rent">
+                </form>
+            <% } else { %>
+                <form action="/admin/details" method="post" >
+                    <input type="hidden" name="carId" value="<%= car.getCarId() %>">
+                    <input type="submit" value="Details" class="submit-details">
+                </form>
+            <% } %>
+
     </tr>
     <% } %>
 </table>

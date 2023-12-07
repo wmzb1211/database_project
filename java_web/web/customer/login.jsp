@@ -21,6 +21,7 @@
     <input type="password" name="password" placeholder="密码" required>
     <div class="centered-container"> <input type="submit" value="登录"> </div>
 </form>
+
 <button onclick="window.location.href='register.jsp';">注册新账户</button>
 </body>
 </html>

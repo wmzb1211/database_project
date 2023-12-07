@@ -52,8 +52,11 @@
 
 <%-- 租车记录 --%>
 <div class="rental-records">
-    <h2 id="toggle-ongoing">Ongoing Rentals</h2>
-    <!-- 详情表格 -->
+    <div class="table-header">
+        <h2>Ongoing Rentals (<%= rentalRecordListOngoing.size() %>)</h2>
+        <button id="toggle-ongoing-btn">隐藏</button>
+    </div>
+
     <table id="ongoing-rentals" class="rental-table">
         <tr>
             <th>RentalRecord ID</th>
@@ -86,7 +89,7 @@
             <td>
                 <form action="/customer/rentalDetail.jsp" method="post">
                     <input type="hidden" name="rentalRecordID" value="<%= record.getRentalId() %>">
-                    <input type="submit" value="Detail">
+                    <input type="submit" value="Return">
                 </form>
             </td>
         </tr>
@@ -95,10 +98,14 @@
         %>
     </table>
 
+    <h2></h2>
 
-    <h2 id="toggle-completed">Completed Rentals</h2>
-    <!-- 详情表格 -->
-    <table id="completed-rentals" class="rental-table">
+    <div class="table-header">
+        <h2>Done Rentals (<%= rentalRecordListDone.size() %>)</h2>
+        <button id="toggle-done-btn">展开</button>
+    </div>
+
+    <table id="done-rentals" class="rental-table" style="display: none;">
         <tr>
             <th>RentalRecord ID</th>
             <th>Car ID</th>
@@ -142,12 +149,17 @@
 
 
 <%-- 租车按钮 --%>
-<form action="/customer/filterCars" method="get" class="form-button">
-    <input type="hidden" name="status" value="Available">
-    <input type="submit" value="Rent a Car">
-</form>
+
 
 </div>
+
+<footer>
+    <form action="/customer/filterCars" method="get">
+        <input type="hidden" name="status" value="Available">
+        <input type="submit" value="Rent a Car!" class="rent-car-button">
+    </form>
+</footer>
+
 </body>
 </html>
 

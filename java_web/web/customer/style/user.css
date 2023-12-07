@@ -5,6 +5,22 @@ body {
     padding: 0;
 }
 
+/* 重置HTML和body的默认边距和填充 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 容器样式 */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
 .header {
     background-color: #007bff;
     color: white;
@@ -35,7 +51,7 @@ body {
 
 input[type=submit] {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -43,7 +59,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 
 .rent-car-button {
@@ -67,3 +83,70 @@ input[type=submit]:hover {
     background-color: #007bff;
     color: white;
 }
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-header h2 {
+    margin: 0; /* 或根据需要进行调整 */
+}
+
+#toggle-ongoing-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#toggle-ongoing-btn:hover {
+    background-color: #0056b3;
+}
+
+#toggle-done-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#toggle-done-btn:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    height: 100px;
+    margin-top: auto; /* 将按钮推到页面底部 */
+    width: 100%; /* 按钮宽度为100% */
+    padding: 0; /* 移除内边距 */
+    background-color: #28a745; /* 背景色 */
+
+}
+
+footer form {
+    margin: 0; /* 移除form元素的默认外边距 */
+}
+
+footer .rent-car-button {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    width: 100%; /* 按钮宽度为100% */
+    height: 100px; /* 或者您想要的任何高度 */
+    border: none; /* 移除边框 */
+    background-color: #28a745; /* 按钮背景色 */
+    color: white; /* 文本颜色 */
+    font-size: 2em; /* 字体大小 */
+    cursor: pointer; /* 鼠标光标样式 */
+}
+
+footer .rent-car-button:hover {
+    background-color: #218838; /* 鼠标悬停时的背景色 */
+}
+
+

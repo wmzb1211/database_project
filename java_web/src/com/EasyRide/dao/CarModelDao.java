@@ -137,8 +137,51 @@ public class CarModelDao {
                 brands.add(resultSet.getString("brand"));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet!= null) resultSet.close();
+                if (preparedStatement!= null) preparedStatement.close();
+                if (connection!= null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return brands;
+    }
+
+    public List<CarModel> getModelsByBrand(String brand) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<CarModel> models = new ArrayList<>();
+
+        try{
+            if (brand!= null &&!brand.equals("")) {
+                connection = DBConnectionPool.getConnection();
+                String sql = "SELECT * FROM carmodel WHERE brand =?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, brand);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    int id = resultSet.getInt("model_id");
+                    String modelName = resultSet.getString("model_name");
+                    String description = resultSet.getString("description");
+                    models.add(new CarModel(id, brand, modelName, description));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return models;
     }
 
     // 测试代码
@@ -147,5 +190,17 @@ public class CarModelDao {
         CarModel carModel = carModelDao.getCarModelById(80);
         System.out.printf("model_id: %d, brand: %s, model_name: %s, description: %s\n",
                 carModel.getModelId(), carModel.getBrand(), carModel.getModelName(), carModel.getDescription());
+
+        System.out.println("=== Test getAllBrands() ===");
+        List<String> brands = carModelDao.getAllBrands();
+        for (String brand : brands) {
+            System.out.println(brand);
+        }
+
+        System.out.println("=== Test getModelsByBrand() ===");
+        List<CarModel> models = carModelDao.getModelsByBrand("Toyota");
+        for (CarModel model : models) {
+            System.out.println(model);
+        }
     }
 }

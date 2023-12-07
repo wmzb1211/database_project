@@ -84,8 +84,8 @@
 </table>
 
 <!-- 生成一个按钮，跳转到可以租车的页面，传递参数customerId  -->
-<form action="/customer/rentalCar.jsp" method="post">
-    <input type="hidden" name="customerId" value="<%= customer.getCustomerId() %>">
+<form action="/customer/filterCars" method="get">
+    <input type="hidden" name="status" value="Available">
     <input type="submit" value="Rent a Car">
 </form>
 </body>

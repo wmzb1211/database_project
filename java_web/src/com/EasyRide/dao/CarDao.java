@@ -7,10 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class CarDao {
@@ -211,6 +208,9 @@ public class CarDao {
                 if (filterParams.containsKey("brand")){
                     preparedStatement.setString(index++, filterParams.get("brand"));
                 }
+                if (filterParams.containsKey("model")){
+                    preparedStatement.setString(index++, filterParams.get("model"));
+                }
                 if (filterParams.containsKey("color")){
                     preparedStatement.setString(index++, filterParams.get("color"));
                 }
@@ -259,6 +259,9 @@ public class CarDao {
         if (filterParams != null){
             if (filterParams.containsKey("brand")){
                 sb.append(" AND cm.brand = ?");
+            }
+            if (filterParams.containsKey("model")){
+                sb.append(" AND cm.model_name =?");
             }
             if (filterParams.containsKey("color")){
                 sb.append(" AND c.color = ?");
@@ -391,6 +394,38 @@ public class CarDao {
             }
         }
         return false;
+    }
+
+    public List<String> getAllFilterOptions(String filter){
+        List<String> options = new ArrayList<>();
+        List<String> availableParameters = Arrays.asList("color", "year", "status");
+
+        if (!availableParameters.contains(filter)){
+            return options;
+        }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT DISTINCT " + filter + " FROM car";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                options.add(resultSet.getString(1));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet!= null) resultSet.close();
+                if (preparedStatement!= null) preparedStatement.close();
+                if (connection!= null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return options;
     }
 
     // 测试代码

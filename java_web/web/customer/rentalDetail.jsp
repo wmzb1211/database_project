@@ -6,7 +6,8 @@
 <%@ page import="com.EasyRide.dao.CarDao" %>
 <%@ page import="com.EasyRide.entity.CarModel" %>
 <%@ page import="com.EasyRide.dao.CarModelDao" %>
-<%@ page import="com.EasyRide.dao.RentalRecordDao" %><%--
+<%@ page import="com.EasyRide.dao.RentalRecordDao" %>
+<%@ page import="com.EasyRide.util.HTMLUtils" %><%--
   Created by IntelliJ IDEA.
   User: Harrison
   Date: 2023/12/6
@@ -17,6 +18,7 @@
 <html>
 <head>
     <title>RentalRecord Details</title>
+    <link rel="stylesheet" type="text/css" href="style/details.css">
 </head>
 <body>
 
@@ -27,7 +29,7 @@
     }
     RentalRecord rentalRecord = new RentalRecordDao().getRentalRecordsByID(rentalRecordID);
     Car car = new CarDao().getCarById(rentalRecord.getCarId());
-    CarModel carModel = new CarModelDao().getCarModelById(car.getModelId());
+
     if (rentalRecord == null) {
         response.sendRedirect("/customer/user.jsp");
     }
@@ -38,47 +40,49 @@
     }
 %>
 
-<h1>RentalRecord Details</h1>
+<div class="details-container">
+    <h1>RentalRecord Details</h1>
 
-<p>RentalRecord ID: <%= rentalRecord.getRentalId() %></p>
-<p>Car ID: <%= rentalRecord.getCarId() %></p>
-<p>Car Model: <%= carModel.getBrand() + " " + carModel.getModelName() %></p>
-<p>Description: <%= carModel.getDescription() %></p>
-<p>Color: <%= car.getColor() %></p>
-<p>Car Year: <%= car.getYear() %></p>
-<p>Rent Date: <%= rentalRecord.getStartDate() %></p>
-<p>Expected Return Date: <%= rentalRecord.getExpectedReturnDate() %></p>
-<p>Rental Fee: <%= rentalRecord.getRentalFee() %></p>
-<p>Status: <%= rentalRecord.getStatus() %></p>
+    <p>RentalRecord ID: <%= rentalRecord.getRentalId() %></p>
+    <p>Car ID: <%= rentalRecord.getCarId() %></p>
+    <p>Car Model: <%= car.getBrand() + " " + car.getModelName() %></p>
+    <p>Description: <%= HTMLUtils.escapeHtml(car.getDescription()) %></p>
+    <p>Color: <%= car.getColor() %></p>
+    <p>Car Year: <%= car.getYear() %></p>
+    <p>Rent Date: <%= rentalRecord.getStartDate() %></p>
+    <p>Expected Return Date: <%= rentalRecord.getExpectedReturnDate() %></p>
+    <p>Rental Fee: <%= rentalRecord.getRentalFee() %></p>
+    <p>Status: <%= rentalRecord.getStatus() %></p>
 
-<h2>Payments</h2>
+    <h2>Payment Details</h2>
 
-<table>
-    <tr>
-        <th>Payment ID</th>
-        <th>RentalRecord ID</th>
-        <th>Amount</th>
-        <th>Payment Method</th>
-        <th>Payment Type</th>
-        <th>Payment Date</th>
-    </tr>
-    <% for (Payment payment : payments) { %>
-    <tr>
-        <td><%= payment.getPaymentId() %></td>
-        <td><%= payment.getRentalId() %></td>
-        <td><%= payment.getAmount() %></td>
-        <td><%= payment.getPaymentMethod() %></td>
-        <td><%= payment.getPaymentType() %></td>
-        <td><%= payment.getPaymentDate() %></td>
-    </tr>
-    <% } %>
-</table>
+    <table>
+        <tr>
+            <th>Payment ID</th>
+            <th>RentalRecord ID</th>
+            <th>Amount</th>
+            <th>Payment Method</th>
+            <th>Payment Type</th>
+            <th>Payment Date</th>
+        </tr>
+        <% for (Payment payment : payments) { %>
+        <tr>
+            <td><%= payment.getPaymentId() %></td>
+            <td><%= payment.getRentalId() %></td>
+            <td><%= payment.getAmount() %></td>
+            <td><%= payment.getPaymentMethod() %></td>
+            <td><%= payment.getPaymentType() %></td>
+            <td><%= payment.getPaymentDate() %></td>
+        </tr>
+        <% } %>
+    </table>
 
-<% if (rentalRecord.getStatus().equals("Ongoing")) { %>
-<form action="/customer/checkReturnTime" method="post">
-    <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">
-    <input type="submit" value="Return Car">
-</form>
+    <% if (rentalRecord.getStatus().equals("Ongoing")) { %>
+    <form action="/customer/checkReturnTime" method="post">
+        <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">
+        <input type="submit" value="Return Car">
+    </form>
+</div>
 <%--<form action="/customer/renewCar" method="post">--%>
 <%--    <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">--%>
 <%--    <input type="text" name="renewDuration" value="1">--%>

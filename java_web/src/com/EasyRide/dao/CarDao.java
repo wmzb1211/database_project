@@ -23,19 +23,24 @@ public class CarDao {
 
         try {
             connection = DBConnectionPool.getConnection();
-            String sql = "SELECT * FROM car";
+//            String sql = "SELECT * FROM car";
+            String sql =  "SELECT * FROM Car c"
+                    + " INNER JOIN CarModel cm ON c.model_id = cm.model_id";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("car_id");
                 int modelId = resultSet.getInt("model_id");
+                String brand = resultSet.getString("brand");
+                String modelName = resultSet.getString("model_name");
+                String description = resultSet.getString("description");
                 String plateNumber = resultSet.getString("plate_number");
                 String color = resultSet.getString("color");
                 int year = resultSet.getInt("year");
                 String status = resultSet.getString("status");
                 double dailyRentalFee = resultSet.getDouble("daily_rental_fee");
-                Car car = new Car(id, modelId, plateNumber, color, year, status, dailyRentalFee);
+                Car car = new Car(id, modelId, brand, modelName, description, plateNumber, color, year, status, dailyRentalFee);
                 cars.add(car);
             }
         } catch (SQLException e) {
@@ -62,19 +67,25 @@ public class CarDao {
         Car car = null;
         try{
             connection = DBConnectionPool.getConnection();
-            String sql = "SELECT * FROM car WHERE car_id = ?";
+//            String sql = "SELECT * FROM car WHERE car_id = ?";
+            String sql =  "SELECT * FROM Car c"
+                    + " INNER JOIN CarModel cm ON c.model_id = cm.model_id"
+                    + " WHERE c.car_id =?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()){
                 int modelId = resultSet.getInt("model_id");
+                String brand = resultSet.getString("brand");
+                String modelName = resultSet.getString("model_name");
+                String description = resultSet.getString("description");
                 String plateNumber = resultSet.getString("plate_number");
                 String color = resultSet.getString("color");
                 int year = resultSet.getInt("year");
                 String status = resultSet.getString("status");
                 double dailyRentalFee = resultSet.getDouble("daily_rental_fee");
-                car = new Car(id, modelId, plateNumber, color, year, status, dailyRentalFee);
+                car = new Car(id, modelId, brand, modelName, description, plateNumber, color, year, status, dailyRentalFee);
                 return car;
             }
 
@@ -196,7 +207,7 @@ public class CarDao {
 
         try{
             StringBuilder sb = getStringBuilder(filterParams);
-            String sql =  "SELECT c.* FROM Car c"
+            String sql =  "SELECT * FROM Car c"
                     + " INNER JOIN CarModel cm ON c.model_id = cm.model_id"
                     + " WHERE 1=1 "
                     + sb;
@@ -232,12 +243,15 @@ public class CarDao {
             while (resultSet.next()){
                 int id = resultSet.getInt("car_id");
                 int modelId = resultSet.getInt("model_id");
+                String brand = resultSet.getString("brand");
+                String modelName = resultSet.getString("model_name");
+                String description = resultSet.getString("description");
                 String plateNumber = resultSet.getString("plate_number");
                 String color = resultSet.getString("color");
                 int year = resultSet.getInt("year");
                 String status = resultSet.getString("status");
                 double dailyRentalFee = resultSet.getDouble("daily_rental_fee");
-                Car car = new Car(id, modelId, plateNumber, color, year, status, dailyRentalFee);
+                Car car = new Car(id, modelId, brand, modelName, description, plateNumber, color, year, status, dailyRentalFee);
                 cars.add(car);
             }
         } catch (SQLException e){

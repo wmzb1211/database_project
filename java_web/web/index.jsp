@@ -3,25 +3,57 @@
   User: Harrison
   Date: 2023/11/25
   Time: 21:51
-  To change this template use File | Settings | File Templates.
+  index.jsp
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>My Web App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>汽车租赁系统</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #333;
+    }
+    .button-container {
+      margin: 20px;
+    }
+    .button-container form {
+      margin: 10px;
+    }
+    input[type=submit] {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    input[type=submit]:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-<h1>Welcome to My Web App</h1>
+<h1>欢迎来到汽车租赁系统</h1>
 
-<%--两个按钮：登录和注册，跳转到login.jsp和register.jsp--%>
-<form action="customer/login.jsp">
-  <input type="submit" value="登录">
-</form>
-<form action="customer/register.jsp">
-  <input type="submit" value="注册">
-</form>
-
+<div class="button-container">
+  <form action="customer/login.jsp">
+    <input type="submit" value="登录">
+  </form>
+  <form action="customer/register.jsp">
+    <input type="submit" value="注册">
+  </form>
+</div>
 </body>
 </html>
+

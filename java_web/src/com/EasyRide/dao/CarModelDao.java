@@ -137,6 +137,14 @@ public class CarModelDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return carModel;
     }
@@ -153,6 +161,13 @@ public class CarModelDao {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return carModel;
     }

@@ -69,6 +69,14 @@ public class ViolationRecordDao {
             }
         }catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            try{
+                if(resultSet!=null) resultSet.close();
+                if(preparedStatement!=null) preparedStatement.close();
+                if(connection!=null) DBConnectionPool.releaseConnection(connection);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return violationRecord;
     }

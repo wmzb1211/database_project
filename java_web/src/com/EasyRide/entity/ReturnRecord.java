@@ -1,17 +1,18 @@
 package com.EasyRide.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class ReturnRecord {
     private int returnId;
     private int rentalId;
     private int violationId;
-    private Timestamp returnDateTime;
+    private Date returnDateTime;
     private String vehicleConditionDescription;
     private String fuelCondition;
     private String handlingPersonnel;
 
-    public ReturnRecord(int returnId, int rentalId, int violationId, Timestamp returnDateTime, String vehicleConditionDescription, String fuelCondition, String handlingPersonnel) {
+    public ReturnRecord(int returnId, int rentalId, int violationId, Date returnDateTime, String vehicleConditionDescription, String fuelCondition, String handlingPersonnel) {
         this.returnId = returnId;
         this.rentalId = rentalId;
         this.violationId = violationId;
@@ -46,11 +47,11 @@ public class ReturnRecord {
         this.violationId = violationId;
     }
 
-    public Timestamp getReturnDateTime() {
+    public Date getReturnDateTime() {
         return returnDateTime;
     }
 
-    public void setReturnDateTime(Timestamp returnDateTime) {
+    public void setReturnDateTime(Date returnDateTime) {
         this.returnDateTime = returnDateTime;
     }
 

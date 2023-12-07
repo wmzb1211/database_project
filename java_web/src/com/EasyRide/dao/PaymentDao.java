@@ -6,7 +6,6 @@ import javafx.beans.binding.ObjectExpression;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +16,8 @@ public class PaymentDao {
      * @param rentalRecordId
      * @return
      */
-    public Payment getPaymentByRentalRecordId(int rentalRecordId) {
-        Payment payment = new Payment();
+    public List<Payment> getPaymentByRentalRecordId(int rentalRecordId) {
+        List<Payment> payment = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -26,10 +25,29 @@ public class PaymentDao {
             connection = DBConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement("SELECT * FROM payment WHERE rental_id = ?");
             preparedStatement.setInt(1, rentalRecordId);
-            preparedStatement.executeQuery();
-            resultSet = preparedStatement.getResultSet();
-        } catch (SQLException e) {
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int paymentId = resultSet.getInt("payment_id");
+                int rentalId = resultSet.getInt("rental_id");
+                int customerId = resultSet.getInt("customer_id");
+                double amount = resultSet.getDouble("amount");
+                String paymentMethod = resultSet.getString("payment_method");
+                String paymentType = resultSet.getString("payment_type");
+                Date paymentDate = resultSet.getDate("payment_date");
+                payment.add(new Payment(paymentId, rentalId, paymentType, paymentDate, amount, paymentMethod));
+            }
+        } catch (SQLException e){
             e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return payment;
     }
@@ -40,7 +58,6 @@ public class PaymentDao {
      * @return payment
      */
     public Payment addPayment(int rentalRecordId, int customerId, double amount, String paymentMethod, String paymentType){
-        Date date = new Date();
         Payment payment = null;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -52,7 +69,8 @@ public class PaymentDao {
             preparedStatement.setInt(1, rentalRecordId);
             preparedStatement.setInt(2, customerId);
             preparedStatement.setString(3, paymentType);
-            preparedStatement.setDate(4, new java.sql.Date(date.getTime()));
+            Date date = new Date(System.currentTimeMillis());
+            preparedStatement.setDate(4, date);
             preparedStatement.setDouble(5, amount);
             preparedStatement.setString(6, paymentMethod);
             int affectedRows = preparedStatement.executeUpdate();
@@ -61,12 +79,21 @@ public class PaymentDao {
             }
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
-                payment = new Payment(resultSet.getInt(1), rentalRecordId, paymentType, new java.sql.Date(date.getTime()), amount, paymentMethod);
+                payment = new Payment(resultSet.getInt(1), rentalRecordId, paymentType,
+                        date, amount, paymentMethod);
             } else {
                 throw new SQLException("Creating payment failed, no ID obtained.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return payment;
     }
@@ -110,4 +137,13 @@ public class PaymentDao {
         return updatedPayment;
     }
 
+
+    // 测试代码
+    public static void main(String[] args) {
+        PaymentDao paymentDao = new PaymentDao();
+        List<Payment> payments = paymentDao.getPaymentByRentalRecordId(2504);
+        for (Payment payment : payments){
+            System.out.println(payment.getPaymentId() + " " + payment.getRentalId() + " " + payment.getPaymentType() + " " + payment.getPaymentDate() + " " + payment.getAmount() + " " + payment.getPaymentMethod());
+        }
+    }
 }

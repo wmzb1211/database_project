@@ -23,6 +23,9 @@ public class Car {
         this.dailyRentalFee = dailyRentalFee;
     }
 
+    public Car() {
+    }
+
     public int getCarId() {
         return carId;
     }

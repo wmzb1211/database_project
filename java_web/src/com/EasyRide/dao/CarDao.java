@@ -7,10 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class CarDao {
@@ -18,7 +15,6 @@ public class CarDao {
     /**
      * 返回所有车辆，包括已出租和未出租的
      */
-    
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -57,7 +53,7 @@ public class CarDao {
         return cars;
     }
 
-    
+
     public Car getCarById(int id) {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -99,7 +95,7 @@ public class CarDao {
     /**
      * 返回某状态的所有车辆
      */
-    
+
     public List<Car> getCarsByStatus(String status){
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -142,7 +138,6 @@ public class CarDao {
     /**
      * 返回某车型的所有车辆
      */
-    
     public List<Car> getCarsByModelId(int modelId) {
         List<Car> cars = new ArrayList<>();
         Connection connection = null;
@@ -189,7 +184,6 @@ public class CarDao {
      * 注意：如果filterParams为null，返回所有车辆
      * 注意：参数参数为Map<String, String>，其中key为上述参数，value为参数值，value类型为String
      */
-    
     public List<Car> getCarsByFilter(Map<String, String> filterParams) {
         if (filterParams == null || filterParams.isEmpty()){
             return getAllCars();
@@ -213,6 +207,9 @@ public class CarDao {
             if (filterParams != null){
                 if (filterParams.containsKey("brand")){
                     preparedStatement.setString(index++, filterParams.get("brand"));
+                }
+                if (filterParams.containsKey("model")){
+                    preparedStatement.setString(index++, filterParams.get("model"));
                 }
                 if (filterParams.containsKey("color")){
                     preparedStatement.setString(index++, filterParams.get("color"));
@@ -263,6 +260,9 @@ public class CarDao {
             if (filterParams.containsKey("brand")){
                 sb.append(" AND cm.brand = ?");
             }
+            if (filterParams.containsKey("model")){
+                sb.append(" AND cm.model_name =?");
+            }
             if (filterParams.containsKey("color")){
                 sb.append(" AND c.color = ?");
             }
@@ -285,29 +285,29 @@ public class CarDao {
     /**
      * 添加车辆
      */
-    
-    public Car addCar(int modelId, String plateNumber, String color, int year, String status, double dailyRentalFee) {
+    public Car addCar(Car car) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        Car car = null;
+        Car newCar = null;
         try{
             connection = DBConnectionPool.getConnection();
             String sql = "INSERT INTO car(model_id, plate_number, color, year, status, daily_rental_fee) VALUES (?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, modelId);
-            preparedStatement.setString(2, plateNumber);
-            preparedStatement.setString(3, color);
-            preparedStatement.setInt(4, year);
-            preparedStatement.setString(5, status);
-            preparedStatement.setDouble(6, dailyRentalFee);
+            preparedStatement.setInt(1, car.getModelId());
+            preparedStatement.setString(2, car.getPlateNumber());
+            preparedStatement.setString(3, car.getColor());
+            preparedStatement.setInt(4, car.getYear());
+            preparedStatement.setString(5, car.getStatus());
+            preparedStatement.setDouble(6, car.getDailyRentalFee());
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0){
                 throw new SQLException("Creating car failed, no rows affected.");
             }
             resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()){
-                car = new Car(resultSet.getInt(1), modelId, plateNumber, color, year, status, dailyRentalFee);
+                newCar = new Car(resultSet.getInt(1), car.getModelId(), car.getPlateNumber(), car.getColor(),
+                        car.getYear(), car.getStatus(), car.getDailyRentalFee());
             } else {
                 throw new SQLException("Creating car failed, no ID obtained.");
             }
@@ -323,14 +323,14 @@ public class CarDao {
                 e.printStackTrace();
             }
         }
-        return car;
+        return newCar;
     }
 
     /**
      * 更新车辆信息
+     * 注意：Status只能为Available、Rented、Maintenance、Unusable四种之一
      * 注意：car的id必须存在，不允许更新id，可以更新其他信息
      */
-    
     public Car updateCar(Car car) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -368,7 +368,7 @@ public class CarDao {
         return updatedCar;
     }
 
-    
+
     public boolean deleteCar(int id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -396,6 +396,38 @@ public class CarDao {
         return false;
     }
 
+    public List<String> getAllFilterOptions(String filter){
+        List<String> options = new ArrayList<>();
+        List<String> availableParameters = Arrays.asList("color", "year", "status");
+
+        if (!availableParameters.contains(filter)){
+            return options;
+        }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT DISTINCT " + filter + " FROM car";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                options.add(resultSet.getString(1));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet!= null) resultSet.close();
+                if (preparedStatement!= null) preparedStatement.close();
+                if (connection!= null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return options;
+    }
+
     // 测试代码
     public static void main(String[] args) {
         CarDao carDao = new CarDao();
@@ -405,7 +437,7 @@ public class CarDao {
         for (Car car : cars){
             System.out.println(car);
         }
-        
+
         // 测试getCarsByStatus()
         System.out.println("=== Test getCarsByStatus() ===");
         cars = carDao.getCarsByStatus("Rented");
@@ -436,7 +468,7 @@ public class CarDao {
 
         // 测试addCar()
         System.out.println("=== Test addCar() ===");
-        Car car = carDao.addCar(1, "粤A12345", "red", 2018, "available", 100);
+        Car car = carDao.addCar(new Car(0, 1, "粤A12345", "red", 2018, "available", 100));
         System.out.println(car);
 
         car.setColor("blue");

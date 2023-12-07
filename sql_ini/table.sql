@@ -29,7 +29,7 @@ CREATE TABLE Car (
     color VARCHAR(50),
     year INT,
     status VARCHAR(50),
-    daily_rental_fee DECIMAL(10, 2),
+    daily_rental_fee DECIMAL(16, 2),
     FOREIGN KEY (model_id) REFERENCES CarModel(model_id)
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE RentalRecord (
     start_date DATE,
     expected_return_date DATE,
     actual_return_date DATE,
-    rental_fee DECIMAL(10, 2),
+    rental_fee DECIMAL(16, 2),
     status VARCHAR(50),
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
     FOREIGN KEY (car_id) REFERENCES Car(car_id)
@@ -52,7 +52,7 @@ CREATE TABLE ViolationRecord (
     rental_id INT,
     violation_type VARCHAR(255),
     description TEXT,
-    fine_amount DECIMAL(10, 2),
+    fine_amount DECIMAL(16, 2),
     FOREIGN KEY (rental_id) REFERENCES RentalRecord(rental_id)
 );
 
@@ -75,7 +75,7 @@ CREATE TABLE Payment (
     rental_id INT,
     customer_id INT,
     payment_date DATE,
-    amount DECIMAL(10, 2),
+    amount DECIMAL(16, 2),
     payment_method VARCHAR(50),
     FOREIGN KEY (rental_id) REFERENCES RentalRecord(rental_id),
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)

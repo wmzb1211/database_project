@@ -12,14 +12,12 @@
     <!-- 页面样式和脚本 -->
 </head>
 <body>
-<form action="UserServlet" method="post">
+<form action="/customer/login" method="post">
     <input type="hidden" name="action" value="login">
-    <input type="text" name="username" placeholder="用户名" required>
+    <input type="text" name="account" placeholder="用户名" required>
     <input type="password" name="password" placeholder="密码" required>
     <input type="submit" value="登录">
 </form>
-<!-- 显示登录错误信息 -->
-<p>${error}</p>
 </body>
 </html>
 

@@ -49,7 +49,40 @@ public class CustomerDao {
         return customers;
     }
 
-    
+    public Customer getCustomerById(int id) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Customer customer = null;
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT * FROM customer WHERE customer_id = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String account = resultSet.getString("account");
+                String password = resultSet.getString("password");
+                String licenseNumber = resultSet.getString("license_number");
+                String contactInfo = resultSet.getString("contact_info");
+                String address = resultSet.getString("address");
+                customer = new Customer(id, name, account, password, contactInfo, licenseNumber, address);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return customer;
+    }
+
     public Customer getCustomerByLicenseNumber(String licenseNumber) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

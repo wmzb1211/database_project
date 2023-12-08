@@ -41,7 +41,7 @@
 
     <div class="table-header">
         <h2>Cars List</h2>
-        <button id="cancel-btn" onclick="history.back()">Back</button>
+        <button id="cancel-btn" onclick="window.location.href='/customer/user.jsp'" class="back-button">Back</button>
     </div>
 
 

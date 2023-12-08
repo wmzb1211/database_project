@@ -99,8 +99,17 @@ function validateRentalFeeInput() {
     var minInput = document.getElementById("minDailyRentalFeeInput");
     var maxInput = document.getElementById("maxDailyRentalFeeInput");
 
+    if (minInput.value === "" || maxInput.value === "") {
+        return true;
+    }
+
     var minRentalFee = parseFloat(minInput.value);
     var maxRentalFee = parseFloat(maxInput.value);
+
+    if (minRentalFee > maxRentalFee) {
+        alert("租金范围不正确，请重新输入。");
+        return false;
+    }
 
     if (isNaN(minRentalFee) || isNaN(maxRentalFee)) {
         alert("请输入有效的数字租金。");

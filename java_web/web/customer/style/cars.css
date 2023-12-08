@@ -139,12 +139,13 @@ th {
 }
 
 .back-button {
-    background-color: #bdbdbd;
+    background-color: #999999;
+    transition: background-color 0.3s;
     color: white;
 }
 
 .back-button:hover {
-    background-color: #999999;
+    background-color: #666666;
 }
 
 

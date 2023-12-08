@@ -70,42 +70,42 @@ public class checkTimeoutRental extends HttpServlet {
         } else {
             Car car = new CarDao().getCarById(carId);
 
-            request.setAttribute("function", function);
-            request.setAttribute("car", car);
-            request.setAttribute("rentalRecordId", rentalRecordId);
-            request.setAttribute("paymentType", "Renew Fee");
-            request.setAttribute("paymentDetails", car.toString());
-            request.setAttribute("duration", duration);
-
-            request.getRequestDispatcher("/customer/payment.jsp").forward(request, response);
-
-//            if (function.equals("/customer/renewCar")) {
-//                RentalRecord rentalRecord = new RentalRecordDao().getRentalRecordsByID(rentalRecordId);
-////                String url = "/customer/payment.jsp?" +
-////                        "function=" + "/customer/renewCar" +
-////                        "&carId=" + rentalRecord.getCarId() +
-////                        "&rentalRecordId=" + rentalRecordId +
-////                        "&paymentType=Renew Fee" +
-////                        "&paymentDetails=" + " " +
-////                        "&dailyRentalFee=" + car.getDailyRentalFee() +
-////                        "&duration=" + duration;
-////
-////                response.sendRedirect(url);
+//            request.setAttribute("function", function);
+//            request.setAttribute("carId", carId);
+//            request.setAttribute("rentalRecordId", rentalRecordId);
+//            request.setAttribute("paymentType", "Renew Fee");
+//            request.setAttribute("paymentDetails", car.toString());
+//            request.setAttribute("duration", duration);
 //
-//            } else if (function.equals("/customer/rentalCar")) {
-//                String url = "/customer/payment.jsp?" +
-//                        "function=" + "/customer/rentalCar" +
-//                        "&carId=" + carId +
-//                        "&rentalRecordId=0" +
-//                        "&paymentType=Rental Fee" +
-//                        "&paymentDetails=" + " " +
-//                        "&dailyRentalFee=" + car.getDailyRentalFee() +
-//                        "&duration=" + duration;
-//
-//                response.sendRedirect(url);
-//            } else {
-//                response.sendRedirect("/customer/user.jsp");
-//            }
+//            request.getRequestDispatcher("/customer/payment.jsp").forward(request, response);
+
+            if (function.equals("/customer/renewCar")) {
+                RentalRecord rentalRecord = new RentalRecordDao().getRentalRecordsByID(rentalRecordId);
+                String url = "/customer/payment.jsp?" +
+                        "function=" + "/customer/renewCar" +
+                        "&carId=" + rentalRecord.getCarId() +
+                        "&rentalRecordId=" + rentalRecordId +
+                        "&paymentType=Renew Fee" +
+                        "&paymentDetails=" + " " +
+                        "&dailyRentalFee=" + car.getDailyRentalFee() +
+                        "&duration=" + duration;
+
+                response.sendRedirect(url);
+
+            } else if (function.equals("/customer/rentalCar")) {
+                String url = "/customer/payment.jsp?" +
+                        "function=" + "/customer/rentalCar" +
+                        "&carId=" + carId +
+                        "&rentalRecordId=0" +
+                        "&paymentType=Rental Fee" +
+                        "&paymentDetails=" + " " +
+                        "&dailyRentalFee=" + car.getDailyRentalFee() +
+                        "&duration=" + duration;
+
+                response.sendRedirect(url);
+            } else {
+                response.sendRedirect("/customer/user.jsp");
+            }
 
         }
     }

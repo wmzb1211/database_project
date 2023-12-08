@@ -13,26 +13,26 @@
     Customer customer = (Customer) session.getAttribute("customer");
     int customerId = customer.getCustomerId();
 
-//    String function = request.getParameter("function");
-//
-//    int carId = Integer.parseInt(request.getParameter("carId"));
-//
-//    int rentalRecordId = Integer.parseInt(request.getParameter("rentalRecordId"));
-//
-//    String paymentType = request.getParameter("paymentType"); // Overdue Penalty Fee OR Rental Fee
-//    String paymentDetails = request.getParameter("paymentDetails");
-//
-//    Double dailyRentalFee = Double.parseDouble(request.getParameter("dailyRentalFee"));
-//    int duration = Integer.parseInt(request.getParameter("duration"));
+    String function = request.getParameter("function");
 
-    String function = (String) request.getAttribute("function");
-    Car car = (Car) request.getAttribute("car");
-    int carId = car.getCarId();
-    Double dailyRentalFee = car.getDailyRentalFee();
-    int rentalRecordId = Integer.parseInt(request.getAttribute("rentalRecordId").toString());
-    String paymentType = (String) request.getAttribute("paymentType");
-    String paymentDetails = (String) request.getAttribute("paymentDetails");
-    int duration = Integer.parseInt(request.getAttribute("duration").toString());
+    int carId = Integer.parseInt(request.getParameter("carId"));
+
+    int rentalRecordId = Integer.parseInt(request.getParameter("rentalRecordId"));
+
+    String paymentType = request.getParameter("paymentType"); // Overdue Penalty Fee OR Rental Fee
+    String paymentDetails = request.getParameter("paymentDetails");
+
+    Double dailyRentalFee = Double.parseDouble(request.getParameter("dailyRentalFee"));
+    int duration = Integer.parseInt(request.getParameter("duration"));
+
+//    String function = (String) request.getAttribute("function");
+//    Car car = (Car) request.getAttribute("car");
+//    int carId = car.getCarId();
+//    Double dailyRentalFee = car.getDailyRentalFee();
+//    int rentalRecordId = Integer.parseInt(request.getAttribute("rentalRecordId").toString());
+//    String paymentType = (String) request.getAttribute("paymentType");
+//    String paymentDetails = (String) request.getAttribute("paymentDetails");
+//    int duration = Integer.parseInt(request.getAttribute("duration").toString());
 
     Double totalFee = dailyRentalFee * duration;
     if (paymentType.equals("Overdue Penalty Fee")) {

@@ -5,8 +5,6 @@
 <%@ page import="com.EasyRide.dao.RentalRecordDao" %>
 <%@ page import="com.EasyRide.entity.Car" %>
 <%@ page import="com.EasyRide.dao.CarDao" %>
-<%@ page import="com.EasyRide.entity.CarModel" %>
-<%@ page import="com.EasyRide.dao.CarModelDao" %>
 <%@ page import="java.sql.Date" %>
 <%--
   Created by IntelliJ IDEA.
@@ -60,9 +58,9 @@
         <div class="profile-actions">
             <form action="/index.jsp" method="post">
                 <%
-                    if (session.getAttribute("customer")!= null) {
-                        session.removeAttribute("customer");
-                    }
+//                    if (session.getAttribute("customer")!= null) {
+//                        session.removeAttribute("customer");
+//                    }
                 %>
 
                 <div class="logout"> <input type="submit" value="Logout"> </div>
@@ -178,7 +176,7 @@
             <td><%= record.getStatus() %></td></td>
             <!--  显示一个按钮，跳转到详情页面  -->
             <td>
-                <form action="/customer/rentalDetail.jsp" method="post" class="form-button">
+                <form action="${pageContext.request.contextPath}/customer/rentalDetail.jsp" method="post" class="form-button">
                     <input type="hidden" name="rentalRecordID" value="<%= record.getRentalId() %>">
                     <input type="submit" value="Detail">
                 </form>

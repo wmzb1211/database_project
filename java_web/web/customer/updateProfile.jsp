@@ -5,6 +5,15 @@
   Time: 18:33
   To change this template use File | Settings | File Templates.
 --%>
+<%
+    Customer customer = (Customer) session.getAttribute("customer");
+    // 检查用户是否已登录
+    if (customer == null) {
+        // 如果用户未登录，重定向到登录页面
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -17,7 +26,7 @@
 
 <div class="login-container">
     <h2>Update Your Profile</h2>
-    <% Customer customer = (Customer) session.getAttribute("customer"); %>
+    <% customer = (Customer) session.getAttribute("customer"); %>
     <form action="/customer/updateProfile" method="post">
 
         <table>

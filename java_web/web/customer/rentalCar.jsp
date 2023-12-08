@@ -20,6 +20,7 @@
     } else {
         // 重定向到index.jsp页面
         response.sendRedirect("/index.jsp");
+        return;
     }
 
     List<Car> cars = (List<Car>) request.getAttribute("cars");

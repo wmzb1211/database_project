@@ -56,41 +56,59 @@ public class checkReturnTime extends HttpServlet {
         // 计算日期差异（以天为单位）
         long dayDifference = (actualReturnTime - expectedReturnTime) / (24 * 60 * 60 * 1000);
 
+
         if (dayDifference > 0) {
             PrintWriter out = response.getWriter();
             // 计算还车所需的额外费用
             Car car = new CarDao().getCarById(rentalRecord.getCarId());
             double extraFee = dayDifference * car.getDailyRentalFee() * 3;
-            String script = "if (confirm('还车已经超时，您需要支付的额外费用为：" + extraFee + "元，是否继续还车？')) {";
-            script += "  window.location.href ='payment.jsp?" +
-                    "function=" + "/customer/returnCar" +
-                    "&carId=" + car.getCarId() +
-                    "&rentalRecordId=" + rentalId +
-                    "&paymentType=Overdue Penalty Fee" +
-                    "&paymentDetails=" + "You are " + dayDifference + " day(s) late to return the car." +
-                    "&dailyRentalFee=" +  extraFee +
-                    "&duration=" + dayDifference +
-                    "';";
-            script += "} else {";
-            script += "  history.back();"; // 如果用户点击否，显示提示消息
-            script += "}";
-            out.println("<script>" + script + "</script>");
+//            String script = "if (confirm('还车已经超时，您需要支付的额外费用为：" + extraFee + "元，是否继续还车？')) {";
+//            script += "  window.location.href ='payment.jsp?" +
+//                    "function=" + "/customer/returnCar" +
+//                    "&carId=" + car.getCarId() +
+//                    "&rentalRecordId=" + rentalId +
+//                    "&paymentType=Overdue Penalty Fee" +
+//                    "&paymentDetails=" + "You are " + dayDifference + " day(s) late to return the car." +
+//                    "&dailyRentalFee=" +  extraFee +
+//                    "&duration=" + dayDifference +
+//                    "';";
+//            script += "} else {";
+//            script += "  history.back();"; // 如果用户点击否，显示提示消息
+//            script += "}";
+//            out.println("<script>" + script + "</script>");
+
+            request.setAttribute("function", "/customer/returnCar");
+            request.setAttribute("car", car);
+            request.setAttribute("rentalRecordId", rentalRecord.getRentalId());
+            request.setAttribute("paymentType", "Overdue Penalty Fee");
+            request.setAttribute("paymentDetails", "You are " + dayDifference + " day(s) late to return the car.");
+            request.setAttribute("duration", dayDifference);
+
+            request.getRequestDispatcher("/customer/payment.jsp").forward(request, response);
 
         } else {
             // 还车，弹窗确认是否要还车
             // 使用JavaScript弹窗
-            PrintWriter out = response.getWriter();
-            String script = "if (confirm('您确定要还车吗？')) {";
-            script += "  window.location.href = 'returnCar?" +
-                    "rentalRecordId=" + rentalId +
-                    "&carId=" + rentalRecord.getCarId() +
-                    "&duration=0" +
-                    "&totalFee=0" +
-                    "';";
-            script += "} else {";
-            script += "  history.back();"; // 如果用户点击否，显示提示消息
-            script += "}";
-            out.println("<script>" + script + "</script>");
+//            PrintWriter out = response.getWriter();
+//            String script = "if (confirm('您确定要还车吗？')) {";
+//            script += "  window.location.href = 'returnCar?" +
+//                    "rentalRecordId=" + rentalId +
+//                    "&carId=" + rentalRecord.getCarId() +
+//                    "&duration=0" +
+//                    "&totalFee=0" +
+//                    "';";
+//            script += "} else {";
+//            script += "  history.back();"; // 如果用户点击否，显示提示消息
+//            script += "}";
+//            out.println("<script>" + script + "</script>");
+
+            request.getRequestDispatcher("/customer/returnCar?" +
+                            "rentalRecordId=" + rentalId +
+                            "&carId=" + rentalRecord.getCarId() +
+                            "&duration=0" +
+                            "&totalFee=0")
+                    .forward(request, response);
+
 
         }
 

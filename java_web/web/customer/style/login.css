@@ -6,6 +6,16 @@ body {
     padding: 0;
 }
 
+.login-container {
+    background-color: white;
+    width: 80%;
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
 h2 {
     color: #333;
     margin-bottom: 20px;
@@ -13,7 +23,6 @@ h2 {
     font-size: 40px;
     font-weight: bold;
     margin-top: 20px;
-    margin-bottom: 20px;
 }
 
 form {
@@ -45,7 +54,8 @@ input[type=submit]:hover {
 
 button {
     padding: 10px 20px;
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border: none;
     border-radius: 5px;
     background-color: #28a745;
@@ -63,4 +73,10 @@ button:hover {
     margin-top: 20px;
 }
 
+table {
+    width: 100%; /* 设置表格宽度为100% */
+}
 
+td:first-child { /* 选择第一个<td>元素，即左侧列 */
+    width: 30%; /* 设置左侧列的宽度，根据需要调整百分比 */
+}

@@ -1,21 +1,29 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // 控制"正在进行的租车"详情的显示与隐藏
-    var ongoingButton = document.getElementById('toggle-ongoing');
-    var ongoingRentals = document.getElementById('ongoing-rentals');
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleBtn = document.getElementById('toggle-ongoing-btn');
+    var ongoingRentalsTable = document.getElementById('ongoing-rentals');
 
-    if (ongoingButton && ongoingRentals) {
-        ongoingButton.addEventListener('click', function() {
-            ongoingRentals.style.display = ongoingRentals.style.display === 'block' ? ('none' || '') : 'block';
-        });
-    }
+    toggleBtn.addEventListener('click', function() {
+        if (ongoingRentalsTable.style.display === 'none') {
+            ongoingRentalsTable.style.display = 'table';
+            toggleBtn.textContent = '隐藏'; // 更新按钮文本为“隐藏”
+        } else {
+            ongoingRentalsTable.style.display = 'none';
+            toggleBtn.textContent = '展开'; // 更新按钮文本为“展开”
+        }
+    });
+});
 
-    // 控制"已完成的租车"详情的显示与隐藏
-    var completedButton = document.getElementById('toggle-completed');
-    var completedRentals = document.getElementById('completed-rentals');
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleBtn = document.getElementById('toggle-completed-btn');
+    var completedRentalsTable = document.getElementById('completed-rentals');
 
-    if (completedButton && completedRentals) {
-        completedButton.addEventListener('click', function() {
-            completedRentals.style.display = completedRentals.style.display === 'block' ? ('none' || '') : 'block';
-        });
-    }
+    toggleBtn.addEventListener('click', function() {
+        if (completedRentalsTable.style.display === 'none') {
+            completedRentalsTable.style.display = 'table';
+            toggleBtn.textContent = '隐藏'; // 更新按钮文本为“隐藏”
+        } else {
+            completedRentalsTable.style.display = 'none';
+            toggleBtn.textContent = '展开'; // 更新按钮文本为“展开”
+        }
+    });
 });

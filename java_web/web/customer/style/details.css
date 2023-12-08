@@ -8,7 +8,7 @@ body {
 .details-container {
     background-color: white;
     width: 80%;
-    max-width: 600px;
+    max-width: 800px;
     margin: 40px auto;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -56,4 +56,39 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: #218838;
+}
+
+.continue-submit{
+    margin-top: 20px;
+    display: flex; /* 使用flex布局 */
+    align-items: center; /* 垂直居中对齐 */
+    gap: 10px; /* 元素之间的间隙 */
+}
+.continue-submit input[type="text"] {
+    height: 35px;
+    flex-grow: 1; /* 输入框占据剩余空间 */
+    margin-right: 10px; /* 右边距，根据需要调整 */
+}
+
+.continue-submit input[type="submit"]{
+    width: 70%;
+    margin-top: 0;
+    text-align:center;
+    vertical-align: middle;
+}
+
+.back-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #bdbdbd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #999999;
 }

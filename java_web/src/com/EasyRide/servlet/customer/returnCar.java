@@ -3,10 +3,8 @@ package com.EasyRide.servlet.customer;
 import com.EasyRide.dao.CarDao;
 import com.EasyRide.dao.RentalRecordDao;
 import com.EasyRide.dao.PaymentDao;
-import com.EasyRide.entity.Car;
-import com.EasyRide.entity.Customer;
-import com.EasyRide.entity.RentalRecord;
-import com.EasyRide.entity.Payment;
+import com.EasyRide.dao.ReturnRecordDao;
+import com.EasyRide.entity.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,16 +41,44 @@ public class returnCar extends HttpServlet {
         double extraFee = Double.parseDouble(request.getParameter("totalFee"));
 
         // 创建还车记录
-
+        ReturnRecordDao returnRecordDao = new ReturnRecordDao();
+        ReturnRecord returnRecord = returnRecordDao.addReturnRecord(rentalRecordId, "Good", 1);
+        if (returnRecord == null) {
+            PrintWriter out = response.getWriter();
+            out.println("<script type='text/javascript'>");
+            out.println("alert('还车失败！创建还车记录失败！');");
+            out.println("location.href='/customer/user.jsp';");
+            out.println("</script>");
+            out.close();
+            return;
+        }
 
         // 创建支付记录
         if (extraDuration > 0) {
             PaymentDao paymentDao = new PaymentDao();
             Payment payment = paymentDao.addPayment(rentalRecordId, customer.getCustomerId(), extraFee, "Credit Card", "Overdue Penalty Fee");
+            if (payment == null) {
+                PrintWriter out = response.getWriter();
+                out.println("<script type='text/javascript'>");
+                out.println("alert('还车失败！创建支付记录失败！');");
+                out.println("location.href='/customer/user.jsp';");
+                out.println("</script>");
+                out.close();
+                return;
+            }
         }
 
         // 更新租赁记录
         RentalRecord rentalRecord = new RentalRecordDao().endRentalRecord(rentalRecordId, extraFee);
+        if (rentalRecord == null) {
+            PrintWriter out = response.getWriter();
+            out.println("<script type='text/javascript'>");
+            out.println("alert('还车失败！更新租赁记录失败！');");
+            out.println("location.href='/customer/user.jsp';");
+            out.println("</script>");
+            out.close();
+            return;
+        }
 
         // 更新车辆状态
         CarDao carDao = new CarDao();

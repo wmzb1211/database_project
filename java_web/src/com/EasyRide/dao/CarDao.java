@@ -121,13 +121,13 @@ public class CarDao {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()){
-                int id = resultSet.getInt("car_id");
+                int carId = resultSet.getInt("car_id");
                 int modelId = resultSet.getInt("model_id");
                 String plateNumber = resultSet.getString("plate_number");
                 String color = resultSet.getString("color");
                 int year = resultSet.getInt("year");
                 double dailyRentalFee = resultSet.getDouble("daily_rental_fee");
-                Car car = new Car(id, modelId, plateNumber, color, year, status, dailyRentalFee);
+                Car car = new Car(carId, modelId, plateNumber, color, year, status, dailyRentalFee);
                 cars.add(car);
             }
         } catch (SQLException e){

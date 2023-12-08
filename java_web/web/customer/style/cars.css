@@ -5,6 +5,11 @@ body {
     padding: 0;
 }
 
+h2 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
 .cars-container {
     width: 80%;
     max-width: 1000px;
@@ -37,6 +42,7 @@ select, input[type="text"] {
 input[type="submit"] {
     padding: 5px 15px;
     background-color: #007bff;
+    transition: background-color 0.3s;
     color: white;
     border: none;
     border-radius: 5px;
@@ -64,11 +70,38 @@ th {
 }
 /* 长下拉列表 */
 .select-long {
-    width: 120px; /* 或其他合适的长度 */
+    width: 150px; /* 或其他合适的长度 */
     padding: 5px 10px;
     margin-right: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between; /* 确保左右两部分分开 */
+}
+
+.filter-selected {
+    flex: 1;
+}
+
+.filter-button {
+    text-align: right;
+}
+
+.input-long {
+    width: 150px; /* 或其他合适的长度 */
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.filter-button {
+    /* 左对齐 */
+    text-align: left;
 }
 
 /* 短输入框 */
@@ -89,4 +122,30 @@ th {
 .rental-column {
     width: 120px; /* 或根据实际需要调整宽度 */
 }
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-header button {
+    width: 120px;
+    height: 50px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.back-button {
+    background-color: #999999;
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.back-button:hover {
+    background-color: #666666;
+}
+
 

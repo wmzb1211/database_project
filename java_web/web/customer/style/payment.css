@@ -9,7 +9,7 @@ body {
 .payment-container {
     background-color: white;
     width: 80%;
-    max-width: 500px;
+    max-width: 800px;
     margin: 40px auto;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -52,5 +52,21 @@ input[type=submit]:hover {
 
 .payment-details {
     word-wrap: break-word; /* 当单词过长时进行换行 */
-    max-width: 450px; /* 根据需要调整最大宽度 */
+    max-width: 650px; /* 根据需要调整最大宽度 */
+}
+
+.back-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #bdbdbd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #999999;
 }

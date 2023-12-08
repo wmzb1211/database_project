@@ -5,6 +5,22 @@ body {
     padding: 0;
 }
 
+/* 重置HTML和body的默认边距和填充 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 容器样式 */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
 .header {
     background-color: #007bff;
     color: white;
@@ -28,22 +44,44 @@ body {
     color: #333;
 }
 
+.user-info {
+    display: flex;
+    justify-content: space-between; /* 确保左右两部分分开 */
+}
+.profile-info {
+    /* 根据需要调整 */
+    flex: 1; /* 占据可用空间 */
+}
+.profile-actions {
+    display: flex;
+    flex-direction: column; /* 让按钮竖直排列 */
+    align-items: flex-start; /* 对齐到起始边 */
+    gap: 10px; /* 按钮之间的间距 */
+}
+.profile-actions input[type=submit] {
+    width: 130px;
+
+}
+
 .form-button {
-    margin-top: 20px;
-    text-align: center;
+    margin-block-end: 0;
+
 }
 
 input[type=submit] {
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    transition: background-color 0.3s;
 }
 
 input[type=submit]:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 
 .rent-car-button {
@@ -61,9 +99,96 @@ input[type=submit]:hover {
 .rental-table th, .rental-table td {
     border: 1px solid #ddd;
     padding: 8px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .rental-table th {
     background-color: #007bff;
     color: white;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-header h2 {
+    margin: 0; /* 或根据需要进行调整 */
+}
+
+#toggle-ongoing-btn {
+    padding: 10px 20px;
+    background-color: #999999;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#toggle-ongoing-btn:hover {
+    background-color: #666666;
+}
+
+#toggle-completed-btn {
+    padding: 10px 20px;
+    background-color: #999999;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#toggle-completed-btn:hover {
+    background-color: #666666;
+}
+
+footer {
+    /* 放在页面的底部 */
+    position: relative;
+    bottom: 0;
+    height: 100px;
+    width: 100%; /* 按钮宽度为100% */
+    padding: 0; /* 移除内边距 */
+    background-color: #28a745; /* 背景色 */
+
+}
+
+footer form {
+    margin: 0; /* 移除form元素的默认外边距 */
+}
+
+footer .rent-car-button {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    width: 100%; /* 按钮宽度为100% */
+    height: 100px; /* 或者您想要的任何高度 */
+    border: none; /* 移除边框 */
+    background-color: #28a745; /* 按钮背景色 */
+    color: white; /* 文本颜色 */
+    font-size: 2em; /* 字体大小 */
+    cursor: pointer; /* 鼠标光标样式 */
+    transition: background-color 0.3s;
+}
+
+footer .rent-car-button:hover {
+    background-color: #218838; /* 鼠标悬停时的背景色 */
+}
+
+.highlight {
+    color: red;
+    font-weight: bold;
+}
+
+.logout input[type=submit]{
+    background-color: #999999;
+    transition: background-color 0.3s;
+}
+.logout input[type=submit]:hover {
+    background-color: #666666;
 }

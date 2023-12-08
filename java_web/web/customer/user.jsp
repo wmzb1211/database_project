@@ -5,6 +5,8 @@
 <%@ page import="com.EasyRide.dao.RentalRecordDao" %>
 <%@ page import="com.EasyRide.entity.Car" %>
 <%@ page import="com.EasyRide.dao.CarDao" %>
+<%@ page import="com.EasyRide.entity.CarModel" %>
+<%@ page import="com.EasyRide.dao.CarModelDao" %>
 <%@ page import="java.sql.Date" %>
 <%--
   Created by IntelliJ IDEA.
@@ -56,13 +58,7 @@
 
         <!-- 按钮部分 -->
         <div class="profile-actions">
-            <form action="/index.jsp" method="post">
-                <%
-//                    if (session.getAttribute("customer")!= null) {
-//                        session.removeAttribute("customer");
-//                    }
-                %>
-
+            <form action="LogoutServlet" method="post">
                 <div class="logout"> <input type="submit" value="Logout"> </div>
             </form>
 

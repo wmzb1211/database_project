@@ -50,6 +50,78 @@ public class AdministratorDao {
         }
         return administrator;
     }
+    public Administrator getAdministratorByAccount(String account) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Administrator administrator = null;
+
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT * FROM administrator WHERE account = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, account);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                int adminId = resultSet.getInt("admin_id");
+                String name = resultSet.getString("name");
+                String accountTmp = resultSet.getString("account");
+                String password = resultSet.getString("password");
+                String contactInfo = resultSet.getString("contact_info");
+                String role = resultSet.getString("role");
+                Date creationDate = resultSet.getDate("creation_date");
+                administrator = new Administrator(adminId, name, accountTmp, password, contactInfo, role, creationDate);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return administrator;
+    }
+    public Administrator getAdministratorById(int adminID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Administrator administrator = null;
+
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT * FROM administrator WHERE admin_id = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, adminID);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                int adminId = resultSet.getInt("admin_id");
+                String name = resultSet.getString("name");
+                String accountTmp = resultSet.getString("account");
+                String password = resultSet.getString("password");
+                String contactInfo = resultSet.getString("contact_info");
+                String role = resultSet.getString("role");
+                Date creationDate = resultSet.getDate("creation_date");
+                administrator = new Administrator(adminId, name, accountTmp, password, contactInfo, role, creationDate);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return administrator;
+    }
 
     /**
      * 添加管理员

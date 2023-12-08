@@ -44,7 +44,7 @@
 
         <!-- 按钮部分 -->
         <div class="profile-actions">
-            <form action="/index.jsp" method="post">
+            <form action="LogoutServlet" method="post">
                 <div class="logout"> <input type="submit" value="Logout"> </div>
             </form>
 

@@ -99,21 +99,26 @@ function validateRentalFeeInput() {
     var minInput = document.getElementById("minDailyRentalFeeInput");
     var maxInput = document.getElementById("maxDailyRentalFeeInput");
 
-    if (minInput.value === "" || maxInput.value === "") {
-        return true;
+
+    if (minInput.value !== ""){
+        var minRentalFee = parseFloat(minInput.value);
+        if (isNaN(minRentalFee)) {
+            alert("请输入有效的数字租金。");
+            return false;
+        }
     }
-
-    var minRentalFee = parseFloat(minInput.value);
-    var maxRentalFee = parseFloat(maxInput.value);
-
-    if (minRentalFee > maxRentalFee) {
-        alert("租金范围不正确，请重新输入。");
-        return false;
+    if (maxInput.value!== ""){
+        var maxRentalFee = parseFloat(maxInput.value);
+        if (isNaN(maxRentalFee)) {
+            alert("请输入有效的数字租金。");
+            return false;
+        }
     }
-
-    if (isNaN(minRentalFee) || isNaN(maxRentalFee)) {
-        alert("请输入有效的数字租金。");
-        return false;
+    if (minInput.value!== "" && maxInput.value!== ""){
+        if (minRentalFee > maxRentalFee) {
+            alert("租金范围不正确，请重新输入。");
+            return false;
+        }
     }
 
     // 继续提交表单或其他操作

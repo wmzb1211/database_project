@@ -31,7 +31,7 @@ public class ReturnRecordDao {
                 int rentalId = resultSet.getInt("rental_id");
                 Date returnDateTime = resultSet.getDate("return_date_time");
                 String vehicleConditionDescription = resultSet.getString("vehicle_condition_description");
-                int adminId = resultSet.getInt("admin_id");
+                int adminId = resultSet.getInt("handling_personnel");
                 returnRecord = new ReturnRecord(returnId, rentalId, returnDateTime, vehicleConditionDescription, adminId);
                 returnRecords.add(returnRecord);
             }

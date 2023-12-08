@@ -53,6 +53,9 @@
   <form action="customer/register.jsp">
     <input type="submit" value="注册">
   </form>
+  <form action="admin/login.jsp">
+    <input type="submit" value="管理员登录">
+  </form>
 </div>
 </body>
 </html>

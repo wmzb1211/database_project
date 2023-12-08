@@ -40,6 +40,14 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.rent-car-container {
+    background-color: #007bff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    text-align: center;
+}
+
 .user-info h2, .rental-records h2 {
     color: #333;
 }
@@ -84,10 +92,6 @@ input[type=submit]:hover {
     background-color: #0056b3;
 }
 
-.rent-car-button {
-    width: 100%;
-    text-align: center;
-}
 
 /* 表格样式 */
 .rental-table {
@@ -163,21 +167,27 @@ footer form {
     margin: 0; /* 移除form元素的默认外边距 */
 }
 
-footer .rent-car-button {
+.rent-car-container form {
+    margin: 0;
+    width: 100%;
+}
+
+.rent-car-container input[type=submit] {
     font-family: Arial, sans-serif;
     text-align: center;
-    width: 100%; /* 按钮宽度为100% */
-    height: 100px; /* 或者您想要的任何高度 */
-    border: none; /* 移除边框 */
-    background-color: #28a745; /* 按钮背景色 */
-    color: white; /* 文本颜色 */
-    font-size: 2em; /* 字体大小 */
-    cursor: pointer; /* 鼠标光标样式 */
+    width: 100%; /* 让按钮宽度占据整个容器 */
+    padding: 20px; /* 调整按钮内边距以适应容器 */
+    margin: 0; /* 移除按钮的外边距 */
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
     transition: background-color 0.3s;
 }
 
-footer .rent-car-button:hover {
-    background-color: #218838; /* 鼠标悬停时的背景色 */
+.rent-car-container input[type=submit]:hover {
+    background-color: #0056b3;
 }
 
 .highlight {

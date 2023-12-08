@@ -1,7 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.EasyRide.util.HTMLUtils" %>
 <%@ page import="com.EasyRide.dao.*" %>
-<%@ page import="com.EasyRide.entity.*" %><%--
+<%@ page import="com.EasyRide.entity.*" %>
+<%@ page import="java.sql.Date" %><%--
   Created by IntelliJ IDEA.
   User: Harrison
   Date: 2023/12/6
@@ -32,6 +33,10 @@
     if (rentalRecord != null) {
         payments = paymentDao.getPaymentByRentalRecordId(rentalRecord.getRentalId());
     }
+
+    Date now = new Date(System.currentTimeMillis());
+    long dayDifference = (now.getTime() - rentalRecord.getExpectedReturnDate().getTime()) / (24 * 60 * 60 * 1000);
+    Double extraFee = car.getDailyRentalFee() * dayDifference * 3;
 %>
 
 <div class="details-container">
@@ -89,6 +94,28 @@
 
     <% if (rentalRecord.getStatus().equals("Ongoing")) { %>
 
+    <script>
+        function confirmPayment() {
+            var dayDifference = ( <%= dayDifference %> );
+
+            if (dayDifference > 0) {
+                var confirmed = confirm("该车辆已经超时，需要支付违约金（" + <%= extraFee %> + "元），确认继续吗？");
+
+                if (!confirmed) {
+                    return false; // 用户取消了操作，阻止表单提交
+                }
+            } else {
+                var confirmed = confirm("确认要还车吗？");
+
+                if (!confirmed) {
+                    return false; // 用户取消了操作，阻止表单提交
+                }
+            }
+
+            return true; // 继续提交表单
+        }
+    </script>
+
     <form action="/customer/checkTimeoutRental" method="get" class="continue-submit">
         <input type="hidden" name="function" value="/customer/renewCar">
         <input type="hidden" name="carId" value="<%= car.getCarId() %>">
@@ -97,7 +124,7 @@
         <input type="submit" value="Continue to Rental Car">
     </form>
 
-    <form action="/customer/checkReturnTime" method="post" onsubmit="return confirm('确认要还车吗？');">
+    <form action="/customer/checkReturnTime" method="post" onsubmit="return confirmPayment();">
         <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">
         <input type="submit" value="Return Car">
     </form>

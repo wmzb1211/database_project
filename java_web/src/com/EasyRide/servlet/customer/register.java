@@ -34,13 +34,38 @@ public class register extends HttpServlet {
         String licenseNumber = request.getParameter("licenseNumber");
         String address = request.getParameter("address");
 
-        CustomerDao ud = new CustomerDao();
-        Customer c = new Customer(0, name, account, password, contactInfo, licenseNumber, address);
+        CustomerDao customerDao = new CustomerDao();
+
+        Customer customerTmp = customerDao.getCustomerByAccount(account);
+        if (customerTmp!= null) {
+            String str = "该账号已被注册";
+            PrintWriter out = response.getWriter();
+            out.print("<script>");
+            out.print("alert('" + str + "');");
+            out.print("location.href='register.jsp'");
+            out.print("</script>");
+            out.close();
+            return;
+        }
+
+        customerTmp = customerDao.getCustomerByLicenseNumber(licenseNumber);
+        if (customerTmp!= null) {
+            String str = "该车牌号已被注册";
+            PrintWriter out = response.getWriter();
+            out.print("<script>");
+            out.print("alert('" + str + "');");
+            out.print("location.href='register.jsp'");
+            out.print("</script>");
+            out.close();
+            return;
+        }
+
+        Customer customer = new Customer(0, name, account, password, contactInfo, licenseNumber, address);
 
         //调用添加接口
-        c = ud.addCustomer(c);
+        customer = customerDao.addCustomer(customer);
 
-        if (c == null) {
+        if (customer == null) {
             String str = "注册失败";
             PrintWriter out = response.getWriter();
             out.print("<script>");
@@ -54,7 +79,7 @@ public class register extends HttpServlet {
             // 重定向到user.jsp
 
             HttpSession session = request.getSession();
-            session.setAttribute("customer", c);
+            session.setAttribute("customer", customer);
             response.sendRedirect("user.jsp");
 
         }

@@ -3,13 +3,13 @@ package com.EasyRide.dao;
 import com.EasyRide.entity.Payment;
 import com.EasyRide.util.DBConnectionPool;
 import javafx.beans.binding.ObjectExpression;
+
 import java.text.SimpleDateFormat;
 //import java.util.Date;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 public class PaymentDao {
     /**
@@ -53,35 +53,35 @@ public class PaymentDao {
         return payment;
     }
     // 查找从开始日期的支付信息，求和
-    public double getPaymentByStartDate(String StartDate) {
-        double TotalPayment = 0;
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = DBConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT SUM(payment) FROM payment WHERE payment_date >= ?");
-            StartDate = dateFormat.parse(StartDate);
-            preparedStatement.setDate(1, StartDate);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                totalPayment = resultSet.getDouble(1);
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        } finally {
-            try{
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) DBConnectionPool.releaseConnection(connection);
-            } catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
-
-        return TotalPayment;
-
-    }
+//    public double getPaymentByStartDate(String StartDate) {
+//        double TotalPayment = 0;
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+//        try {
+//            connection = DBConnectionPool.getConnection();
+//            preparedStatement = connection.prepareStatement("SELECT SUM(payment) FROM payment WHERE payment_date >= ?");
+//            StartDate = dateFormat.parse(StartDate);
+//            preparedStatement.setDate(1, StartDate);
+//            resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                totalPayment = resultSet.getDouble(1);
+//            }
+//        } catch (SQLException e){
+//            e.printStackTrace();
+//        } finally {
+//            try{
+//                if (resultSet != null) resultSet.close();
+//                if (preparedStatement != null) preparedStatement.close();
+//                if (connection != null) DBConnectionPool.releaseConnection(connection);
+//            } catch (SQLException e){
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return TotalPayment;
+//
+//    }
 
     public List<Double> getPaymentInPastYear() {
         List<Double> paymentsInPastYear = new ArrayList<>();
@@ -89,7 +89,7 @@ public class PaymentDao {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         // 获取当前日期
-        Date currentDate = new Date();
+        Date currentDate = new Date(System.currentTimeMillis());
         calendar.setTime(currentDate);
 
         // 迭代过去的十二个月
@@ -101,17 +101,17 @@ public class PaymentDao {
             calendar.add(Calendar.MONTH, -1);
 
             // 获取上一个月的第一天的日期
-            Date startDate = calendar.getTime();
+//            Date startDate = calendar.getTime();
 
             // 获取上一个月的支付总和
-            double payment = getPaymentByStartDate(dateFormat.format(startDate));
+//            double payment = getPaymentByStartDate(dateFormat.format(startDate));
 
             // 将支付总和添加到列表中
-            paymentsInPastYear.add(payment);
+//            paymentsInPastYear.add(payment);
         }
 
         // 将列表反转，使得列表中的数据按照时间顺序排列
-        Collections.reverse(paymentsInPastYear);
+//        Collections.reverse(paymentsInPastYear);
 
         return paymentsInPastYear;
     }

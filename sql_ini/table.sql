@@ -1,4 +1,15 @@
 -- 创建客户表
+-- 创建管理员表
+CREATE TABLE Administrator (
+                               admin_id INT AUTO_INCREMENT PRIMARY KEY,
+                               name VARCHAR(255),
+                               account VARCHAR(50) UNIQUE,
+                               password VARCHAR(255),
+                               contact_info VARCHAR(255),
+                               role VARCHAR(50),
+                               creation_date DATE
+);
+
 CREATE TABLE Customer (
       customer_id INT AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(255),
@@ -81,16 +92,6 @@ CREATE TABLE Payment (
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 
--- 创建管理员表
-CREATE TABLE Administrator (
-    admin_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    account VARCHAR(50) UNIQUE,
-    password VARCHAR(255),
-    contact_info VARCHAR(255),
-    role VARCHAR(50),
-    creation_date DATE
-);
 
 -- 创建系统操作日志表
 CREATE TABLE SystemLog (

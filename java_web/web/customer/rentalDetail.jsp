@@ -97,7 +97,7 @@
         <input type="submit" value="Continue to Rental Car">
     </form>
 
-    <form action="/customer/checkReturnTime" method="post">
+    <form action="/customer/checkReturnTime" method="post" onsubmit="return confirm('确认要还车吗？');">
         <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">
         <input type="submit" value="Return Car">
     </form>

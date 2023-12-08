@@ -101,7 +101,7 @@ public class checkTimeoutRental extends HttpServlet {
                         "&paymentDetails=" + " " +
                         "&dailyRentalFee=" + car.getDailyRentalFee() +
                         "&duration=" + duration;
-
+                System.out.println(url);
                 response.sendRedirect(url);
             } else {
                 response.sendRedirect("/customer/user.jsp");

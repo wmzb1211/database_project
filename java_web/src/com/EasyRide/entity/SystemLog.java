@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class SystemLog {
     private int logId;
+    
     private String operationType;
     private String operationDescription;
     private int operatorId;

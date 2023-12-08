@@ -268,6 +268,7 @@ public class CarDao {
         return cars;
     }
 
+
     private static StringBuilder getStringBuilder(Map<String, String> filterParams) {
         StringBuilder sb = new StringBuilder();
         if (filterParams != null){

@@ -4,7 +4,7 @@ import com.EasyRide.entity.Car;
 import com.EasyRide.entity.Customer;
 import com.EasyRide.entity.RentalRecord;
 import com.EasyRide.util.DBConnectionPool;
-
+import com.EasyRide.entity.Brand_Count;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +90,40 @@ public class RentalRecordDao {
             }
         }
         return rentalRecords;
+    }
+    // 根据品牌查询过去一年的租赁情况(租出去的车数量)
+    public List<Brand_Count> getRentalDetailAllBrandsInPastoneYear() {
+        List<Brand_Count> Brand_Count = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        RentalRecord rentalRecord = null;
+        try {
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT brand, COUNT(*) FROM rentalrecord WHERE start_date >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR) GROUP BY brand";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeQuery();
+            resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                String brand = resultSet.getString("brand");
+                int count = resultSet.getInt("COUNT(*)");
+                Brand_Count brand_count = new Brand_Count(brand, count);
+                Brand_Count.add(brand_count);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+
+        }
+        return Brand_Count;
+
     }
 
     public List<RentalRecord> getRentalRecordsByCarID(int carId) {

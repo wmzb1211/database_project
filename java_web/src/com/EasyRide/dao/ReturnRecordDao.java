@@ -55,7 +55,7 @@ public class ReturnRecordDao {
         ReturnRecord returnRecord=null;
         try {
             connection =DBConnectionPool.getConnection();
-            String sql="insert into returnrecord (rental_id, return_date_time, vehicle_condition_description, admin_id) values (?,?,?,?)";
+            String sql="insert into returnrecord (rental_id, return_date_time, vehicle_condition_description, handling_personnel) values (?,?,?,?)";
             preparedStatement=connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 
             Date returnDate=new Date(System.currentTimeMillis());

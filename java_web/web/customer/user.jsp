@@ -15,6 +15,16 @@
   Time: 16:47
   To change this template use File | Settings | File Templates.
 --%>
+<%
+    session = request.getSession();
+    Customer customer = (Customer) session.getAttribute("customer");
+
+    // 检查用户是否已登录
+    if (customer == null) {
+        // 如果用户未登录，重定向到登录页面
+        response.sendRedirect("login.jsp");
+    }
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

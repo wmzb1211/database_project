@@ -94,3 +94,20 @@ function checkDuration() {
 
     return true; // 允许表单提交
 }
+
+function validateRentalFeeInput() {
+    var minInput = document.getElementById("minDailyRentalFeeInput");
+    var maxInput = document.getElementById("maxDailyRentalFeeInput");
+
+    var minRentalFee = parseFloat(minInput.value);
+    var maxRentalFee = parseFloat(maxInput.value);
+
+    if (isNaN(minRentalFee) || isNaN(maxRentalFee)) {
+        alert("请输入有效的数字租金。");
+        return false;
+    }
+
+    // 继续提交表单或其他操作
+    return true;
+}
+

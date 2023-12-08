@@ -35,11 +35,17 @@
     <script src="js/filter.js"></script>
 </head>
 <body>
+
+
 <div class="cars-container">
-    <h2>Cars List</h2>
+
+    <div class="table-header">
+        <h2>Cars List</h2>
+        <button id="cancel-btn" onclick="history.back()">Back</button>
+    </div>
 
 
-    <form action="/customer/filterCars" method="get">
+    <form action="/customer/filterCars" method="get" onsubmit="return validateRentalFeeInput();">
         <div class="filter-container">
             <div class="filter-selected">
                 <label for="brandSelect">品牌:</label>

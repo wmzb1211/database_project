@@ -24,7 +24,21 @@
 </head>
 <body>
 
-<% Customer customer = (Customer) session.getAttribute("customer"); %>
+<%
+//    Customer customer = null;
+//    if (session.getAttribute("customer")!= null) {
+//        customer = (Customer) session.getAttribute("customer");
+//        if (customer.getName() == null) {
+//            response.sendRedirect("/index.jsp");
+//        }
+//        if (customer.getCustomerId() == 0) {
+//            response.sendRedirect("/index.jsp");
+//        }
+//    } else {
+//        response.sendRedirect("/index.jsp");
+//    }
+    Customer customer = (Customer) session.getAttribute("customer");
+%>
 
 <div class="header">
     <h1>Welcome, <%= customer.getName() %>!</h1>
@@ -45,6 +59,12 @@
         <!-- 按钮部分 -->
         <div class="profile-actions">
             <form action="/index.jsp" method="post">
+                <%
+                    if (session.getAttribute("customer")!= null) {
+                        session.removeAttribute("customer");
+                    }
+                %>
+
                 <div class="logout"> <input type="submit" value="Logout"> </div>
             </form>
 
@@ -59,7 +79,7 @@
     <%
     int id = customer.getCustomerId();
     List<RentalRecord> rentalRecordListOngoing = new RentalRecordDao().getRentalRecordsByCustomerID(id, "Ongoing");
-    List<RentalRecord> rentalRecordListDone = new RentalRecordDao().getRentalRecordsByCustomerID(id, "Done");
+    List<RentalRecord> rentalRecordListCompleted = new RentalRecordDao().getRentalRecordsByCustomerID(id, "Completed");
     Date now = new Date(System.currentTimeMillis());
 %>
 
@@ -124,11 +144,11 @@
     <h2></h2>
 
     <div class="table-header">
-        <h2>Done Rentals (<%= rentalRecordListDone.size() %>)</h2>
-        <button id="toggle-done-btn">展开</button>
+        <h2>Completed Rentals (<%= rentalRecordListCompleted.size() %>)</h2>
+        <button id="toggle-completed-btn">展开</button>
     </div>
 
-    <table id="done-rentals" class="rental-table" style="display: none;">
+    <table id="completed-rentals" class="rental-table" style="display: none;">
         <tr>
             <th>Rental ID</th>
             <th>Plate Number</th>
@@ -141,7 +161,7 @@
             <th>Operation</th>
         </tr>
         <%
-            for (RentalRecord record : rentalRecordListDone) {
+            for (RentalRecord record : rentalRecordListCompleted) {
                 Car car = new Car();
                 if (record.getCarId()!= 0) {
                     car = new CarDao().getCarById(record.getCarId());
@@ -153,7 +173,7 @@
             <td><%= car.getBrand() + " " + car.getModelName() %></td>
             <td><%= car.getColor() %></td>
             <td><%= record.getStartDate() %></td>
-            <td><%= record.getExpectedReturnDate() %></td>
+            <td><%= record.getActualReturnDate() %></td>
             <td><%= record.getRentalFee() %></td>
             <td><%= record.getStatus() %></td></td>
             <!--  显示一个按钮，跳转到详情页面  -->

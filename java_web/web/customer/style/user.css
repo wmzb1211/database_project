@@ -134,7 +134,7 @@ input[type=submit]:hover {
     background-color: #666666;
 }
 
-#toggle-done-btn {
+#toggle-completed-btn {
     padding: 10px 20px;
     background-color: #999999;
     color: white;
@@ -144,7 +144,7 @@ input[type=submit]:hover {
     transition: background-color 0.3s;
 }
 
-#toggle-done-btn:hover {
+#toggle-completed-btn:hover {
     background-color: #666666;
 }
 

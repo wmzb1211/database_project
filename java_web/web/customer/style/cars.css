@@ -5,6 +5,11 @@ body {
     padding: 0;
 }
 
+h2 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
 .cars-container {
     width: 80%;
     max-width: 1000px;
@@ -117,4 +122,29 @@ th {
 .rental-column {
     width: 120px; /* 或根据实际需要调整宽度 */
 }
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-header button {
+    width: 120px;
+    height: 50px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.back-button {
+    background-color: #bdbdbd;
+    color: white;
+}
+
+.back-button:hover {
+    background-color: #999999;
+}
+
 

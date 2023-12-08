@@ -14,15 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    var toggleBtn = document.getElementById('toggle-done-btn');
-    var doneRentalsTable = document.getElementById('done-rentals');
+    var toggleBtn = document.getElementById('toggle-completed-btn');
+    var completedRentalsTable = document.getElementById('completed-rentals');
 
     toggleBtn.addEventListener('click', function() {
-        if (doneRentalsTable.style.display === 'none') {
-            doneRentalsTable.style.display = 'table';
+        if (completedRentalsTable.style.display === 'none') {
+            completedRentalsTable.style.display = 'table';
             toggleBtn.textContent = '隐藏'; // 更新按钮文本为“隐藏”
         } else {
-            doneRentalsTable.style.display = 'none';
+            completedRentalsTable.style.display = 'none';
             toggleBtn.textContent = '展开'; // 更新按钮文本为“展开”
         }
     });

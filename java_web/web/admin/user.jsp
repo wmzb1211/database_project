@@ -1,15 +1,14 @@
 <%@ page import="com.EasyRide.entity.Administrator" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="com.EasyRide.dao.RentalRecordDao" %>
 <%@ page import="com.EasyRide.dao.CarDao" %>
 <%@ page import="com.EasyRide.dao.PaymentDao" %>
 <%@ page import="com.EasyRide.dao.CarModelDao" %>
 <%@ page import="com.EasyRide.dao.SystemLogDao" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.EasyRide.entity.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.math.BigDecimal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -143,8 +142,9 @@
         <%-- 一个统计图表，柱状图，可视化展示过去十二个月的payment --%>
         <% List<Double> PaymentInPastYear = new PaymentDao().getPaymentInPastYear();
         Double sum = PaymentInPastYear.stream().reduce(0.0, Double::sum);
+        BigDecimal b = new BigDecimal(sum);
         %>
-        <p>Payment in the past year: <%= sum%></p>
+        <p>Payment in the past year: <%= b%></p>
 <%--        <p>666: <%=PaymentInPastYear%></p>--%>
         <div>
         <h2>过去十二个月支付数据柱状图</h2>
@@ -204,6 +204,33 @@
         <div>
         <%
             List<Brand_Count> brand_counts = new RentalRecordDao().getBrandCountAccordingBrand();
+//            sort(Brand_Count);
+
+
+//***********************  为解决的漏洞，小于七个就会报错    **********************
+//            brand_counts = brand_counts.subList(0, 5);
+//**********************************************************************************
+
+
+            Comparator<Brand_Count> countComparator = Comparator.comparingInt(Brand_Count::getCount);
+            Collections.sort(brand_counts, countComparator.reversed());
+            // 将前七个保留，剩下的合成一个others
+            int sum_count = 0;
+            for (Brand_Count brand_count : brand_counts) {
+                sum_count += brand_count.getCount();
+            }
+            int others_count = sum_count;
+            for (int i = 0; i < brand_counts.size(); i++) {
+                if (i < 7) {
+                    continue;
+                } else {
+                    others_count -= brand_counts.get(i).getCount();
+                }
+            }
+            Brand_Count others = new Brand_Count("Others", others_count);
+            brand_counts = brand_counts.subList(0, 7);
+            brand_counts.add(others);
+
             List<String> brand = new ArrayList<>();
             List<Integer> count = new ArrayList<>();
             for (Brand_Count brand_count : brand_counts) {
@@ -262,7 +289,12 @@
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)'
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(153, 102, 255)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 99, 13)',
+                        'rgb(54, 162, 25)'
                     ],
                     hoverOffset: 4
                 }]

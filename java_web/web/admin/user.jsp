@@ -26,19 +26,14 @@
 <html>
 <head>
     <title>Admin Page</title>
-    <link rel="stylesheet" type="text/css" href="../customer/style/user.css">
-<%--    <script src="../customer/js/user.js"></script>--%>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        #barChart {
-            width: 300px;
-            height: 150px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style/user.css">
+    <script src="js/user.js"></script>
+<%--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--%>
+
 
 </head>
 
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+<body style="justify-content: center; align-items: center; height: 100vh; margin: 0;">
 <% Administrator admin = (Administrator) session.getAttribute("admin"); %>
 
 <div class="header">
@@ -150,18 +145,33 @@
         Double sum = PaymentInPastYear.stream().reduce(0.0, Double::sum);
         %>
         <p>Payment in the past year: <%= sum%></p>
-        <p>666: <%=PaymentInPastYear%></p>
+<%--        <p>666: <%=PaymentInPastYear%></p>--%>
+        <div>
         <h2>过去十二个月支付数据柱状图</h2>
 
         <!-- 用于显示柱状图的 canvas 元素 -->
-        <canvas id="barChart" width="300" height="150"></canvas>
+<%--        <style>--%>
+<%--            #barChart {--%>
+<%--                width: 300px;--%>
+<%--                height: 150px;--%>
+<%--            }--%>
+<%--        </style>--%>
+<%--        <script src="js/Chart.js">--%>
+        <div class="centered-container" >
+            <div class="outer">
+                <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
 
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <%--        <div class="BarChart">--%>
         <script>
             // 将 paymentData 传递给 JavaScript 变量
             var paymentDataArray = <%= PaymentInPastYear %>;
 
             // 使用 Chart.js 创建柱状图
-            var ctx = document.getElementById('barChart').getContext('2d');
+            var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -175,20 +185,112 @@
                     }]
                 },
                 options: {
+                    responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
+                    maintainAspectRatio: false,// 保持图表原有比例
                     scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
                     }
                 }
             });
         </script>
+        </div>
+        </div>
+<%--        </div>--%>
         <%-- 展示各品牌的租赁情况，饼状图 --%>
-        
+        <div>
+        <%
+            List<Brand_Count> brand_counts = new RentalRecordDao().getBrandCountAccordingBrand();
+            List<String> brand = new ArrayList<>();
+            List<Integer> count = new ArrayList<>();
+            for (Brand_Count brand_count : brand_counts) {
+                brand.add(brand_count.getBrand());
+                count.add(brand_count.getCount());
+            }
+            for (String s : brand) {
+                s = "\'" + s + "\'";
+            }
+        %>
 
-        
+        <h2>各品牌的租赁情况</h2>
+        <style>
+            #myPieChart {
+                width: 40px;
+                height: 40px;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <div>
+            <canvas id="myChart1" width="400" height="400" ></canvas>
+        </div>
 
-        
+        <script>
+            var brand = "<%=brand%>";
+
+            // 现在brand是一个string，“Audi, Toyota,...,BMW”，将这个转成一个list到brand_list
+            var brand_list = [];
+            var temp = ""
+            for (var i = 0; i < brand.length; i++) {
+                if (brand[i] === "[") {
+                    continue
+                }
+                if (brand[i] === ",") {
+                    brand_list.push(temp)
+                    temp = "";
+                } else {
+                    if (brand[i] === "]") {
+                        brand_list.push(temp)
+                    } else {
+                        temp = temp + brand[i];
+                    }
+                }
+            }
+
+            var count = <%=count%>;
+            // sort
+
+
+            var ctx_ = document.getElementById('myChart1');
+            const data = {
+                labels: brand_list,
+                datasets: [{
+                    label: '饼图实例',
+                    data: count,
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4
+                }]
+            };
+            const config = {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
+                    maintainAspectRatio: false,// 保持图表原有比例
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            };
+            const myChart1 = new Chart(ctx_, config);
+
+
+
+
+
+        </script>
+
+    </div>
     </div>
 <%-- 对系统的操作按钮 --%>
 
@@ -202,9 +304,7 @@
 <form action="/admin/addRentalRecord.jsp" method="post" class="form-button">
     <input type="submit" name="operation" value="Add Rental Record">
 </form>
-<form action="/admin/addSystemLog.jsp" method="post" class="form-button">
-    <input type="submit" name="operation" value="Add System Log">
-</form>
+
 
 </div>
 </body>

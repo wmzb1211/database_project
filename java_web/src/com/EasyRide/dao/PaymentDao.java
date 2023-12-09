@@ -97,22 +97,23 @@ public class PaymentDao {
         calendar.setTime(currentDate);
 
         // 迭代过去的十二个月
-        double temp = 0;
+        double sum = 0;
         for (int i = 0; i < 12; i++) {
             // 将日期调整到当前月的第一天
             calendar.set(Calendar.DAY_OF_MONTH, 1);
 
             // 将日期调整到上一个月
-            calendar.add(Calendar.MONTH, -1);
 
             // 获取上一个月的第一天的日期
-            Date startDate = new Date(System.currentTimeMillis());
+            Date startDate = new Date(calendar.getTimeInMillis());
 //            Date startDate =
             // 获取上一个月的支付总和
-            double payment = getPaymentByStartDate(startDate) - temp ;
-            temp += payment;
+            double payment = getPaymentByStartDate(startDate) - sum ;
+            sum += payment;
             // 将支付总和添加到列表中
             paymentsInPastYear.add(payment);
+            calendar.add(Calendar.MONTH, -1);
+
         }
 
         // 将列表反转，使得列表中的数据按照时间顺序排列

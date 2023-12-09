@@ -15,7 +15,7 @@
     // 检查session中存有customer对象还是admin对象
     if (session.getAttribute("customer") != null) {
         role = "customer";
-    } else if (session.getAttribute("admin") == null) {
+    } else if (session.getAttribute("admin") != null) {
         role = "admin";
     } else {
         // 重定向到index.jsp页面
@@ -28,6 +28,8 @@
     List<String> colors = (List<String>) request.getAttribute("colors");
     List<String> years = (List<String>) request.getAttribute("years");
     List<String> statuses = (List<String>) request.getAttribute("statuses");
+
+    Map<String, String> filterParams = (Map<String, String>) session.getAttribute("filterParams");
 %>
 <html>
 <head>
@@ -42,7 +44,11 @@
 
     <div class="table-header">
         <h2>Cars List</h2>
+        <% if (role.equals("customer")) { %>
         <button id="cancel-btn" onclick="window.location.href='/customer/user.jsp'" class="back-button">Back</button>
+        <% } else if (role.equals("admin")) { %>
+        <button id="cancel-btn" onclick="window.location.href='/admin/user.jsp'" class="back-button">Back</button>
+        <% } %>
     </div>
 
 
@@ -87,20 +93,27 @@
                 <select name="status" id="statusSelect" class="select-long">
                     <% if (role.equals("customer")) { %>
                     <option value="Available">Available</option>
-                    <% } else { %>
-                    <option value="Available">Available</option>
-                    <option value="Unavailable">Unavailable</option>
-                    <option value="Rented">Rented</option>
-                    <% } %>
+                    <%
+                    } else {
+                        for (String status : statuses) { %>
+<%--                    <option value="<%= status %>"><%= status %>--%>
+                    <option value="<%= status %>" <% if (status.equals("Available")) { %>selected<% } %>><%= status %></option>
+                    </option>
+                    <%
+                            }
+                        }
+                    %>
                 </select>
 
 
                 <label for="minDailyRentalFeeInput">价格区间:</label>
-                <input type="text" id="minDailyRentalFeeInput" name="minDailyRentalFee" style="width: 150px; margin-top: 15px;"
+                <input type="text" id="minDailyRentalFeeInput" name="minDailyRentalFee"
+                       style="width: 150px; margin-top: 15px;"
                        placeholder="请输入最小租金">
 
                 <label for="maxDailyRentalFeeInput">至</label>
-                <input type="text" id="maxDailyRentalFeeInput" name="maxDailyRentalFee" style="width: 150px; margin-top: 15px;"
+                <input type="text" id="maxDailyRentalFeeInput" name="maxDailyRentalFee"
+                       style="width: 150px; margin-top: 15px;"
                        placeholder="请输入最大租金">
 
             </div>
@@ -157,7 +170,7 @@
                     <input type="submit" value="Rent" class="submit-rent">
                 </form>
                     <% } else { %>
-                <form action="/admin/details" method="post">
+                <form id="detailForm" action="/admin/details" method="post">
                     <input type="hidden" name="carId" value="<%= car.getCarId() %>">
                     <input type="submit" value="Details" class="submit-details">
                 </form>

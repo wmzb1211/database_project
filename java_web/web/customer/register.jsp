@@ -52,6 +52,11 @@
 
 </form>
 <button type="button" onclick="window.location.href='login.jsp';" class="secondary-button">已有账户？登录</button>
+
+<br>
+
+<button onclick="window.location.href='/index.jsp';"> 返回首页 </button>
+
 </div>
 </body>
 </html>

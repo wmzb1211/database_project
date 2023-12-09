@@ -7,7 +7,9 @@ CREATE TABLE Administrator
     password      VARCHAR(255),
     contact_info  VARCHAR(255),
     role          VARCHAR(50),
-    creation_date DATE
+    creation_date DATE,
+    INDEX idx_admin_id (admin_id),
+    INDEX idx_account (account)
 );
 
 -- 创建客户表
@@ -32,7 +34,10 @@ CREATE TABLE CarModel
     model_id    INT AUTO_INCREMENT PRIMARY KEY, -- 设置自增主键
     brand       VARCHAR(255),
     model_name  VARCHAR(255),
-    description TEXT
+    description TEXT,
+    Index idx_model_id (model_id),
+    Index idx_brand (brand),
+    Index idx_model_name (model_name)
 );
 
 -- 创建可租用汽车表
@@ -45,7 +50,9 @@ CREATE TABLE Car
     year             INT,
     status           VARCHAR(50),
     daily_rental_fee DECIMAL(16, 2),
-    FOREIGN KEY (model_id) REFERENCES CarModel (model_id)
+    FOREIGN KEY (model_id) REFERENCES CarModel (model_id),
+    INDEX idx_car_id (car_id),
+    INDEX idx_plate_number (plate_number)
 );
 
 -- 创建租赁记录表
@@ -60,8 +67,12 @@ CREATE TABLE RentalRecord
     rental_fee           DECIMAL(16, 2),
     status               VARCHAR(50),
     FOREIGN KEY (customer_id) REFERENCES Customer (customer_id),
-    FOREIGN KEY (car_id) REFERENCES Car (car_id)
+    FOREIGN KEY (car_id) REFERENCES Car (car_id),
+    INDEX idx_rental_id (rental_id),
+    INDEX idx_customer_id (customer_id),
+    INDEX idx_car_id (car_id)
 );
+
 -- 创建违约记录表
 CREATE TABLE ViolationRecord
 (
@@ -70,7 +81,9 @@ CREATE TABLE ViolationRecord
     violation_type VARCHAR(255),
     description    TEXT,
     fine_amount    DECIMAL(16, 2),
-    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id)
+    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id),
+    INDEX idx_violation_id (violation_id),
+    INDEX idx_rental_id (rental_id)
 );
 
 -- 创建还车单表
@@ -82,7 +95,9 @@ CREATE TABLE ReturnRecord
     vehicle_condition_description TEXT,
     handling_personnel            INT,
     FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id),
-    FOREIGN KEY (handling_personnel) REFERENCES Administrator (admin_id)
+    FOREIGN KEY (handling_personnel) REFERENCES Administrator (admin_id),
+    INDEX idx_return_id (return_id),
+    INDEX idx_rental_id (rental_id)
 );
 
 
@@ -96,7 +111,10 @@ CREATE TABLE Payment
     amount         DECIMAL(16, 2),
     payment_method VARCHAR(50),
     FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id),
-    FOREIGN KEY (customer_id) REFERENCES Customer (customer_id)
+    FOREIGN KEY (customer_id) REFERENCES Customer (customer_id),
+    INDEX idx_payment_id (payment_id),
+    INDEX idx_rental_id (rental_id),
+    INDEX idx_customer_id (customer_id)
 );
 
 
@@ -110,5 +128,7 @@ CREATE TABLE SystemLog
     operation_date_time   DATETIME,
     ip_address            VARCHAR(50),
     result                VARCHAR(50),
-    FOREIGN KEY (operator_id) REFERENCES Administrator (admin_id)
+    FOREIGN KEY (operator_id) REFERENCES Administrator (admin_id),
+    INDEX idx_log_id (log_id),
+    INDEX idx_operator_id (operator_id)
 );

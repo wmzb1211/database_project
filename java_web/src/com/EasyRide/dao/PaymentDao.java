@@ -137,15 +137,15 @@ public class PaymentDao {
         ResultSet resultSet = null;
         try{
             connection = DBConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO payment (rental_id, customer_id,payment_date, amount, payment_method) " +
-                    "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement = connection.prepareStatement("INSERT INTO payment (rental_id, customer_id, payment_type, payment_date, amount, payment_method) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, rentalRecordId);
             preparedStatement.setInt(2, customerId);
-//            preparedStatement.setString(3, paymentType);
+            preparedStatement.setString(3, paymentType);
             Date date = new Date(System.currentTimeMillis());
-            preparedStatement.setDate(3, date);
-            preparedStatement.setDouble(4, amount);
-            preparedStatement.setString(5, paymentMethod);
+            preparedStatement.setDate(4, date);
+            preparedStatement.setDouble(5, amount);
+            preparedStatement.setString(6, paymentMethod);
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating payment failed, no rows affected.");

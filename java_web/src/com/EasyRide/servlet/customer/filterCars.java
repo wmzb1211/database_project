@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -61,12 +62,15 @@ public class filterCars extends HttpServlet {
         Collections.sort(years);
         List<String> statuses = carDao.getAllFilterOptions("status");
 
+        HttpSession session = request.getSession();
+        session.setAttribute("filterParams", filterParams);
+
         request.setAttribute("cars", cars);
         request.setAttribute("brands", models);
         request.setAttribute("colors", colors);
         request.setAttribute("years", years);
         request.setAttribute("statuses", statuses);
-        request.getRequestDispatcher("rentalCar.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/rentalCar.jsp").forward(request, response);
 
     }
 }

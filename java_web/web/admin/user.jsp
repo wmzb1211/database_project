@@ -306,6 +306,11 @@
 </form>
 
 
+<form action="/customer/filterCars" method="get">
+    <input type="hidden" name="status" value="Available">
+    <input type="submit" value="Filter Cars" class="rent-car-button">
+</form>
+
 </div>
 </body>
 </html>

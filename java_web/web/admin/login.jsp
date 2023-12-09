@@ -20,7 +20,7 @@
 <%--</html>--%>
 
 <div class="login-container">
-    <h2>登录到您的账户</h2>
+    <h2>管理员登录</h2>
     <form action="/admin/login" method="post">
         <table>
             <tr>
@@ -36,6 +36,7 @@
 
     </form>
 
+    <button onclick="window.location.href='/index.jsp';"> 返回首页 </button>
 <%--    <button onclick="window.location.href='register.jsp';">注册新账户</button>--%>
 </div>
 </body>

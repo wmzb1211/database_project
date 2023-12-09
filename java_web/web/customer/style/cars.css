@@ -25,7 +25,8 @@ h2 {
 }
 
 form {
-    margin-bottom: 20px;
+    margin-block-start: 1em;
+    margin-block-end : 1em;
 }
 
 label {
@@ -61,7 +62,8 @@ table {
 th, td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center;
+    vertical-align: middle;
 }
 
 th {
@@ -123,6 +125,12 @@ th {
     width: 120px; /* 或根据实际需要调整宽度 */
 }
 
+.table-header form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .table-header {
     display: flex;
     justify-content: space-between;
@@ -130,7 +138,7 @@ th {
 
 .table-header button {
     width: 120px;
-    height: 50px;
+    height: 70px;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;

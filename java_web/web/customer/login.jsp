@@ -32,6 +32,10 @@
     </form>
 
     <button onclick="window.location.href='register.jsp';">注册新账户</button>
+
+    <br>
+
+    <button onclick="window.location.href='/index.jsp';"> 返回首页 </button>
 </div>
 </body>
 </html>

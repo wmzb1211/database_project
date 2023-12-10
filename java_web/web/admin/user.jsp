@@ -1,15 +1,14 @@
 <%@ page import="com.EasyRide.entity.Administrator" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="com.EasyRide.dao.RentalRecordDao" %>
 <%@ page import="com.EasyRide.dao.CarDao" %>
 <%@ page import="com.EasyRide.dao.PaymentDao" %>
 <%@ page import="com.EasyRide.dao.CarModelDao" %>
 <%@ page import="com.EasyRide.dao.SystemLogDao" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.EasyRide.entity.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.math.BigDecimal" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -26,19 +25,14 @@
 <html>
 <head>
     <title>Admin Page</title>
-    <link rel="stylesheet" type="text/css" href="../customer/style/user.css">
-<%--    <script src="../customer/js/user.js"></script>--%>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        #barChart {
-            width: 300px;
-            height: 150px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style/user.css">
+    <script src="js/user.js"></script>
+<%--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--%>
+
 
 </head>
 
-<body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+<body style="justify-content: center; align-items: center; height: 100vh; margin: 0;">
 <% Administrator admin = (Administrator) session.getAttribute("admin"); %>
 
 <div class="header">
@@ -148,20 +142,36 @@
         <%-- 一个统计图表，柱状图，可视化展示过去十二个月的payment --%>
         <% List<Double> PaymentInPastYear = new PaymentDao().getPaymentInPastYear();
         Double sum = PaymentInPastYear.stream().reduce(0.0, Double::sum);
+        BigDecimal b = new BigDecimal(sum);
         %>
-        <p>Payment in the past year: <%= sum%></p>
-        <p>666: <%=PaymentInPastYear%></p>
+        <p>Payment in the past year: <%= b%></p>
+<%--        <p>666: <%=PaymentInPastYear%></p>--%>
+        <div>
         <h2>过去十二个月支付数据柱状图</h2>
 
         <!-- 用于显示柱状图的 canvas 元素 -->
-        <canvas id="barChart" width="300" height="150"></canvas>
+<%--        <style>--%>
+<%--            #barChart {--%>
+<%--                width: 300px;--%>
+<%--                height: 150px;--%>
+<%--            }--%>
+<%--        </style>--%>
+<%--        <script src="js/Chart.js">--%>
+        <div class="centered-container" >
+            <div class="outer">
+                <canvas id="myChart" width="800" height="400"></canvas>
+            </div>
 
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <%--        <div class="BarChart">--%>
         <script>
             // 将 paymentData 传递给 JavaScript 变量
             var paymentDataArray = <%= PaymentInPastYear %>;
 
             // 使用 Chart.js 创建柱状图
-            var ctx = document.getElementById('barChart').getContext('2d');
+            var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -175,20 +185,153 @@
                     }]
                 },
                 options: {
+                    responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
+                    maintainAspectRatio: false,// 保持图表原有比例
                     scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
                     }
                 }
             });
         </script>
+        </div>
+        </div>
+<%--        </div>--%>
         <%-- 展示各品牌的租赁情况，饼状图 --%>
-        
+        <div>
+        <%
+            List<Brand_Count> brand_counts = new RentalRecordDao().getBrandCountAccordingBrand();
+//            sort(Brand_Count);
 
-        
 
-        
+//***********************  为解决的漏洞，小于七个就会报错    **********************
+//            brand_counts = brand_counts.subList(0, 5);
+//**********************************************************************************
+
+
+            Comparator<Brand_Count> countComparator = Comparator.comparingInt(Brand_Count::getCount);
+            Collections.sort(brand_counts, countComparator.reversed());
+            // 将前七个保留，剩下的合成一个others
+            int sum_count = 0;
+            for (Brand_Count brand_count : brand_counts) {
+                sum_count += brand_count.getCount();
+            }
+            int others_count = sum_count;
+            for (int i = 0; i < brand_counts.size(); i++) {
+                if (i < 7) {
+                    continue;
+                } else {
+                    others_count -= brand_counts.get(i).getCount();
+                }
+            }
+            Brand_Count others = new Brand_Count("Others", others_count);
+            brand_counts = brand_counts.subList(0, 7);
+            brand_counts.add(others);
+
+            List<String> brand = new ArrayList<>();
+            List<Integer> count = new ArrayList<>();
+            for (Brand_Count brand_count : brand_counts) {
+                brand.add(brand_count.getBrand());
+                count.add(brand_count.getCount());
+            }
+            for (String s : brand) {
+                s = "\'" + s + "\'";
+            }
+        %>
+
+        <h2>各品牌的租赁情况</h2>
+        <style>
+            #myPieChart {
+                width: 400px;
+                height: 400px;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <div class="outer">
+            <canvas id="myChart1" width="800" height="400" ></canvas>
+        </div>
+
+        <script>
+            var brand = "<%=brand%>";
+
+            // 现在brand是一个string，“Audi, Toyota,...,BMW”，将这个转成一个list到brand_list
+            var brand_list = [];
+            var temp = ""
+            for (var i = 0; i < brand.length; i++) {
+                if (brand[i] === "[") {
+                    continue
+                }
+                if (brand[i] === ",") {
+                    brand_list.push(temp)
+                    temp = "";
+                } else {
+                    if (brand[i] === "]") {
+                        brand_list.push(temp)
+                    } else {
+                        temp = temp + brand[i];
+                    }
+                }
+            }
+
+            var count = <%=count%>;
+            // sort
+
+
+            var ctx_ = document.getElementById('myChart1');
+            const data = {
+                labels: brand_list,
+                datasets: [{
+                    label: '饼图实例',
+                    data: count,
+                    backgroundColor: [
+                        // 'rgb(255, 99, 132)',
+                        // 'rgb(54, 162, 235)',
+                        // 'rgb(255, 205, 86)',
+                        // 'rgb(75, 192, 192)',
+                        // 'rgb(153, 102, 255)',
+                        // 'rgb(255, 159, 64)',
+                        // 'rgb(255, 99, 13)',
+                        // 'rgb(54, 162, 25)'
+                        '#B395BD',
+                        '#EA8379',
+                        '#F5B971',
+                        '#F6C957',
+                        '#FFB77F',
+                        '#FBE8D5',
+                        '#F5B971',
+                        '#43978F'
+
+                    ],
+                    hoverOffset: 4
+                }]
+            };
+            const config = {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
+                    maintainAspectRatio: false,// 保持图表原有比例
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            };
+            const myChart1 = new Chart(ctx_, config);
+
+
+
+
+
+        </script>
+
+    </div>
     </div>
 <%-- 对系统的操作按钮 --%>
 
@@ -202,9 +345,7 @@
 <form action="/admin/addRentalRecord.jsp" method="post" class="form-button">
     <input type="submit" name="operation" value="Add Rental Record">
 </form>
-<form action="/admin/addSystemLog.jsp" method="post" class="form-button">
-    <input type="submit" name="operation" value="Add System Log">
-</form>
+
 
 <form action="/customer/filterCars" method="get">
     <input type="hidden" name="status" value="Available">

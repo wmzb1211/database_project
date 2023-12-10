@@ -12,4 +12,13 @@ public class Brand_Count {
         Brand = brand;
         Count = count;
     }
+
+    public String getBrand() {
+        return Brand;
+    }
+
+    public int getCount() {
+        return Count;
+    }
+
 }

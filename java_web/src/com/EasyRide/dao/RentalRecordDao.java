@@ -1,5 +1,6 @@
 package com.EasyRide.dao;
 
+import com.EasyRide.entity.Brand_Count;
 import com.EasyRide.entity.Car;
 import com.EasyRide.entity.Customer;
 import com.EasyRide.entity.RentalRecord;
@@ -129,6 +130,48 @@ public class RentalRecordDao {
         return rentalRecords;
     }
 
+    public List<Brand_Count> getBrandCountAccordingBrand() {
+        List<Brand_Count> brand_counts = new ArrayList<>();
+        List<String> brands = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DBConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT\n" +
+                    "    brand,\n" +
+                    "    COUNT(*) AS rental_count\n" +
+                    "FROM\n" +
+                    "    carmodel\n" +
+                    "JOIN\n" +
+                    "    car ON carmodel.model_id = car.model_id\n" +
+                    "JOIN\n" +
+                    "    rentalrecord ON car.car_id = rentalrecord.car_id\n" +
+                    "GROUP BY\n" +
+                    "    brand;");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String brand = resultSet.getString("brand");
+                int count = resultSet.getInt("rental_count");
+                Brand_Count brand_count = new Brand_Count(brand, count);
+                brand_counts.add(brand_count);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return brand_counts;
+    }
     public List<RentalRecord> getRentalRecordByFilter(Map<String, String> filterParams) {
         if (filterParams == null || filterParams.isEmpty()) {
             return getAllRentalRecords();

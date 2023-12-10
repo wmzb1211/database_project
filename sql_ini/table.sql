@@ -107,6 +107,7 @@ CREATE TABLE Payment
     payment_id     INT AUTO_INCREMENT PRIMARY KEY,
     rental_id      INT,
     customer_id    INT,
+    payment_type   VARCHAR(50),
     payment_date   DATE,
     amount         DECIMAL(16, 2),
     payment_method VARCHAR(50),

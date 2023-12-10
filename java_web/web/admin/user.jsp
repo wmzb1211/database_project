@@ -159,7 +159,7 @@
 <%--        <script src="js/Chart.js">--%>
         <div class="centered-container" >
             <div class="outer">
-                <canvas id="myChart" width="400" height="200"></canvas>
+                <canvas id="myChart" width="800" height="400"></canvas>
             </div>
 
 
@@ -245,13 +245,13 @@
         <h2>各品牌的租赁情况</h2>
         <style>
             #myPieChart {
-                width: 40px;
-                height: 40px;
+                width: 400px;
+                height: 400px;
             }
         </style>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <div>
-            <canvas id="myChart1" width="400" height="400" ></canvas>
+        <div class="outer">
+            <canvas id="myChart1" width="800" height="400" ></canvas>
         </div>
 
         <script>
@@ -287,14 +287,23 @@
                     label: '饼图实例',
                     data: count,
                     backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(153, 102, 255)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 99, 13)',
-                        'rgb(54, 162, 25)'
+                        // 'rgb(255, 99, 132)',
+                        // 'rgb(54, 162, 235)',
+                        // 'rgb(255, 205, 86)',
+                        // 'rgb(75, 192, 192)',
+                        // 'rgb(153, 102, 255)',
+                        // 'rgb(255, 159, 64)',
+                        // 'rgb(255, 99, 13)',
+                        // 'rgb(54, 162, 25)'
+                        '#B395BD',
+                        '#EA8379',
+                        '#F5B971',
+                        '#F6C957',
+                        '#FFB77F',
+                        '#FBE8D5',
+                        '#F5B971',
+                        '#43978F'
+
                     ],
                     hoverOffset: 4
                 }]

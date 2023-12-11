@@ -20,13 +20,13 @@
 <%
     int rentalRecordID = Integer.parseInt(request.getParameter("rentalRecordID"));
     if (rentalRecordID == 0) {
-        response.sendRedirect("/customer/user.jsp");
+        response.sendRedirect("user.jsp");
     }
     RentalRecord rentalRecord = new RentalRecordDao().getRentalRecordsByID(rentalRecordID);
     Car car = new CarDao().getCarById(rentalRecord.getCarId());
 
     if (rentalRecord == null) {
-        response.sendRedirect("/customer/user.jsp");
+        response.sendRedirect("user.jsp");
     }
     PaymentDao paymentDao = new PaymentDao();
     List<Payment> payments = null;

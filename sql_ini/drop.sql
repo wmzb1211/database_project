@@ -1,3 +1,5 @@
+use cardb;
+
 DROP TABLE IF EXISTS Payment;
 DROP TABLE IF EXISTS ReturnRecord;
 DROP TABLE IF EXISTS ViolationRecord;

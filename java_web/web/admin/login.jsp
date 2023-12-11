@@ -28,7 +28,7 @@
 
 <div class="login-container">
     <h2>管理员登录</h2>
-    <form action="/admin/login" method="post">
+    <form action="${pageContext.request.contextPath}/admin/login" method="post">
         <table>
             <tr>
                 <td>账号：</td>
@@ -43,7 +43,7 @@
 
     </form>
 
-    <button onclick="window.location.href='/index.jsp';"> 返回首页 </button>
+    <button onclick="window.location.href='${pageContext.request.contextPath}/index.jsp';"> 返回首页 </button>
 <%--    <button onclick="window.location.href='register.jsp';">注册新账户</button>--%>
 </div>
 </body>

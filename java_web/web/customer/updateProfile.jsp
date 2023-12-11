@@ -35,38 +35,38 @@
 <div class="login-container">
     <h2>Update Your Profile</h2>
     <% customer = (Customer) session.getAttribute("customer"); %>
-    <form action="/customer/updateProfile" method="post">
+    <form action="${pageContext.request.contextPath}/customer/updateProfile" method="post">
 
         <table>
             <tr>
                 <td>昵称</td>
-                <td><input type="text" id="name" name="name" value="<%= customer.getName() %>"></td>
+                <td><label for="name"></label><input type="text" id="name" name="name" value="<%= customer.getName() %>"></td>
             </tr>
             <tr>
                 <td>账号</td>
-                <td><input type="text" id="account" name="account" value="<%= customer.getAccount() %>"></td>
+                <td><label for="account"></label><input type="text" id="account" name="account" value="<%= customer.getAccount() %>"></td>
             </tr>
             <tr>
                 <td>密码</td>
-                <td><input type="password" id="password" name="password" value=""></td>
+                <td><label for="password"></label><input type="password" id="password" name="password" value=""></td>
             </tr>
             <tr>
                 <td>确认密码</td>
-                <td><input type="password" id="password2" name="password2" value=""></td>
+                <td><label for="password2"></label><input type="password" id="password2" name="password2" value=""></td>
             </tr>
             <tr>
                 <td>联系方式</td>
-                <td><input type="text" id="contactInfo" name="contactInfo" value="<%= customer.getContactInfo() %>">
+                <td><label for="contactInfo"></label><input type="text" id="contactInfo" name="contactInfo" value="<%= customer.getContactInfo() %>">
                 </td>
             </tr>
             <tr>
                 <td>驾驶证号</td>
-                <td><input type="text" id="licenseNumber" name="licenseNumber"
-                           value="<%= customer.getLicenseNumber() %>"></td>
+                <td><label for="licenseNumber"></label><input type="text" id="licenseNumber" name="licenseNumber"
+                                                              value="<%= customer.getLicenseNumber() %>"></td>
             </tr>
             <tr>
                 <td>地址</td>
-                <td><input type="text" id="address" name="address" value="<%= customer.getAddress() %>"></td>
+                <td><label for="address"></label><input type="text" id="address" name="address" value="<%= customer.getAddress() %>"></td>
             </tr>
         </table>
 

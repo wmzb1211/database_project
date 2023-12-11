@@ -20,19 +20,11 @@
 <%
 
     customer = (Customer) session.getAttribute("customer");
-    int customerId = customer.getCustomerId();
-
-//    String function = request.getParameter("function");
-//
-//    int carId = Integer.parseInt(request.getParameter("carId"));
-//
-//    int rentalRecordId = Integer.parseInt(request.getParameter("rentalRecordId"));
-//
-//    String paymentType = request.getParameter("paymentType"); // Overdue Penalty Fee OR Rental Fee
-//    String paymentDetails = request.getParameter("paymentDetails");
-//
-//    Double dailyRentalFee = Double.parseDouble(request.getParameter("dailyRentalFee"));
-//    int duration = Integer.parseInt(request.getParameter("duration"));
+    if (customer == null) {
+        // 如果用户未登录，重定向到登录页面
+        response.sendRedirect("login.jsp");
+        return;
+    }
 
     String function = (String) request.getAttribute("function");
     Car car = (Car) request.getAttribute("car");
@@ -77,7 +69,7 @@
     <p class="total-fee">Total Price: <%= totalFee %></p>
     <% } %>
 
-    <form action="<%= function %>" method="post" class="payment-form">
+    <form action="${pageContext.request.contextPath}<%= function %>" method="post" class="payment-form">
         <input type="hidden" name="carId" value="<%= carId %>">
         <input type="hidden" name="rentalRecordId" value="<%= rentalRecordId %>">
         <input type="hidden" name="duration" value="<%= duration %>">

@@ -24,15 +24,19 @@
 
 <div class="login-container">
     <h2>登录到您的账户</h2>
-    <form action="/customer/login" method="post">
+    <form action="${pageContext.request.contextPath}/customer/login" method="post">
         <table>
             <tr>
                 <td>账号：</td>
-                <td><input type="text" name="account"></td>
+                <td><label>
+                    <input type="text" name="account">
+                </label></td>
             </tr>
             <tr>
                 <td>密码：</td>
-                <td><input type="password" name="password"></td>
+                <td><label>
+                    <input type="password" name="password">
+                </label></td>
             </tr>
         </table>
         <div class="centered-container"><input type="submit" value="登录"></div>
@@ -43,7 +47,7 @@
 
     <br>
 
-    <button onclick="window.location.href='/index.jsp';"> 返回首页 </button>
+    <button onclick="window.location.href='${pageContext.request.contextPath}/index.jsp';"> 返回首页 </button>
 </div>
 </body>
 </html>

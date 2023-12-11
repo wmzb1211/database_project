@@ -35,14 +35,14 @@ public class checkReturnTime extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<script>");
             out.println("alert('该车已经还车，请勿重复操作！');");
-            out.println("location.href='/customer/user.jsp';");
+            out.println("location.href='user.jsp';");
             out.println("</script>");
         }
         if (rentalRecord.getStatus().equals("Cancelled")) {
             PrintWriter out = response.getWriter();
             out.println("<script>");
             out.println("alert('该订单已经被取消，无法还车！');");
-            out.println("location.href='/customer/user.jsp';");
+            out.println("location.href='user.jsp';");
             out.println("</script>");
         }
 

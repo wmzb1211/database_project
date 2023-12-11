@@ -26,7 +26,21 @@ html, body {
     color: white;
     padding: 20px;
     text-align: center;
+    background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);
+
 }
+.header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    /*background: url(../images/bg.png) no-repeat left top/cover;*/
+    filter: blur(5px);
+    z-index: -1;
+}
+
 
 .content {
     margin: 20px;
@@ -119,13 +133,24 @@ html, body {
 }
 
 .operation {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr; /* 4列 */
-    gap: 10px; /* 间距 */
+    display: flex;
+    flex-direction: column; /* 垂直方向排列 */
+    /*align-items: center; !* 在交叉轴上居中对齐 *!*/
+    gap: 10px; /* 设置元素之间的间距 */
+    /*display: grid;*/
+    /*place-items: center;*/
+    /*grid-template-columns: 1fr 1fr 1fr 1fr; !* 4列 *!*/
+    /*gap: 20px; !* 间距 *!*/
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 /*按钮并排*/
 .operation input[type=submit] {
-    width: 180px;
+    width: 80%;
+    height: 50px;
     padding: 10px; /* 添加内边距 */
     /*background-color: #4CAF50; !* 设置背景颜色 *!*/
     color: white; /* 设置文字颜色 */
@@ -134,11 +159,26 @@ html, body {
     cursor: pointer; /* 设置光标样式为手型 */
     font-size: 16px; /* 设置文字大小 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+    background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);
 
 }
-.operation input[type=submit]:hover {
-    background-color: #45a049;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时增加阴影效果 */
+.form-container {
+    display: flex;
+    justify-content: space-between; /* 在主轴上均等分布 */
+    /*margin: 100px;*/
+    /*gap: 100px;*/
+}
+
+.form {
+    flex: 0.5; /* 让每个 form 元素均等分布 */
+    margin: 0 10px; /* 设置间距 */
+
+}
+
+/* 可以根据需要添加其他样式 */
+.form label, .form input, .form button {
+    margin-bottom: 10px;
+    gap: 200px;
 }
 
 
@@ -202,6 +242,7 @@ canvas {
 
 .form-button {
     margin-block-end: 0;
+    width: 400px;
 
 }
 

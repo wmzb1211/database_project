@@ -340,20 +340,32 @@
 
 
 
-<div class="operation">
-    <form action="/admin/addCar.jsp" method="post" class="form-button">
-        <input type="submit" name="operation" value="Add Car">
-    </form>
-    <form action="/admin/addCustomer.jsp" method="post" class="form-button">
-        <input type="submit" name="operation" value="Add Customer">
-    </form>
-    <form action="/admin/addRentalRecord.jsp" method="post" class="form-button">
-        <input type="submit" name="operation" value="Add Rental Record">
-    </form>
-    <form action="/customer/filterCars" method="get">
-        <input type="hidden" name="status" value="Available">
-        <input type="submit" value="Filter Cars" class="rent-car-button">
-    </form>
+<div class="operation" >
+    <style>
+        h1 {
+            white-space: pre;
+        }
+    </style>
+        <h1>Operation to Car-Rent System</h1>
+
+    <div class="form-container">
+        <form action="/admin/addCar.jsp" method="post" class="form-button" style="float:left">
+            <input type="submit" name="operation" value="Add Car" width="250px">
+        </form>
+        <form action="/admin/addCustomer.jsp" method="post" class="form-button" style="float:left">
+            <input type="submit" name="operation" value="Add Customer">
+        </form>
+        <form action="/admin/addRentalRecord.jsp" method="post" class="form-button" style="float:left">
+            <input type="submit" name="operation" value="Add Rental Record">
+        </form>
+        <form action="/customer/filterCars" method="get" class="form-button" style="float:left">
+            <input type="hidden" name="status" value="Available">
+            <input type="submit" value="Filter Cars" class="rent-car-button">
+        </form>
+    </div>
+
+
+
 </div>
 
 

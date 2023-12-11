@@ -26,6 +26,8 @@ html, body {
     color: white;
     padding: 20px;
     text-align: center;
+    background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);
+
 }
 
 .content {
@@ -44,8 +46,11 @@ html, body {
     background-color: #007bff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px;
+    margin-left: 35%;
+    margin-right: 35%;
     text-align: center;
+    background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);
+
 }
 
 .user-info h2, .rental-records h2 {
@@ -182,7 +187,10 @@ footer form {
 
 .rent-car-container form {
     margin: 0;
-    width: 100%;
+    /*width: 30%;*/
+/*    居中*/
+/*    margin-left: 35%;*/
+/*    margin-right: 35%;*/
 }
 
 .rent-car-container input[type=submit] {
@@ -193,11 +201,16 @@ footer form {
     margin: 0; /* 移除按钮的外边距 */
     border: none;
     background-color: #007bff;
+    /*在整个容器的中间*/
+    /*margin-left: 35%;*/
+    /*margin-right: 35%;*/
     color: white;
     font-size: 2em;
     cursor: pointer;
     transition: background-color 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);
+
 }
 .rent-car-container input[type=submit]:hover {
     background-color: #0056b3;

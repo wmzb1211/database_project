@@ -31,7 +31,7 @@ public class returnCar extends HttpServlet {
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("customer");
         if (customer == null) {
-            response.sendRedirect("/customer/login");
+            response.sendRedirect("login.jsp");
             return;
         }
 

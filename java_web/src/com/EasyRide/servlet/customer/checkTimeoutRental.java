@@ -37,7 +37,7 @@ public class checkTimeoutRental extends HttpServlet {
         Customer customer = (Customer) request.getSession().getAttribute("customer");
         if (customer == null) {
             // 未登录，跳转到登录页面
-            response.sendRedirect(request.getContextPath() + "/customer/login.jsp");
+            response.sendRedirect("login.jsp");
         }
 
         String function = request.getParameter("function");

@@ -42,18 +42,6 @@
 <body>
 
 <%
-    //    Customer customer = null;
-//    if (session.getAttribute("customer")!= null) {
-//        customer = (Customer) session.getAttribute("customer");
-//        if (customer.getName() == null) {
-//            response.sendRedirect("/index.jsp");
-//        }
-//        if (customer.getCustomerId() == 0) {
-//            response.sendRedirect("/index.jsp");
-//        }
-//    } else {
-//        response.sendRedirect("/index.jsp");
-//    }
     customer = (Customer) session.getAttribute("customer");
 %>
 

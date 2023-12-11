@@ -200,7 +200,7 @@ footer form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 .rent-car-container input[type=submit]:hover {
-    background-color: #999999;
+    background-color: #0056b3;
     box-shadow: 0 6px 12px rgba(0, 0, 0.2, 0.2);
 }
 

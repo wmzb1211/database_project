@@ -83,7 +83,7 @@
                 <div class="logout"><input type="submit" value="Logout"></div>
             </form>
 
-            <form action="/customer/updateProfile.jsp" method="post">
+            <form action="${pageContext.request.contextPath}/customer/updateProfile.jsp" method="post">
                 <input type="hidden" name="customerId" value="<%= customer.getCustomerId() %>">
                 <input type="submit" value="Update Profile">
             </form>
@@ -153,7 +153,7 @@
                 </td>
                 <!--  显示一个按钮，跳转到详情页面  -->
                 <td>
-                    <form action="/customer/rentalDetail.jsp" method="post" class="form-button">
+                    <form action="${pageContext.request.contextPath}/customer/rentalDetail.jsp" method="post" class="form-button">
                         <input type="hidden" name="rentalRecordID" value="<%= record.getRentalId() %>">
                         <input type="submit" value="Operation">
                     </form>
@@ -226,7 +226,7 @@
 
 <div class="rent-car-container">
     <%-- 租车按钮 --%>
-    <form action="/customer/filterCars" method="get">
+    <form action="${pageContext.request.contextPath}/customer/filterCars" method="get">
         <input type="hidden" name="status" value="Available">
         <input type="submit" value="Rent a Car!" class="rent-car-button">
     </form>

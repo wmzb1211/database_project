@@ -47,7 +47,7 @@ public class returnCar extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<script type='text/javascript'>");
             out.println("alert('还车失败！创建还车记录失败！');");
-            out.println("location.href='/customer/user.jsp';");
+            out.println("location.href='user.jsp';");
             out.println("</script>");
             out.close();
             return;
@@ -61,7 +61,7 @@ public class returnCar extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 out.println("<script type='text/javascript'>");
                 out.println("alert('还车失败！创建支付记录失败！');");
-                out.println("location.href='/customer/user.jsp';");
+                out.println("location.href='user.jsp';");
                 out.println("</script>");
                 out.close();
                 return;
@@ -74,7 +74,7 @@ public class returnCar extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.println("<script type='text/javascript'>");
             out.println("alert('还车失败！更新租赁记录失败！');");
-            out.println("location.href='/customer/user.jsp';");
+            out.println("location.href='user.jsp';");
             out.println("</script>");
             out.close();
             return;
@@ -90,7 +90,7 @@ public class returnCar extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<script type='text/javascript'>");
         out.println("alert('还车成功！');");
-        out.println("location.href='/customer/user.jsp';");
+        out.println("location.href='user.jsp';");
         out.println("</script>");
         out.close();
 

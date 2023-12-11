@@ -260,6 +260,9 @@
         <div class="outer">
             <canvas id="myChart1" width="800" height="400" ></canvas>
         </div>
+              <form action="/admin/statsBrands" method="post" style="text-align: center;">
+                <input type="submit" value="导出统计数据">
+              </form>
 
         <script>
             var brand = "<%=brand%>";

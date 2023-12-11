@@ -45,14 +45,14 @@
     <div class="table-header">
         <h2>Cars List</h2>
         <% if (role.equals("customer")) { %>
-        <button id="cancel-btn" onclick="window.location.href='/customer/user.jsp'" class="back-button">Back</button>
+        <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/customer/user.jsp'" class="back-button">Back</button>
         <% } else if (role.equals("admin")) { %>
-        <button id="cancel-btn" onclick="window.location.href='/admin/user.jsp'" class="back-button">Back</button>
+        <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/admin/user.jsp'" class="back-button">Back</button>
         <% } %>
     </div>
 
 
-    <form action="/customer/filterCars" method="get" onsubmit="return validateRentalFeeInput();">
+    <form action="${pageContext.request.contextPath}/customer/filterCars" method="get" onsubmit="return validateRentalFeeInput();">
         <div class="filter-container">
             <div class="filter-selected">
                 <label for="brandSelect">品牌:</label>
@@ -161,7 +161,7 @@
             <!-- 一个输入框，输入租车天数 -->
             <td class="rental-column">
                     <% if (role.equals("customer")) { %>
-                <form id="rentalForm" action="/customer/checkTimeoutRental" method="post"
+                <form id="rentalForm" action="${pageContext.request.contextPath}/customer/checkTimeoutRental" method="post"
                       onsubmit="return checkDuration()">
                     <input type="hidden" name="function" value="/customer/rentalCar">
                     <input type="hidden" name="carId" value="<%= car.getCarId() %>">
@@ -170,7 +170,7 @@
                     <input type="submit" value="Rent" class="submit-rent">
                 </form>
                     <% } else { %>
-                <form id="detailForm" action="/admin/details" method="post">
+                <form id="detailForm" action="${pageContext.request.contextPath}/admin/details" method="post">
                     <input type="hidden" name="carId" value="<%= car.getCarId() %>">
                     <input type="submit" value="Details" class="submit-details">
                 </form>

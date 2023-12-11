@@ -34,7 +34,7 @@
     }
     .button-container form {
       /*opacity: 1.0;*/
-      margin: 10px;
+      margin-top: 20px;
     }
     input[type=submit] {
       padding: 10px 20px;

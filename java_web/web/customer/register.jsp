@@ -24,7 +24,7 @@
 
 <div class="login-container">
 <h2>注册新账户</h2>
-<form name="registrationForm" action="/customer/register" method="post" onsubmit="return validateForm()">
+<form name="registrationForm" action="${pageContext.request.contextPath}/customer/register" method="post" onsubmit="return validateForm()">
     <!--    (String name, String account, String password, String contactInfo, String licenseNumber, String address) -->
     <table>
         <tr>
@@ -63,7 +63,7 @@
 
 <br>
 
-<button onclick="window.location.href='/index.jsp';"> 返回首页 </button>
+<button onclick="window.location.href='${pageContext.request.contextPath}/index.jsp';"> 返回首页 </button>
 
 </div>
 </body>

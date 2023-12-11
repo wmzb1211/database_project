@@ -57,14 +57,14 @@ public class checkTimeoutRental extends HttpServlet {
             for (RentalRecord rentalRecord : timeoutRentalRecords) {
                 Car car = new CarDao().getCarById(rentalRecord.getCarId());
                 Msg.append("\\n" + "订单号：").append(rentalRecord.getRentalId())
-                        .append("车型：").append(car.getBrand()).append(car.getModelName())
+                        .append("，车型：").append(car.getBrand()).append(car.getModelName())
                         .append("，车牌号：").append(car.getPlateNumber())
                         .append("，应还日期：").append(rentalRecord.getExpectedReturnDate());
             }
 
             out.println("<script type='text/javascript'>");
             out.println("alert('" + Msg +"');");
-            out.println("location.href='/customer/user.jsp';");
+            out.println("location.href='user.jsp';");
             out.println("</script>");
             out.close();
         } else {
@@ -77,7 +77,7 @@ public class checkTimeoutRental extends HttpServlet {
             request.setAttribute("paymentDetails", car.toString());
             request.setAttribute("duration", duration);
 
-            request.getRequestDispatcher("/customer/payment.jsp").forward(request, response);
+            request.getRequestDispatcher("payment.jsp").forward(request, response);
 //
 //            if (function.equals("/customer/renewCar")) {
 //                RentalRecord rentalRecord = new RentalRecordDao().getRentalRecordsByID(rentalRecordId);

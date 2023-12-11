@@ -56,6 +56,10 @@
   <form action="admin/login.jsp">
     <input type="submit" value="管理员登录">
   </form>
+
+<%--  <form action="admin/statsBrands" method="post">--%>
+<%--    <input type="submit" value="统计">--%>
+<%--  </form>--%>
 </div>
 </body>
 </html>

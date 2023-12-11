@@ -1,8 +1,10 @@
 package com.EasyRide.dao;
 
+import com.EasyRide.entity.BrandStats;
 import com.EasyRide.entity.CarModel;
 import com.EasyRide.util.DBConnectionPool;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -230,6 +232,48 @@ public class CarModelDao {
             }
         }
         return models;
+    }
+
+    public List<BrandStats> getBrandStats (){
+        List<BrandStats> statsList = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT cm.brand, COUNT(rr.rental_id) AS rental_count, " +
+                    "SUM(DATEDIFF(IFNULL(rr.actual_return_date, CURDATE()), rr.start_date)) AS total_rental_days, " +
+                    "SUM(rr.rental_fee) AS total_income " +
+                    "FROM CarModel cm " +
+                    "JOIN Car c ON cm.model_id = c.model_id " +
+                    "JOIN RentalRecord rr ON c.car_id = rr.car_id " +
+                    "GROUP BY cm.brand";
+
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                BrandStats stats = new BrandStats();
+                stats.setBrand(resultSet.getString("brand"));
+                stats.setRentalCount(resultSet.getInt("rental_count"));
+                stats.setTotalRentalDays(resultSet.getInt("total_rental_days"));
+                stats.setTotalIncome(BigDecimal.valueOf(resultSet.getDouble("total_income")));
+                statsList.add(stats);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+
+        return statsList;
     }
 
     // 测试代码

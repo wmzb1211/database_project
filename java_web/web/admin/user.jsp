@@ -28,7 +28,14 @@
     <link rel="stylesheet" type="text/css" href="style/user.css">
     <script src="js/user.js"></script>
 <%--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--%>
-
+    <style>
+        body {
+        background-image: url("https://s2.loli.net/2023/12/11/xvPtufzdi2KamLl.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        }
+    </style>
 
 </head>
 
@@ -222,9 +229,9 @@
             int others_count = sum_count;
             for (int i = 0; i < brand_counts.size(); i++) {
                 if (i < 7) {
-                    continue;
-                } else {
                     others_count -= brand_counts.get(i).getCount();
+                } else {
+                    continue;
                 }
             }
             Brand_Count others = new Brand_Count("Others", others_count);
@@ -287,22 +294,15 @@
                     label: '饼图实例',
                     data: count,
                     backgroundColor: [
-                        // 'rgb(255, 99, 132)',
-                        // 'rgb(54, 162, 235)',
-                        // 'rgb(255, 205, 86)',
-                        // 'rgb(75, 192, 192)',
-                        // 'rgb(153, 102, 255)',
-                        // 'rgb(255, 159, 64)',
-                        // 'rgb(255, 99, 13)',
-                        // 'rgb(54, 162, 25)'
-                        '#B395BD',
-                        '#EA8379',
-                        '#F5B971',
-                        '#F6C957',
-                        '#FFB77F',
-                        '#FBE8D5',
-                        '#F5B971',
-                        '#43978F'
+                        //63b2ee - 76da91 - f8cb7f - f89588 - 7cd6cf - 9192ab - 7898e1 - efa666
+                        '#63b2ee',
+                        '#76da91',
+                        '#f8cb7f',
+                        '#f89588',
+                        '#7cd6cf',
+                        '#9192ab',
+                        '#7898e1',
+                        '#efa666'
 
                     ],
                     hoverOffset: 4
@@ -336,21 +336,26 @@
 <%-- 对系统的操作按钮 --%>
 
 
-<form action="/admin/addCar.jsp" method="post" class="form-button">
-    <input type="submit" name="operation" value="Add Car">
-</form>
-<form action="/admin/addCustomer.jsp" method="post" class="form-button">
-    <input type="submit" name="operation" value="Add Customer">
-</form>
-<form action="/admin/addRentalRecord.jsp" method="post" class="form-button">
-    <input type="submit" name="operation" value="Add Rental Record">
-</form>
+
+<div class="operation">
+    <form action="/admin/addCar.jsp" method="post" class="form-button">
+        <input type="submit" name="operation" value="Add Car">
+    </form>
+    <form action="/admin/addCustomer.jsp" method="post" class="form-button">
+        <input type="submit" name="operation" value="Add Customer">
+    </form>
+    <form action="/admin/addRentalRecord.jsp" method="post" class="form-button">
+        <input type="submit" name="operation" value="Add Rental Record">
+    </form>
+    <form action="/customer/filterCars" method="get">
+        <input type="hidden" name="status" value="Available">
+        <input type="submit" value="Filter Cars" class="rent-car-button">
+    </form>
+</div>
 
 
-<form action="/customer/filterCars" method="get">
-    <input type="hidden" name="status" value="Available">
-    <input type="submit" value="Filter Cars" class="rent-car-button">
-</form>
+
+
 
 </div>
 </body>

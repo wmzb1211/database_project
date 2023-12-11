@@ -15,6 +15,14 @@
     <meta charset="UTF-8">
     <title>Update Profile</title>
     <link rel="stylesheet" type="text/css" href="../customer/style/login.css">
+    <style>
+        body {
+            background-image: url("../images/genshin_background.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 
 <body>

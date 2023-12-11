@@ -5,7 +5,14 @@
 <head>
     <title>登录 - 汽车租赁系统</title>
     <link rel="stylesheet" type="text/css" href="../customer/style/login.css" />
-
+    <style>
+        body {
+            background-image: url("../images/genshin_background.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 
 <%--<h2>登录到您的账户</h2>--%>

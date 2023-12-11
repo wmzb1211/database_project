@@ -54,6 +54,14 @@
 <head>
     <title>Payment Confirmation</title>
     <link rel="stylesheet" type="text/css" href="style/payment.css"> <!-- 确保路径正确 -->
+    <style>
+        body {
+            background-image: url("../images/genshin_background.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 <body>
 <div class="payment-container">

@@ -118,6 +118,28 @@ html, body {
     box-shadow: 0 6px 12px rgba(0, 0, 0.2, 0.2); /* 鼠标悬停时增加阴影效果 */
 }
 
+.operation {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* 4列 */
+    gap: 10px; /* 间距 */
+}
+/*按钮并排*/
+.operation input[type=submit] {
+    width: 180px;
+    padding: 10px; /* 添加内边距 */
+    /*background-color: #4CAF50; !* 设置背景颜色 *!*/
+    color: white; /* 设置文字颜色 */
+    border: none; /* 移除边框 */
+    border-radius: 5px; /* 添加圆角 */
+    cursor: pointer; /* 设置光标样式为手型 */
+    font-size: 16px; /* 设置文字大小 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+
+}
+.operation input[type=submit]:hover {
+    background-color: #45a049;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬停时增加阴影效果 */
+}
 
 
 /*.profile-actions {*/

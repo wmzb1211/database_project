@@ -104,7 +104,7 @@ html, body {
 .profile-actions input[type=submit] {
     width: 130px;
     padding: 10px; /* 添加内边距 */
-    background-color: #4CAF50; /* 设置背景颜色 */
+    /*background-color: #4CAF50; !* 设置背景颜色 *!*/
     color: white; /* 设置文字颜色 */
     border: none; /* 移除边框 */
     border-radius: 5px; /* 添加圆角 */

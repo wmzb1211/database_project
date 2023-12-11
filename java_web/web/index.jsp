@@ -14,11 +14,16 @@
   <title>汽车租赁系统</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      margin: 0;
-      padding: 0;
+      /*font-family: Arial, sans-serif;*/
+      /*background-color: #f4f4f4;*/
+      /*text-align: center;*/
+      /*margin: 0;*/
+      /*padding: 0;*/
+      background-image: url("images/genshin.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+
     }
     h1 {
       color: #333;

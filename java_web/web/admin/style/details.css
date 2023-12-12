@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.details-container {
+    background-color: white;
+    width: 80%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.details-container h1, .details-container h2 {
+    color: #333;
+}
+
+.details-container p, .details-container table {
+    text-align: left;
+    color: #555;
+    margin: 10px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+input[type=submit] {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+input[type=submit]:hover {
+    background-color: #218838;
+}
+
+.continue-submit{
+    margin-top: 20px;
+    display: flex; /* 使用flex布局 */
+    align-items: center; /* 垂直居中对齐 */
+    gap: 10px; /* 元素之间的间隙 */
+}
+.continue-submit input[type="text"] {
+    height: 35px;
+    flex-grow: 1; /* 输入框占据剩余空间 */
+    margin-right: 10px; /* 右边距，根据需要调整 */
+}
+
+.continue-submit input[type="submit"]{
+    width: 70%;
+    margin-top: 0;
+    text-align:center;
+    vertical-align: middle;
+}
+
+.back-button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #bdbdbd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #999999;
+}

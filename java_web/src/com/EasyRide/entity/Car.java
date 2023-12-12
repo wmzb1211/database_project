@@ -36,6 +36,14 @@ public class Car {
         this.status = status;
         this.dailyRentalFee = dailyRentalFee;
     }
+    public Car(int carId, int modelId, String plateNumber, String color, int year,  double dailyRentalFee) {
+        this.carId = carId;
+        this.modelId = modelId;
+        this.plateNumber = plateNumber;
+        this.color = color;
+        this.year = year;
+        this.dailyRentalFee = dailyRentalFee;
+    }
 
     public Car() {
     }

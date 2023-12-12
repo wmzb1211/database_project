@@ -102,7 +102,43 @@ public class CarDao {
         }
         return car;
     }
+    public Car getCarByPlateNumber(String PlateNumber){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Car car =null;
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql =  "SELECT * FROM Car c"
+                    + " INNER JOIN CarModel cm ON c.model_id = cm.model_id"
+                    + " WHERE c.plate_number =?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, PlateNumber);
+            resultSet = preparedStatement.executeQuery();
 
+            if (resultSet.next()){
+                int carId = resultSet.getInt("car_id");
+                int modelId = resultSet.getInt("model_id");
+                String plateNumber = resultSet.getString("plate_number");
+                String color = resultSet.getString("color");
+                int year = resultSet.getInt("year");
+                double dailyRentalFee = resultSet.getDouble("daily_rental_fee");
+                car = new Car(carId, modelId, plateNumber, color, year, dailyRentalFee);
+                return car;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return car;
+    }
     /**
      * 返回某状态的所有车辆
      */

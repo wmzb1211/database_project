@@ -199,7 +199,32 @@ public class CarModelDao {
         }
         return brands;
     }
-
+    public List<String> getAllModelNames(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<String> modelNames = new ArrayList<>();
+        try {
+            connection = DBConnectionPool.getConnection();
+            String sql = "SELECT DISTINCT model_name FROM carmodel";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                modelNames.add(resultSet.getString("modelName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet!= null) resultSet.close();
+                if (preparedStatement!= null) preparedStatement.close();
+                if (connection!= null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return modelNames;
+    }
     public List<CarModel> getModelsByBrand(String brand) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -274,6 +299,39 @@ public class CarModelDao {
         }
 
         return statsList;
+    }
+    public List<CarModel> getModelsByModelName(String modelName) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<CarModel> models = new ArrayList<>();
+
+        try{
+            if (modelName!= null &&!modelName.equals("")) {
+                connection = DBConnectionPool.getConnection();
+                String sql = "SELECT * FROM carmodel WHERE model_name =?";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, modelName);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()){
+                    int id = resultSet.getInt("model_id");
+                    String brand = resultSet.getString("brand");
+                    String description = resultSet.getString("description");
+                    models.add(new CarModel(id, brand, modelName, description));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return models;
     }
 
     // 测试代码

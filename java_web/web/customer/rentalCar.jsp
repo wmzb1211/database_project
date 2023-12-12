@@ -36,6 +36,14 @@
     <title>汽车详情 - 汽车租赁系统</title>
     <link rel="stylesheet" type="text/css" href="style/cars.css">
     <script src="js/filter.js"></script>
+    <style>
+        body {
+            background-image: url("../images/genshin_background.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+    </style>
 </head>
 <body>
 

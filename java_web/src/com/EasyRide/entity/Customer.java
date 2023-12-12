@@ -18,6 +18,7 @@ public class Customer {
         this.licenseNumber = licenseNumber;
         this.address = address;
     }
+    public Customer() {}
 
     public int getCustomerId() {
         return customerId;

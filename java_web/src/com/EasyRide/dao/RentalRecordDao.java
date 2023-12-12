@@ -129,7 +129,42 @@ public class RentalRecordDao {
         }
         return rentalRecords;
     }
-
+    public List<RentalRecord> getRentalRecordsByStatus(String status) {
+        List<RentalRecord> rentalRecords = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        RentalRecord rentalRecord = null;
+        try {
+            connection = DBConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM rentalrecord WHERE status = ?");
+            preparedStatement.setString(1, status);
+            preparedStatement.executeQuery();
+            resultSet = preparedStatement.getResultSet();
+            while (resultSet.next()) {
+                int rentalId = resultSet.getInt("rental_id");
+                int customerId = resultSet.getInt("customer_id");
+                Date startDate = resultSet.getDate("start_date");
+                Date expectedReturnDate = resultSet.getDate("expected_return_date");
+                Date actualReturnDate = resultSet.getDate("actual_return_date");
+                double rentalFee = resultSet.getDouble("rental_fee");
+                int carId = resultSet.getInt("car_id");
+                RentalRecord rentalRecord1 = new RentalRecord(rentalId, customerId, carId, startDate, expectedReturnDate, actualReturnDate, rentalFee, status);
+                rentalRecords.add(rentalRecord1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return rentalRecords;
+    }
     public List<Brand_Count> getBrandCountAccordingBrand() {
         List<Brand_Count> brand_counts = new ArrayList<>();
         List<String> brands = new ArrayList<>();

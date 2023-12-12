@@ -30,7 +30,7 @@
 <%--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>--%>
     <style>
         body {
-        background-image: url("https://s2.loli.net/2023/12/11/xvPtufzdi2KamLl.png");
+        background-image: url("../images/genshin_background.png");
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;

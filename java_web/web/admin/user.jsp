@@ -96,12 +96,24 @@
         function showMoreBtn() {
             var table = document.getElementById("Mytable");
             var rows = table.getElementsByTagName("tr");
+            var button = document.querySelector("button");
 
-            for (var i = 0; i < rows.length; i++) {
-                if (i > 10) {
-                    rows[i].style.display = "table-row";
+            if (button.textContent === "Show More") {
+                for (var i = 0; i < rows.length; i++) {
+                    if (i > 10) {
+                        rows[i].style.display = "table-row";
+                    }
                 }
+                button.innerHTML = "Show Less";
+            } else {
+                for (var i = 0; i < rows.length; i++) {
+                    if (i > 10) {
+                        rows[i].style.display = "none";
+                    }
+                }
+                button.innerHTML = "Show More"
             }
+
         }
     </script>
     <div class="system-log">
@@ -139,7 +151,7 @@
             </tbody>
 
         </table>
-        <button id="showMoreBtn">Show More</button>
+        <button onclick="showMoreBtn()">Show More</button>
     </div>
 
 <%-- 所有车辆统计信息展示 --%>

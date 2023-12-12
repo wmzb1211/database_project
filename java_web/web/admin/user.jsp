@@ -92,36 +92,66 @@
 %>
 
 <%-- 系統日誌 --%>
+    <script>
+        function showMoreBtn() {
+            var table = document.getElementById("Mytable");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                if (i > 10) {
+                    rows[i].style.display = "table-row";
+                }
+            }
+        }
+    </script>
     <div class="system-log">
         <h2>System Log</h2>
-        <table>
+        <style>
+            #logTableBody tr:not(:first-child):nth-child(n+11) {
+                display: none;
+            }
+        </style>
+        <table id="Mytable">
+            <thead>
             <tr>
                 <th>Log ID</th>
                 <th>Admin ID</th>
                 <th>Log Time</th>
                 <th>Log Content</th>
             </tr>
-            <% for (SystemLog systemLog : systemLogs) { %>
+            </thead>
+
+            <tbody id="logTableBody">
+<%--            <% for (int i = 0; i < Math.min(10, systemLogs.size()); i++) { %>--%>
+            <% for (int i = 0; i < systemLogs.size(); i++) { %>
+
             <tr>
-                <td><%= systemLog.getLogId() %></td>
-                <td><%= systemLog.getOperatorId() %></td>
-                <td><%= systemLog.getOperationDateTime() %></td>
-                <td><%= systemLog.getOperationDescription() %></td>
-                <td><%= systemLog.getResult() %></td>
+                <td><%= systemLogs.get(i).getLogId() %></td>
+                <td><%= systemLogs.get(i).getOperatorId() %></td>
+                <td><%= systemLogs.get(i).getOperationDateTime() %></td>
+                <td><%= systemLogs.get(i).getOperationDescription() %></td>
+                <td><%= systemLogs.get(i).getResult() %></td>
             </tr>
             <% } %>
+<%--            <% for (int i=10; i < systemLogs.size(); i++) {--%>
+
+<%--            }--%>
+            </tbody>
+
         </table>
+        <button id="showMoreBtn">Show More</button>
     </div>
+
 <%-- 所有车辆统计信息展示 --%>
     <div class="Cars-Info">
         <h2>Cars Info</h2>
         <%-- 展示有多少辆车被租出去了 --%>
         <% CarDao carDao = new CarDao();
             int count_rented = carDao.getCarsByStatus("Rented").size(); %>
-        <p>Number of cars rented: <%= count_rented %></p>
+        <p>被租出去的车有<%= count_rented %>辆</p>
         <%-- 展示有多少辆车处于闲置的状态 --%>
         <% int count_Available = carDao.getCarsByStatus("Available").size(); %>
-        <p>Number of cars available: <%= count_Available %></p>
+        <p>尚未出租的车有<%= count_Available %> 辆</p>
         <%-- 展示本月收入 --%>
         <%
 
@@ -145,13 +175,13 @@
 //            String formattedDate = dateFormat.format(previousMonthFirstDate);
             double count_Income = new PaymentDao().getPaymentByStartDate(previousMonthFirstDate);
         %>
-        <p>Income in the past month: <%= count_Income %></p>
+        <p>上个月总收入是<%= count_Income %>元</p>
         <%-- 一个统计图表，柱状图，可视化展示过去十二个月的payment --%>
         <% List<Double> PaymentInPastYear = new PaymentDao().getPaymentInPastYear();
         Double sum = PaymentInPastYear.stream().reduce(0.0, Double::sum);
         BigDecimal b = new BigDecimal(sum);
         %>
-        <p>Payment in the past year: <%= b%></p>
+        <p>去年的总收入是<%= b%>元</p>
 <%--        <p>666: <%=PaymentInPastYear%></p>--%>
         <div>
         <h2>过去十二个月支付数据柱状图</h2>
@@ -197,7 +227,15 @@
                     scales: {
                         yAxes: [{
                             ticks: {
-                                beginAtZero:true
+                                beginAtZero:true,
+                                callback: function (value, index, values) {
+                                    return value + ' 元';
+                                }
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Amount', // 纵轴的标题
+                                fontSize: 16
                             }
                         }]
                     }
@@ -317,12 +355,21 @@
                 options: {
                     responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
                     maintainAspectRatio: false,// 保持图表原有比例
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
+                    // scales: {
+                    //     yAxes: [{
+                    //         ticks: {
+                    //             beginAtZero:true
+                    //         }
+                    //     }]
+                    // }
+                    tooltips: {
+                        callbacks: {
+                            label: function(context) {
+                                var label = data.labels[context.dataIndex];
+                                var value = data.datasets[0].data[context.dataIndex];
+                                return label + ': ' + value + ' %';
                             }
-                        }]
+                        }
                     }
                 }
             };
@@ -333,6 +380,10 @@
 
 
         </script>
+            <div class="conclusion">
+                <p2>最受欢迎的品牌是<%=brand_counts.get(0).getBrand()%>,共被租出去<%=brand_counts.get(0).getCount()%>单</p2>
+
+            </div>
 
     </div>
     </div>

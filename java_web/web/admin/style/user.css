@@ -159,7 +159,8 @@ html, body {
     cursor: pointer; /* 设置光标样式为手型 */
     font-size: 16px; /* 设置文字大小 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
-    background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);
+    /*background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);*/
+    background: linear-gradient(90deg, #65c0e6 0%, #6d91c3 25%, #7e6db2 50%, #b564a5 75%, #ed6a82 100%);
 
 }
 .form-container {
@@ -180,6 +181,37 @@ html, body {
     margin-bottom: 10px;
     gap: 200px;
 }
+
+/*.conclusion {*/
+/*    background-color: #f8f8f8; !* 背景颜色 *!*/
+/*    padding: 15px; !* 内边距 *!*/
+/*    border: 1px solid #ddd; !* 边框 *!*/
+/*    border-radius: 5px; !* 圆角 *!*/
+/*    margin-bottom: 20px; !* 底部外边距 *!*/
+/*}*/
+
+/*.conclusion p2 {*/
+/*    font-size: 18px; !* 字体大小 *!*/
+/*    color: #333; !* 字体颜色 *!*/
+/*    margin: 0; !* 去除段落的默认外边距 *!*/
+/*}*/
+.conclusion {
+    text-align: center; /* 文本居中 */
+    padding: 20px; /* 内边距 */
+    border: 2px solid #e74c3c; /* 边框颜色红色 */
+    border-radius: 10px; /* 圆角 */
+    font-family: 'STFangsong', 'Songti SC', 'SimSun', sans-serif; /* 中文艺术字体 */
+}
+
+.conclusion p2 {
+    font-size: 34px; /* 字体大小 */
+    /*字体加粗*/
+    font-weight: bold;
+    color: #e74c3c; /* 字体颜色红色 */
+    margin: 0; /* 去除段落的默认外边距 */
+}
+
+/* 可以根据需要添加其他样式，比如文字居中、阴影效果等 */
 
 
 /*.profile-actions {*/

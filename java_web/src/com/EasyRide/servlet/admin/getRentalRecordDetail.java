@@ -55,7 +55,7 @@ public class getRentalRecordDetail extends HttpServlet {
         request.setAttribute("rentalRecord", rentalRecord);
         request.setAttribute("payments", payments);
         request.setAttribute("returnRecords", returnRecords);
-        request.getRequestDispatcher("/admin/editRentalRecord.jsp").forward(request, response);
+        request.getRequestDispatcher("editRentalRecord.jsp").forward(request, response);
 
     }
 }

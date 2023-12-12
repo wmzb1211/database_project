@@ -119,7 +119,7 @@ public class CarModelDao {
         try{
             connection = DBConnectionPool.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO carmodel (brand, model_name, description) " +
-                    "VALUES (?, ?, ?)");
+                    "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, brand);
             preparedStatement.setString(2, modelName);
             preparedStatement.setString(3, description);

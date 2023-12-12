@@ -51,7 +51,7 @@ public class filterRentalRecord extends HttpServlet {
 
         }
         request.setAttribute("rentalRecords",rentalRecords);
-        request.getRequestDispatcher("/admin/filterRentalRecord.jsp").forward(request, response);
+        request.getRequestDispatcher("filterRentalRecord.jsp").forward(request, response);
 
     }
 }

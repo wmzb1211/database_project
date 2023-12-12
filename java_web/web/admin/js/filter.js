@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const xhr = new XMLHttpRequest();
 
             // 设置请求方法和URL，这里假设你的后端Servlet URL是"getModelsByBrand"，并传递选择的品牌作为参数
-            xhr.open("GET", "getModelsByBrand?brand=" + selectedBrand, true);
+            xhr.open("GET", "../customer/getModelsByBrand?brand=" + selectedBrand, true);
 
             // 监听XMLHttpRequest的readyState变化
             xhr.onreadystatechange = function () {

@@ -49,7 +49,7 @@ public class editRentalRecord extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print("<script>alert('Update successfully!');");
 //              request.getRequestDispatcher("/admin/filterCarModel").forward(request, response);
-            response.sendRedirect("/admin/filterRentalRecord?selectType=rentalId&filterValue=" + rentalRecordId);
+            response.sendRedirect("filterRentalRecord?selectType=rentalId&filterValue=" + rentalRecordId);
             out.flush();
             return;
         }

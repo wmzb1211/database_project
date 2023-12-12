@@ -70,7 +70,7 @@ public class updateCar extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print("<script>alert('Update successfully!');</script>");
 //            response.sendRedirect("/targetPage?carDetailId=" + car.getCarId());
-            request.getRequestDispatcher("/admin/filterCars").forward(request, response);
+            request.getRequestDispatcher("filterCars").forward(request, response);
             out.flush();
             return;
         }

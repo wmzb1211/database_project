@@ -42,7 +42,7 @@ public class filterCarModel extends HttpServlet {
         }
         request.setAttribute("brands",brands);
         request.setAttribute("models",models);
-        request.getRequestDispatcher("/admin/filterCarModel.jsp").forward(request, response);
+        request.getRequestDispatcher("filterCarModel.jsp").forward(request, response);
 
     }
 }

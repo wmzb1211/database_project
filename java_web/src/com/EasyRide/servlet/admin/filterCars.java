@@ -73,7 +73,7 @@ public class filterCars extends HttpServlet {
         request.setAttribute("brands", brands);
         request.setAttribute("years", years);
         request.setAttribute("statuses", statuses);
-        request.getRequestDispatcher("/admin/filterCar.jsp").forward(request, response);
+        request.getRequestDispatcher("filterCar.jsp").forward(request, response);
 
     }
 }

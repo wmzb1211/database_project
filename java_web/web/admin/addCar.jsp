@@ -45,7 +45,7 @@
 %>
 <div class="details-container">
     <h1>Car Details</h1>
-    <form action ="/admin/updateCar" method ="post">
+    <form action ="${pageContext.request.contextPath}/admin/updateCar" method ="post">
         <table>
             <tr>
                 <td>Car ID</td>
@@ -115,7 +115,7 @@
             <td><%= rentalRecordDetail.getRentalFee()%></td>
             <td><%= rentalRecordDetail.getStatus()%></td>
             <td>
-                <form id="detailForm" action="/admin/filterPayment" method="post">
+                <form id="detailForm" action="${pageContext.request.contextPath}/admin/filterPayment" method="post">
                     <input type="hidden" name="rentalId" value="<%= rentalRecordDetail.getRentalId() %>">
                     <input type="submit" value="Details" class="submit-details">
                 </form></td>

@@ -45,14 +45,14 @@
   <div class="table-header">
     <h2>Cars List</h2>
     <% if (role.equals("customer")) { %>
-    <button id="cancel-btn" onclick="window.location.href='/customer/user.jsp'" class="back-button">Back</button>
+    <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/customer/user.jsp'" class="back-button">Back</button>
     <% } else if (role.equals("admin")) { %>
-    <button id="cancel-btn" onclick="window.location.href='/admin/user.jsp'" class="back-button">Back</button>
+    <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/admin/user.jsp'" class="back-button">Back</button>
     <% } %>
   </div>
 
 
-  <form action="/customer/filterCars" method="get" onsubmit="return validateRentalFeeInput();">
+  <form action="${pageContext.request.contextPath}/admin/filterCars" method="get" onsubmit="return validateRentalFeeInput();">
     <div class="filter-container">
       <div class="filter-selected">
         <label for="brandSelect">品牌:</label>
@@ -160,7 +160,7 @@
       </td>
       <!-- 一个输入框，输入租车天数 -->
       <td class="rental-column">
-        <form id="detailForm" action="/admin/getCarDetail" method="post">
+        <form id="detailForm" action="${pageContext.request.contextPath}/admin/getCarDetail" method="post">
           <input type="hidden" name="carId" value="<%= car.getCarId() %>">
           <input type="submit" value="Details" class="submit-details">
         </form>
@@ -173,7 +173,7 @@
 
 </div>
 <div id="floating-window">
-  <form action="/admin/addCar" method="post">
+  <form action="${pageContext.request.contextPath}/admin/addCar" method="post">
 
     <table>
       <tr>

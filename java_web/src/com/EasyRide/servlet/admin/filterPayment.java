@@ -39,7 +39,7 @@ public class filterPayment extends HttpServlet {
 
         payments = paymentDao.getPaymentByRentalRecordId(rentalId);
         request.setAttribute("payments",payments);
-        request.getRequestDispatcher("/admin/editPayment.jsp").forward(request, response);
+        request.getRequestDispatcher("editPayment.jsp").forward(request, response);
 
     }
 }

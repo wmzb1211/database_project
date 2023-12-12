@@ -16,7 +16,7 @@
 <%
     Administrator administrator = (Administrator) session.getAttribute("admin");
     if (administrator == null) {
-        response.sendRedirect("/admin/login.jsp");
+        response.sendRedirect("${pageContext.request.contextPath}/admin/login.jsp");
         return;
     }
 %>
@@ -75,7 +75,7 @@
         <h2></h2>
         <!-- 按钮部分-->
         <div class="profile-actions">
-            <form action="/admin/updateProfile.jsp" method="post" class="form-button">
+            <form action="${pageContext.request.contextPath}/admin/updateProfile.jsp" method="post" class="form-button">
                 <input type="hidden" name="customerId" value="<%= admin.getAdminId() %>">
                 <input type="submit" value="Update Profile">
             </form>
@@ -310,7 +310,7 @@
         <div class="outer">
             <canvas id="myChart1" width="800" height="400" ></canvas>
         </div>
-              <form action="/admin/statsBrands" method="post" style="text-align: center;">
+              <form action="${pageContext.request.contextPath}/admin/statsBrands" method="post" style="text-align: center;">
                 <input type="submit" value="导出统计数据">
               </form>
 
@@ -412,21 +412,21 @@
         <h1>Operation to Car-Rent System</h1>
 
     <div class="form-container">
-        <form action="/admin/filterCars" method="post" class="form-button" style="float:left">
+        <form action="${pageContext.request.contextPath}/admin/filterCars" method="post" class="form-button" style="float:left">
             <input type="hidden" name="status" value="Available">
-            <input type="submit" name="operation" value="Add Car" width="250px">
+            <input type="submit" name="operation" value="Edit Car" width="250px">
         </form>
-        <form action="/admin/filterCarModel" method="get" class="form-button">
+        <form action="${pageContext.request.contextPath}/admin/filterCarModel" method="get" class="form-button">
             <input type="hidden" name="brandSelect" value="">
             <input type="submit" value="Edit Car Model" class="rent-car-button">
         </form>
 
-        <form action="/admin/filterCustomer" method="get" class="form-button">
+        <form action="${pageContext.request.contextPath}/admin/filterCustomer" method="get" class="form-button">
             <input type="hidden" name="selectType" value="">
             <input type="hidden" name="filterValue" value="">
             <input type="submit" value="Edit Customer" class="rent-car-button">
         </form>
-        <form action="/admin/filterRentalRecord" method="post" class="form-button">
+        <form action="${pageContext.request.contextPath}/admin/filterRentalRecord" method="post" class="form-button">
             <input type="hidden" name="selectType" value="">
             <input type="hidden" name="filterValue" value="">
             <input type="submit" name="operation" value="Edit Rental Record">

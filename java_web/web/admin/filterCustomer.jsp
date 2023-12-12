@@ -42,14 +42,14 @@
   <div class="table-header">
     <h2>Customer List</h2>
     <% if (role.equals("customer")) { %>
-    <button id="cancel-btn" onclick="window.location.href='/customer/user.jsp'" class="back-button">Back</button>
+    <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/customer/user.jsp'" class="back-button">Back</button>
     <% } else if (role.equals("admin")) { %>
-    <button id="cancel-btn" onclick="window.location.href='/admin/user.jsp'" class="back-button">Back</button>
+    <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/admin/user.jsp'" class="back-button">Back</button>
     <% } %>
   </div>
 
 
-  <form action="/admin/filterCustomer" method="get" onsubmit="return validateRentalFeeInput();">
+  <form action="${pageContext.request.contextPath}/admin/filterCustomer" method="get" onsubmit="return validateRentalFeeInput();">
     <div class="filter-container">
       <div class="filter-selected">
         <label for="brandSelect">筛选条件:</label>
@@ -95,7 +95,7 @@
       </td>
       <td><%= customer.getAddress() %>
       </td>
-      <td><form id="detailForm" action="/admin/editCustomer.jsp" method="post">
+      <td><form id="detailForm" action="${pageContext.request.contextPath}/admin/editCustomer.jsp" method="post">
         <input type="hidden" name="customerId" value="<%= customer.getCustomerId() %>">
         <%--        <input type="hidden" name="customerStatus" value="<%=customer.get%>">--%>
         <input type="submit" value="Details" class="submit-details">
@@ -108,7 +108,7 @@
 
 </div>
 <div id="floating-window">
-  <form action="/admin/editCustomer" method="post">
+  <form action="${pageContext.request.contextPath}/admin/editCustomer" method="post">
 
     <table>
       <tr>

@@ -43,14 +43,14 @@
   <div class="table-header">
     <h2>Rental Record List</h2>
     <% if (role.equals("customer")) { %>
-    <button id="cancel-btn" onclick="window.location.href='/customer/user.jsp'" class="back-button">Back</button>
+    <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/customer/user.jsp'" class="back-button">Back</button>
     <% } else if (role.equals("admin")) { %>
-    <button id="cancel-btn" onclick="window.location.href='/admin/user.jsp'" class="back-button">Back</button>
+    <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/admin/user.jsp'" class="back-button">Back</button>
     <% } %>
   </div>
 
 
-  <form action="/admin/filterRentalRecord" method="get" onsubmit="return validateRentalFeeInput();">
+  <form action="${pageContext.request.contextPath}/admin/filterRentalRecord" method="get" onsubmit="return validateRentalFeeInput();">
     <div class="filter-container">
       <div class="filter-selected">
         <label for="brandSelect">筛选条件:</label>
@@ -102,7 +102,7 @@
       <td><%= rentalRecord.getRentalFee() %></td>
       <td><%= rentalRecord.getStatus() %></td>
       <td>
-        <form id="detailForm" action="/admin/getRentalRecordDetail" method="post">
+        <form id="detailForm" action="${pageContext.request.contextPath}/admin/getRentalRecordDetail" method="post">
           <input type="hidden" name="rentalRecordId" value="<%= rentalRecord.getRentalId() %>">
           <input type="submit" value="Details" class="submit-details">
         </form>

@@ -47,7 +47,7 @@ public class filterCustomer extends HttpServlet {
             }
         }
         request.setAttribute("customers",customers);
-        request.getRequestDispatcher("/admin/filterCustomer.jsp").forward(request, response);
+        request.getRequestDispatcher("filterCustomer.jsp").forward(request, response);
 
     }
 }

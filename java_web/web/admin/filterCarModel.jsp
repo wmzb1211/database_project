@@ -41,11 +41,11 @@
 
   <div class="table-header">
     <h2>Car model List</h2>
-    <button id="cancel-btn" onclick="window.location.href='/admin/user.jsp'" class="back-button">Back</button>
+    <button id="cancel-btn" onclick="window.location.href='${pageContext.request.contextPath}/admin/user.jsp'" class="back-button">Back</button>
   </div>
 
 
-  <form action="/admin/filterCarModel" method="get" onsubmit="return validateRentalFeeInput();">
+  <form action="${pageContext.request.contextPath}/admin/filterCarModel" method="get" onsubmit="return validateRentalFeeInput();">
     <div class="filter-container">
       <div class="filter-selected">
         <label for="brandSelect">品牌:</label>
@@ -85,7 +85,7 @@
       <td><%= carModel.getDescription() %>
       </td>
       <td>
-        <form id="detailForm" action="/admin/editCarModel.jsp" method="post">
+        <form id="detailForm" action="${pageContext.request.contextPath}/admin/editCarModel.jsp" method="post">
           <input type="hidden" name="carModelId" value="<%= carModel.getModelId() %>">
           <input type="submit" value="Details" class="submit-details">
 
@@ -97,7 +97,7 @@
 
 </div>
 <div id="floating-window">
-  <form action="/admin/editCarModel" method="post">
+  <form action="${pageContext.request.contextPath}/admin/editCarModel" method="post">
 
     <table>
       <tr>

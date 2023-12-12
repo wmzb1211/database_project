@@ -73,7 +73,7 @@ public class getCarDetail extends HttpServlet {
         request.setAttribute("rentalRecords", rentalRecords);
         request.setAttribute("allPayments", allPayments);
         request.setAttribute("allReturnRecords", allReturnRecords);
-        request.getRequestDispatcher("/admin/addCar.jsp").forward(request, response);
+        request.getRequestDispatcher("addCar.jsp").forward(request, response);
 
     }
 }

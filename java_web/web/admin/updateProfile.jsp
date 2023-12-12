@@ -29,7 +29,7 @@
 <div class="login-container">
     <h2>Update Profile</h2>
     <% administrator = (Administrator) session.getAttribute("admin"); %>
-    <form action="/admin/updateProfile" method="post">
+    <form action="${pageContext.request.contextPath}/admin/updateProfile" method="post">
 
         <table>
             <tr>

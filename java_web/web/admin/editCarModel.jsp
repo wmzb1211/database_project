@@ -42,7 +42,7 @@
 %>
 <div class="details-container">
   <h1>Car Details</h1>
-  <form action ="/admin/editCarModel" method ="post">
+  <form action ="${pageContext.request.contextPath}/admin/editCarModel" method ="post">
     <table>
       <tr>
         <td>Car Model ID</td>

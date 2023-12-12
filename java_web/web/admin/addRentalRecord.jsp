@@ -39,7 +39,7 @@
 %>
 <div class="details-container">
     <h1>Rental Record Details</h1>
-    <form action ="/admin/editRentalRecord" method ="post">
+    <form action ="${pageContext.request.contextPath}/admin/editRentalRecord" method ="post">
         <table>
             <tr>
                 <td>Rental Record ID</td>

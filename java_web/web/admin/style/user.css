@@ -155,7 +155,7 @@ html, body {
     /*background-color: #4CAF50; !* 设置背景颜色 *!*/
     color: white; /* 设置文字颜色 */
     border: none; /* 移除边框 */
-    border-radius: 5px; /* 添加圆角 */
+    border-radius: 10px; /* 添加圆角 */
     cursor: pointer; /* 设置光标样式为手型 */
     font-size: 16px; /* 设置文字大小 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */

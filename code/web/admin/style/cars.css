@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.cars-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.cars-container h2 {
+    color: #333;
+}
+
+form {
+    margin-block-start: 1em;
+    margin-block-end : 1em;
+}
+
+label {
+    margin-right: 10px;
+}
+
+select, input[type="text"] {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 40px;
+}
+
+input[type="submit"] {
+    padding: 5px 15px;
+    background-color: #007bff;
+    transition: background-color 0.3s;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+/* 长下拉列表 */
+.select-long {
+    width: 150px; /* 或其他合适的长度 */
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between; /* 确保左右两部分分开 */
+}
+
+.filter-selected {
+    flex: 1;
+}
+
+.filter-button {
+    text-align: right;
+}
+
+.input-long {
+    width: 150px; /* 或其他合适的长度 */
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.filter-button {
+    /* 左对齐 */
+    text-align: left;
+}
+
+/* 短输入框 */
+.input-short {
+    width: 40px; /* 或其他合适的长度 */
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.submit-rent {
+    margin-top: 15px;
+}
+
+/* 宽列 */
+.rental-column {
+    width: 120px; /* 或根据实际需要调整宽度 */
+}
+
+.table-header form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-header button {
+    width: 120px;
+    height: 70px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.back-button {
+    background-color: #999999;
+    transition: background-color 0.3s;
+    color: white;
+}
+
+.back-button:hover {
+    background-color: #666666;
+}
+
+

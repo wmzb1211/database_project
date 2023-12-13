@@ -1,0 +1,414 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* 重置HTML和body的默认边距和填充 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* 容器样式 */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);
+
+}
+.header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    /*background: url(../images/bg.png) no-repeat left top/cover;*/
+    filter: blur(5px);
+    z-index: -1;
+}
+
+
+.content {
+    margin: 20px;
+}
+
+
+.rent-car-container {
+    background-color: #007bff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    text-align: center;
+}
+
+.admin-info h2, .profile-info h2 {
+    color: #333;
+}
+
+.admin-info {
+    display: flex;
+    justify-content: space-between; /* 确保左右两部分分开 */
+}
+.system-log, .admin-info{
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.system-log h2, .system-log h3 {
+    color: #333;
+}
+.profile-info {
+    /* 根据需要调整 */
+    flex: 1; /* 占据可用空间 */
+}
+
+
+
+.Cars-Info {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+.BarChart {
+    width: 300px;
+    height: 150px;
+}
+
+#barChart{
+    width: 300px;
+    height: 150px;
+
+}
+/*.profile-actions {*/
+/*    display: flex;*/
+/*    flex-direction: column; !* 让按钮竖直排列 *!*/
+/*    align-items: flex-start; !* 对齐到起始边 *!*/
+/*    gap: 10px; !* 按钮之间的间距 *!*/
+/*}*/
+/*.profile-actions input[type=submit] {*/
+/*    width: 130px;*/
+
+/*}*/
+/*.profile-actions和.profile-actions input[type=submit]要求按钮有阴影*/
+.profile-actions {
+    display: flex;
+    flex-direction: column; /* 让按钮竖直排列 */
+    align-items: flex-start; /* 对齐到起始边 */
+    gap: 10px; /* 按钮之间的间距 */
+}
+.profile-actions input[type=submit] {
+    width: 130px;
+    padding: 10px; /* 添加内边距 */
+    /*background-color: #4CAF50; !* 设置背景颜色 *!*/
+    color: white; /* 设置文字颜色 */
+    border: none; /* 移除边框 */
+    border-radius: 5px; /* 添加圆角 */
+    cursor: pointer; /* 设置光标样式为手型 */
+    font-size: 16px; /* 设置文字大小 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+
+}
+.profile-actions input[type=submit]:hover {
+    background-color: #45a049;
+    box-shadow: 0 6px 12px rgba(0, 0, 0.2, 0.2); /* 鼠标悬停时增加阴影效果 */
+}
+
+.operation {
+    display: flex;
+    flex-direction: column; /* 垂直方向排列 */
+    /*align-items: center; !* 在交叉轴上居中对齐 *!*/
+    gap: 10px; /* 设置元素之间的间距 */
+    /*display: grid;*/
+    /*place-items: center;*/
+    /*grid-template-columns: 1fr 1fr 1fr 1fr; !* 4列 *!*/
+    /*gap: 20px; !* 间距 *!*/
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/*按钮并排*/
+.operation input[type=submit] {
+    width: 80%;
+    height: 50px;
+    padding: 10px; /* 添加内边距 */
+    /*background-color: #4CAF50; !* 设置背景颜色 *!*/
+    color: white; /* 设置文字颜色 */
+    border: none; /* 移除边框 */
+    border-radius: 10px; /* 添加圆角 */
+    cursor: pointer; /* 设置光标样式为手型 */
+    font-size: 16px; /* 设置文字大小 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 添加阴影效果 */
+    /*background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%);*/
+    background: linear-gradient(90deg, #65c0e6 0%, #6d91c3 25%, #7e6db2 50%, #b564a5 75%, #ed6a82 100%);
+
+}
+.form-container {
+    display: flex;
+    justify-content: space-between; /* 在主轴上均等分布 */
+    /*margin: 100px;*/
+    /*gap: 100px;*/
+}
+
+.form {
+    flex: 0.5; /* 让每个 form 元素均等分布 */
+    margin: 0 10px; /* 设置间距 */
+
+}
+
+/* 可以根据需要添加其他样式 */
+.form label, .form input, .form button {
+    margin-bottom: 10px;
+    gap: 200px;
+}
+
+/*.conclusion {*/
+/*    background-color: #f8f8f8; !* 背景颜色 *!*/
+/*    padding: 15px; !* 内边距 *!*/
+/*    border: 1px solid #ddd; !* 边框 *!*/
+/*    border-radius: 5px; !* 圆角 *!*/
+/*    margin-bottom: 20px; !* 底部外边距 *!*/
+/*}*/
+
+/*.conclusion p2 {*/
+/*    font-size: 18px; !* 字体大小 *!*/
+/*    color: #333; !* 字体颜色 *!*/
+/*    margin: 0; !* 去除段落的默认外边距 *!*/
+/*}*/
+.conclusion {
+    text-align: center; /* 文本居中 */
+    padding: 20px; /* 内边距 */
+    border: 2px solid #e74c3c; /* 边框颜色红色 */
+    border-radius: 10px; /* 圆角 */
+    font-family: 'STFangsong', 'Songti SC', 'SimSun', sans-serif; /* 中文艺术字体 */
+}
+
+.conclusion p2 {
+    font-size: 34px; /* 字体大小 */
+    /*字体加粗*/
+    font-weight: bold;
+    color: #e74c3c; /* 字体颜色红色 */
+    margin: 0; /* 去除段落的默认外边距 */
+}
+
+/* 可以根据需要添加其他样式，比如文字居中、阴影效果等 */
+
+
+/*.profile-actions {*/
+/*    display: flex;*/
+/*    flex-direction: column; !* 让按钮竖直排列 *!*/
+/*    align-items: flex-start; !* 对齐到起始边 *!*/
+/*    gap: 10px; !* 按钮之间的间距 *!*/
+/*}*/
+
+/*!* 样式 .profile-actions 中的提交按钮 *!*/
+/*.profile-actions input[type=submit] {*/
+/*    width: 130px;*/
+/*    padding: 10px; !* 添加内边距 *!*/
+/*    background-color: #4CAF50; !* 设置背景颜色 *!*/
+/*    color: white; !* 设置文字颜色 *!*/
+/*    border: none; !* 移除边框 *!*/
+/*    border-radius: 5px; !* 添加圆角 *!*/
+/*    cursor: pointer; !* 设置光标样式为手型 *!*/
+/*    font-size: 16px; !* 设置文字大小 *!*/
+/*}*/
+
+/*!* 鼠标悬停时的样式 *!*/
+/*.profile-actions input[type=submit]:hover {*/
+/*    background-color: #45a049;*/
+/*}*/
+
+/*.outer {*/
+/*    background: white;*/
+/*    padding: 20px;*/
+/*    margin-bottom: 20px;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+
+/*}*/
+/*canvas {*/
+/*    display: block;*/
+/*    margin: auto;*/
+/*    border: 1px solid pink;*/
+/*    border-radius: 16px;*/
+/*}*/
+
+
+.outer {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+    display: block;
+    margin-left: 20%;
+    margin-right: 20%;
+    border: 1px solid pink;
+    border-radius: 16px;
+    width: 80%; /* 设置宽度为80% */
+}
+
+
+.form-button {
+    margin-block-end: 0;
+    width: 400px;
+
+}
+
+input[type=submit] {
+    width: 180px;
+    height: 60px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    transition: background-color 0.3s;
+    background: linear-gradient(90deg, #65c0e6 0%, #6d91c3 25%, #7e6db2 50%, #b564a5 75%, #ed6a82 100%);
+}
+
+input[type=submit]:hover {
+    background-color: #0056b3;
+}
+
+
+/* 表格样式 */
+.rental-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.rental-table th, .rental-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.rental-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-header h2 {
+    margin: 0; /* 或根据需要进行调整 */
+}
+
+#toggle-ongoing-btn {
+    padding: 10px 20px;
+    background-color: #999999;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#toggle-ongoing-btn:hover {
+    background-color: #666666;
+}
+
+#toggle-completed-btn {
+    padding: 10px 20px;
+    background-color: #999999;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#toggle-completed-btn:hover {
+    background-color: #666666;
+}
+
+footer {
+    /* 放在页面的底部 */
+    position: relative;
+    bottom: 0;
+    height: 100px;
+    width: 100%; /* 按钮宽度为100% */
+    padding: 0; /* 移除内边距 */
+    background-color: #28a745; /* 背景色 */
+
+}
+
+footer form {
+    margin: 0; /* 移除form元素的默认外边距 */
+}
+
+.rent-car-container form {
+    margin: 0;
+    width: 100%;
+}
+
+.rent-car-container input[type=submit] {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    width: 100%; /* 让按钮宽度占据整个容器 */
+    padding: 20px; /* 调整按钮内边距以适应容器 */
+    margin: 0; /* 移除按钮的外边距 */
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.rent-car-container input[type=submit]:hover {
+    background-color: #0056b3;
+}
+
+.highlight {
+    color: red;
+    font-weight: bold;
+}
+
+.logout input[type=submit]{
+    background-color: #999999;
+    transition: background-color 0.3s;
+}
+.logout input[type=submit]:hover {
+    background-color: #666666;
+}
+.canvas#barChart{
+    width: 300px;
+    height: 150px;
+
+}

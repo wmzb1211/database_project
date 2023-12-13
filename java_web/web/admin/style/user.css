@@ -279,6 +279,8 @@ canvas {
 }
 
 input[type=submit] {
+    width: 180px;
+    height: 60px;
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -288,6 +290,7 @@ input[type=submit] {
     text-align: center;
     vertical-align: middle;
     transition: background-color 0.3s;
+    background: linear-gradient(90deg, #65c0e6 0%, #6d91c3 25%, #7e6db2 50%, #b564a5 75%, #ed6a82 100%);
 }
 
 input[type=submit]:hover {

@@ -23,8 +23,9 @@ public class SystemLogDao {
         SystemLog systemLog=null;
         try{
             connection= DBConnectionPool.getConnection();
-            String sql="SELECT * FROM SystemLog";
+            String sql="SELECT * FROM SystemLog WHERE operator_id=?";
             preparedStatement =connection.prepareStatement(sql);
+            preparedStatement.setInt(1, operatorId);
             resultSet=preparedStatement.executeQuery();
             while(resultSet.next()) {
                 int logId = resultSet.getInt("log_id");

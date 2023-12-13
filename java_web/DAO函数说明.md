@@ -389,6 +389,7 @@ public Car addCar(Car car)
 添加车辆到数据库中。
 
 **参数:**
+
 - `Car car`: 要添加的车辆对象。
 
 **返回值:**
@@ -396,6 +397,20 @@ public Car addCar(Car car)
 
 **异常处理:**
 在发生 `SQLException` 时，打印堆栈轨迹。
+
+**算法**：
+
+- 如果 `filterParams` 为 `null` 或为空，返回所有车辆列表（通过调用 `getAllCars()`）。
+- 根据提供的筛选参数构建 SQL 查询语句：
+  - 通过连接 `Car` 和 `CarModel` 表，基于筛选参数生成 WHERE 子句。
+- 获取数据库连接，并创建预处理语句。
+- 设置预处理语句中的参数，执行查询，获取结果集。
+- 遍历结果集：
+  - 提取车辆属性，创建 `Car` 对象，并添加到结果列表中。
+- 关闭结果集、预处理语句，并释放数据库连接。
+- 返回结果列表。
+
+
 
 ##### 4.2.3.7 方法7：`updateCar`
 
@@ -607,6 +622,32 @@ public List<BrandStats> getBrandStats()
 
 **异常处理:**
 在发生 `SQLException` 时，打印堆栈轨迹。
+
+**算法**：
+
+- 获取数据库连接。
+
+- 构建 SQL 查询语句，连接 `CarModel`、`Car` 和 `RentalRecord` 表，按品牌分组，统计租赁次数、总租赁天数和总收入。
+
+  ```sql
+  SELECT cm.brand, COUNT(rr.rental_id) AS rental_count,
+         SUM(DATEDIFF(IFNULL(rr.actual_return_date, CURDATE()), rr.start_date)) AS total_rental_days,
+         SUM(rr.rental_fee) AS total_income
+  FROM CarModel cm
+  JOIN Car c ON cm.model_id = c.model_id
+  JOIN RentalRecord rr ON c.car_id = rr.car_id
+  GROUP BY cm.brand
+  ```
+
+- 创建预处理语句，执行查询，获取结果集。
+
+- 遍历结果集：
+
+  - 提取品牌统计信息，创建 `BrandStats` 对象，并添加到结果列表中。
+
+- 关闭结果集、预处理语句，并释放数据库连接。
+
+- 返回结果列表。
 
 ---
 
@@ -1008,6 +1049,23 @@ public boolean deleteCustomer(int customerId)
   返回一个 `RentalRecord` 对象，表示成功更新的租赁记录。如果更新失败，返回 `null`。
 - **异常处理:**
   在发生 `SQLException` 时，打印堆栈轨迹。
+- **算法**：
+  
+  - 获取数据库连接。
+  - 构建 SQL 插入语句，插入租赁记录到 `rentalrecord` 表，包括客户编号、汽车编号、起始日期、预计归还日期、租金和状态。
+  
+  ```
+  sqlCopy codeINSERT INTO rentalrecord (customer_id, car_id, start_date, expected_return_date, rental_fee, status)
+  VALUES (?, ?, ?, ?, ?, ?)
+  ```
+  
+  - 创建预处理语句，并设置参数。
+  - 执行插入语句，获取受影响的行数。
+  - 如果没有行受影响，抛出异常。
+  - 获取生成的租赁记录的 ID。
+  - 创建新的 `RentalRecord` 对象，包括租赁记录的各个属性。
+  - 关闭结果集、预处理语句，并释放数据库连接。
+  - 返回新创建的租赁记录。
 
 ##### 4.6.3.
 

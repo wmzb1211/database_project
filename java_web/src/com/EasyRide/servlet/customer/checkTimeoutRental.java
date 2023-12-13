@@ -52,7 +52,7 @@ public class checkTimeoutRental extends HttpServlet {
             // 有超时的记录，弹窗提示无法还车，并展示超时的记录，重定向回主页
             PrintWriter out = response.getWriter();
 
-            StringBuilder Msg = new StringBuilder("您有未还车的订单，请处理后再续租！" +
+            StringBuilder Msg = new StringBuilder("您有未还车的订单，请处理后再租车/续租！" +
                     "超时订单如下：");
             for (RentalRecord rentalRecord : timeoutRentalRecords) {
                 Car car = new CarDao().getCarById(rentalRecord.getCarId());

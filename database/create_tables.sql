@@ -1,3 +1,5 @@
+use cardb;
+
 -- 创建管理员表
 CREATE TABLE Administrator
 (

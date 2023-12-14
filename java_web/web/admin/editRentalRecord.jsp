@@ -81,6 +81,10 @@
       <input type="submit" value="Update Rental Record">
     </div>
   </form>
+  <form action="/admin/editRentalRecord">
+    <input type="hidden" id="delete" name="delete" value="<%=rentalRecordDetail.getRentalId()%>">
+    <input type="submit" value="Delete Rental Record">
+  </form>
 </div>
 <div class="details-container">
   <h1>Car Model Details</h1>

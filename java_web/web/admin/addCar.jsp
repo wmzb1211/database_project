@@ -87,11 +87,15 @@
             <input type="submit" value="Update Car">
         </div>
     </form>
+    <form action="/admin/updateCar">
+        <input type="hidden" id="delete" name="delete" value="<%=carDetail.getCarId()%>">
+        <input type="submit" value="Delete Car">
+    </form>
 </div>
-<%--<div class="details-container">--%>
-<%--    <h1>Car Model Details</h1>--%>
-<%--    <p></p>--%>
-<%--</div>--%>
+<div class="details-container">
+    <h1>Car Model Details</h1>
+    <p></p>
+</div>
 <div class="details-container">
     <h1>RentalRecord Details</h1>
     <table>

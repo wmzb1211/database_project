@@ -35,23 +35,31 @@ public class editRentalRecord extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
 
         HttpSession session = request.getSession();
-        String RentalRecordId = request.getParameter("rentalRecordId");
-        int rentalRecordId = Integer.parseInt(RentalRecordId);
-        RentalRecordDao rentalRecordDao = new RentalRecordDao();
-        String RentalFee = request.getParameter("fee");
-        double rentalFee = Double.parseDouble(RentalFee);
-        RentalRecord newRentalRecord = rentalRecordDao.getRentalRecordsByID(rentalRecordId);
-        newRentalRecord.setRentalFee(rentalFee);
+        String Delete = request.getParameter("delete");
+        if (Delete!=null){
+            int delete = Integer.parseInt(Delete);
+            RentalRecordDao rentalRecordDao = new RentalRecordDao();
+            rentalRecordDao.deleteRentalRecord(delete);
+            response.sendRedirect("/admin/filterRentalRecord");
+        }else {
+            String RentalRecordId = request.getParameter("rentalRecordId");
+            int rentalRecordId = Integer.parseInt(RentalRecordId);
+            RentalRecordDao rentalRecordDao = new RentalRecordDao();
+            String RentalFee = request.getParameter("fee");
+            double rentalFee = Double.parseDouble(RentalFee);
+            RentalRecord newRentalRecord = rentalRecordDao.getRentalRecordsByID(rentalRecordId);
+            newRentalRecord.setRentalFee(rentalFee);
 
-        if (rentalRecordDao.updateRentalRecord(newRentalRecord) != null){
-            // 弹窗提示修改成功
+            if (rentalRecordDao.updateRentalRecord(newRentalRecord) != null) {
+                // 弹窗提示修改成功
 
-            PrintWriter out = response.getWriter();
-            out.print("<script>alert('Update successfully!');");
+                PrintWriter out = response.getWriter();
+                out.print("<script>alert('Update successfully!');");
 //              request.getRequestDispatcher("/admin/filterCarModel").forward(request, response);
-            response.sendRedirect("filterRentalRecord?selectType=rentalId&filterValue=" + rentalRecordId);
-            out.flush();
-            return;
+                response.sendRedirect("/admin/filterRentalRecord?selectType=rentalId&filterValue=" + rentalRecordId);
+                out.flush();
+                return;
+            }
         }
     }
 }

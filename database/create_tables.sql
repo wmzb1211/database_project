@@ -52,7 +52,7 @@ CREATE TABLE Car
     year             INT,
     status           VARCHAR(50),
     daily_rental_fee DECIMAL(16, 2),
-    FOREIGN KEY (model_id) REFERENCES CarModel (model_id),
+    FOREIGN KEY (model_id) REFERENCES CarModel (model_id) on delete cascade,
     INDEX idx_car_id (car_id),
     INDEX idx_plate_number (plate_number)
 );
@@ -68,8 +68,8 @@ CREATE TABLE RentalRecord
     actual_return_date   DATE,
     rental_fee           DECIMAL(16, 2),
     status               VARCHAR(50),
-    FOREIGN KEY (customer_id) REFERENCES Customer (customer_id),
-    FOREIGN KEY (car_id) REFERENCES Car (car_id),
+    FOREIGN KEY (customer_id) REFERENCES Customer (customer_id) on delete cascade,
+    FOREIGN KEY (car_id) REFERENCES Car (car_id) on delete cascade,
     INDEX idx_rental_id (rental_id),
     INDEX idx_customer_id (customer_id),
     INDEX idx_car_id (car_id)
@@ -83,7 +83,7 @@ CREATE TABLE ViolationRecord
     violation_type VARCHAR(255),
     description    TEXT,
     fine_amount    DECIMAL(16, 2),
-    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id),
+    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id) on delete cascade,
     INDEX idx_violation_id (violation_id),
     INDEX idx_rental_id (rental_id)
 );
@@ -96,8 +96,8 @@ CREATE TABLE ReturnRecord
     return_date_time              DATETIME,
     vehicle_condition_description TEXT,
     handling_personnel            INT,
-    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id),
-    FOREIGN KEY (handling_personnel) REFERENCES Administrator (admin_id),
+    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id) on delete cascade,
+    FOREIGN KEY (handling_personnel) REFERENCES Administrator (admin_id) on delete cascade,
     INDEX idx_return_id (return_id),
     INDEX idx_rental_id (rental_id)
 );
@@ -113,8 +113,8 @@ CREATE TABLE Payment
     payment_date   DATE,
     amount         DECIMAL(16, 2),
     payment_method VARCHAR(50),
-    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id),
-    FOREIGN KEY (customer_id) REFERENCES Customer (customer_id),
+    FOREIGN KEY (rental_id) REFERENCES RentalRecord (rental_id) on delete cascade,
+    FOREIGN KEY (customer_id) REFERENCES Customer (customer_id) on delete cascade,
     INDEX idx_payment_id (payment_id),
     INDEX idx_rental_id (rental_id),
     INDEX idx_customer_id (customer_id)

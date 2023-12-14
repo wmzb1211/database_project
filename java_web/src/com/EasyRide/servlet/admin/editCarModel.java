@@ -37,7 +37,7 @@ public class editCarModel extends HttpServlet {
             CarModelDao carModelDao = new CarModelDao();
             carModelDao.deleteCarModel(delete);
             request.setAttribute("brandSelect","");
-            response.sendRedirect("/admin/filterCarModel");
+            response.sendRedirect("filterCarModel");
         } else{
             String ModelId = request.getParameter("carModelId");
             if (ModelId == "") {
@@ -61,7 +61,7 @@ public class editCarModel extends HttpServlet {
                     PrintWriter out = response.getWriter();
                     out.print("<script>alert('Add successfully!');</script>");
                     //                request.getRequestDispatcher("/admin/filterCarModel").forward(request, response);
-                    response.sendRedirect("/admin/filterCarModel?brandSelect=" + brand);
+                    response.sendRedirect("filterCarModel?brandSelect=" + brand);
                     out.flush();
                 }
             } else {
@@ -83,7 +83,7 @@ public class editCarModel extends HttpServlet {
                     PrintWriter out = response.getWriter();
                     out.print("<script>alert('Update successfully!');");
                     //                request.getRequestDispatcher("/admin/filterCarModel").forward(request, response);
-                    response.sendRedirect("/admin/filterCarModel?brandSelect=" + carModel.getBrand());
+                    response.sendRedirect("filterCarModel?brandSelect=" + carModel.getBrand());
                     out.flush();
                     return;
                 }

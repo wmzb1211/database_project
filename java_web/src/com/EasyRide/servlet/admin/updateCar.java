@@ -38,7 +38,7 @@ public class updateCar extends HttpServlet {
             CarDao carDao = new CarDao();
             carDao.deleteCar(deleteId);
             request.setAttribute("status","Available");
-            response.sendRedirect("/admin/filterCars");
+            response.sendRedirect("filterCars");
         }else{
             String plateNumber = request.getParameter("plateNumber");
             int carId = Integer.parseInt(request.getParameter("carId"));
@@ -77,7 +77,7 @@ public class updateCar extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 out.print("<script>alert('Update successfully!');</script>");
                 //            response.sendRedirect("/targetPage?carDetailId=" + car.getCarId());
-                request.getRequestDispatcher("/admin/filterCars").forward(request, response);
+                request.getRequestDispatcher("filterCars").forward(request, response);
                 out.flush();
                 return;
             }

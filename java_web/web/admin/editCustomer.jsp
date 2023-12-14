@@ -76,7 +76,7 @@
       </div>
     </table>
   </form>
-  <form action="/admin/editCustomer">
+  <form action="${pageContext.request.contextPath}/admin/editCustomer">
     <input type="hidden" id="delete" name="delete" value="<%=customer.getCustomerId()%>">
     <input type="submit" value="Delete Customer">
   </form>

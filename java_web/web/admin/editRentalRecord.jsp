@@ -81,7 +81,7 @@
       <input type="submit" value="Update Rental Record">
     </div>
   </form>
-  <form action="/admin/editRentalRecord">
+  <form action="${pageContext.request.contextPath}/admin/editRentalRecord">
     <input type="hidden" id="delete" name="delete" value="<%=rentalRecordDetail.getRentalId()%>">
     <input type="submit" value="Delete Rental Record">
   </form>

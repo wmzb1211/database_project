@@ -40,7 +40,7 @@ public class editRentalRecord extends HttpServlet {
             int delete = Integer.parseInt(Delete);
             RentalRecordDao rentalRecordDao = new RentalRecordDao();
             rentalRecordDao.deleteRentalRecord(delete);
-            response.sendRedirect("/admin/filterRentalRecord");
+            response.sendRedirect("filterRentalRecord");
         }else {
             String RentalRecordId = request.getParameter("rentalRecordId");
             int rentalRecordId = Integer.parseInt(RentalRecordId);
@@ -56,7 +56,7 @@ public class editRentalRecord extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 out.print("<script>alert('Update successfully!');");
 //              request.getRequestDispatcher("/admin/filterCarModel").forward(request, response);
-                response.sendRedirect("/admin/filterRentalRecord?selectType=rentalId&filterValue=" + rentalRecordId);
+                response.sendRedirect("filterRentalRecord?selectType=rentalId&filterValue=" + rentalRecordId);
                 out.flush();
                 return;
             }

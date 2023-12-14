@@ -87,7 +87,7 @@
             <input type="submit" value="Update Car">
         </div>
     </form>
-    <form action="/admin/updateCar">
+    <form action="${pageContext.request.contextPath}/admin/updateCar">
         <input type="hidden" id="delete" name="delete" value="<%=carDetail.getCarId()%>">
         <input type="submit" value="Delete Car">
     </form>

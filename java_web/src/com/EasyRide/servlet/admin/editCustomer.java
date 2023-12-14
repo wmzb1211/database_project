@@ -39,7 +39,7 @@ public class editCustomer extends HttpServlet {
             int delete = Integer.parseInt(Delete);
             CustomerDao customerDao = new CustomerDao();
             customerDao.deleteCustomer(delete);
-            response.sendRedirect("/admin/filterCustomer");
+            response.sendRedirect("filterCustomer");
         }else {
             String CustomerId = request.getParameter("customerId");
             if ("".equals(CustomerId)) {
@@ -78,7 +78,7 @@ public class editCustomer extends HttpServlet {
                     out.print("<script>alert('Add successfully!');</script>");
 //                request.getRequestDispatcher("/admin/filterCustomer.jsp").forward(request, response);
 //                /admin/filterCustomer?selectType=licenseNumber&filterValue=f
-                    response.sendRedirect("/admin/filterCustomer?selectType=account&filterValue=" + account);
+                    response.sendRedirect("filterCustomer?selectType=account&filterValue=" + account);
                     out.flush();
 
                 }
@@ -105,7 +105,7 @@ public class editCustomer extends HttpServlet {
                     PrintWriter out = response.getWriter();
                     out.print("<script>alert('Update successfully!');");
 //               request.getRequestDispatcher("/admin/filterCarModel").forward(request, response);
-                    request.getRequestDispatcher("/admin/editCustomer.jsp").forward(request, response);
+                    request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
                     out.flush();
                     return;
                 }

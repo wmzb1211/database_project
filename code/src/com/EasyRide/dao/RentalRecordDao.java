@@ -418,6 +418,32 @@ public class RentalRecordDao {
         }
         return sb;
     }
+    public boolean deleteRentalRecord(int id) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try{
+            connection = DBConnectionPool.getConnection();
+            String sql = "DELETE FROM rentalrecord WHERE rental_id = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0){
+                return true;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            try{
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) DBConnectionPool.releaseConnection(connection);
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
     // 测试代码
     public static void main(RentalRecord[] args){
         List<RentalRecord> rentalRecordList = new RentalRecordDao().getRentalRecordsByCustomerID(18, null);

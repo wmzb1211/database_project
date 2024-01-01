@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBConnectionPool {
-    private static final String url = "jdbc:mysql://localhost:3306/cardb";
+    private static final String url = "jdbc:mysql://localhost:3306/cardb?autoReconnect=true";
     private static final String username = "carmaster";
     private static final String password = "carmasterpasswd";
     private static final int initialPoolSize = 5; // 初始连接池大小
